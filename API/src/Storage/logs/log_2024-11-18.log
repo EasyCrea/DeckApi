@@ -1,0 +1,285 @@
+[2024-11-18 19:37:17]	[ALERT]	404 - commande non existante :: /
+[2024-11-18 19:37:23]	[ALERT]	404 - commande non existante :: /public
+[2024-11-18 19:37:47]	[ALERT]	404 - commande non existante :: /public//admin/login
+[2024-11-18 19:37:50]	[ALERT]	404 - commande non existante :: /public/admin/login
+[2024-11-18 19:41:44]	[ALERT]	404 - commande non existante :: /
+[2024-11-18 19:41:48]	[ALERT]	404 - commande non existante :: /Deck
+[2024-11-18 19:42:00]	[ALERT]	404 - commande non existante :: /
+[2024-11-18 19:42:16]	[ALERT]	404 - commande non existante :: /admin/card/1à
+[2024-11-18 19:47:09]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:10]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:11]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:11]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:11]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:11]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:11]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:47:12]	[ALERT]	500 - le contrôleur App\Controller\AdminController n'existe pas
+[2024-11-18 19:53:15]	[ALERT]	404 - commande non existante :: /
+[2024-11-18 19:53:36]	[ALERT]	404 - commande non existante :: /
+[2024-11-18 19:57:33]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 19:57:45]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 19:58:03]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 19:59:25]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 19:59:26]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 19:59:41]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:02:24]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:02:25]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:14:24]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:14:29]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:14:32]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '22',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:15:28]	[ALERT]	404 - commande non existante :: /admin/
+[2024-11-18 20:15:39]	[ALERT]	500 - la méthode getAllDeck n'existe pas
+[2024-11-18 20:21:50]	[INFO]	Requête reçue pour la méthode login
+[2024-11-18 20:21:59]	[INFO]	Requête reçue pour la méthode login
+[2024-11-18 20:22:00]	[INFO]	Requête reçue pour la méthode login
+[2024-11-18 20:22:12]	[INFO]	Requête reçue pour la méthode login
+[2024-11-18 20:25:31]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:25:38]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '10',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:26:09]	[ALERT]	500 - la méthode getCardById n'existe pas
+[2024-11-18 20:26:10]	[ALERT]	500 - la méthode getCardById n'existe pas
+[2024-11-18 20:26:13]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '10',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:27:43]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:27:47]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:28:00]	[ALERT]	404 - commande non existante :: /admin/card/
+[2024-11-18 20:28:21]	[ALERT]	404 - commande non existante :: /admin/card/
+[2024-11-18 20:28:24]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:28:25]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '24',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:29:20]	[ALERT]	404 - commande non existante :: /admin/card/
+[2024-11-18 20:30:47]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getAllCardInDeck',
+        2 => array(
+            'id' => '10',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'deck_id' in 'where clause''
+[2024-11-18 20:32:44]	[ALERT]	404 - commande non existante :: /admin/deck/
+[2024-11-18 20:33:10]	[ALERT]	404 - commande non existante :: /admin/card/1à
+[2024-11-18 20:35:00]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '10',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:35:12]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@getCardById',
+        2 => array(
+            'id' => '10',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\Sprit\OneDrive\Bureau\Deck\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-18 20:41:42]	[ALERT]	404 - commande non existante :: /admin/carte/24
+[2024-11-18 20:41:45]	[ALERT]	404 - commande non existante :: /admin/carte/10
