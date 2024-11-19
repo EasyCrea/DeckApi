@@ -10,6 +10,7 @@ use Firebase\JWT\Key;
 use App\Model\Deck;
 use App\Model\Carte;
 use App\Model\CarteAleatoire;
+use App\Controller\AuthorizationController;
 
 
 
@@ -21,16 +22,25 @@ class CreateurController extends Controller
 
     public function register()
     {
-        $this->options();
+
         $data = json_decode(file_get_contents('php://input'), true);
         // 1. vérifier les données soumises
         // 2. exécuter la requête d'insertion
+        $date = \DateTime::createFromFormat('Y-m-d', $data['ddn']);
+        if (!$date || $date->format('Y-m-d') !== $data['ddn']) {
+            http_response_code(400); // Code 400 Bad Request
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Format de date invalide. Utilisez le format YYYY-MM-DD.'
+            ]);
+            return;
+        }
 
         $request = Createur::getInstance()->create([
             'nom_createur' => trim($data['name']),
             'ad_email_createur' => trim($data['email']),
             'mdp_createur' => trim(password_hash($data['password'], PASSWORD_BCRYPT)),
-            'ddn' => trim($data['ddn']),
+            'ddn' => $date->format('Y-m-d'),
             'genre' => trim($data['genre']),
         ]);
 
@@ -115,59 +125,71 @@ class CreateurController extends Controller
 
     public function createCard()
     {
-        $this->options();
+
 
         $data = json_decode(file_get_contents('php://input'), true);
-
         // 1. vérifier les données soumises
-        $id_deck = trim($data['id_deck']);
-        $text_carte = trim($data['text_carte']);
-        $valeurs_choix1 = trim($data['valeurs_choix1']);
-        $valeurs_choix2 = trim($data['valeurs_choix2']);
-        $date_soumission = date('Y-m-d');
-        $ordre_soumission = trim($data['ordre_soumission']);
+        $id_deck = $data['id_deck'];
+        $text_carte = $data['texte_carte'];
+        $valeurs_choix1 = $data['valeurs_choix1'];
+        $valeurs_choix2 = $data['valeurs_choix2'];
+
+        $date = new \DateTime();
+        $date_soumission = $date->format('Y-m-d');
+
+        $ordre_soumission = $data['ordre_soumission'];
 
 
-        if ($_POST['id_createur'] != null) {
-            $id_createur = trim($data['id_createur']);
+
+        if (isset($data['id_createur'])) {
+            $id_createur = $data['id_createur'];
         }
-        if ($_POST['id_administrateur'] != null) {
-            $id_administration = trim($data['id_administrateur']);
+        if (isset($data['id_administrateur'])) {
+            $id_administration = $data['id_administrateur'];
         }
 
-        if ($id_createur) {
-            $creation =  Carte::getInstance()->create([
-                'id_deck' => $id_deck,
-                'text_carte' => $text_carte,
-                'valeurs_choix1' => $valeurs_choix1,
-                'valeurs_choix2' => $valeurs_choix2,
-                'date_soumission' => $date_soumission,
-                'ordre_soumission' => $ordre_soumission,
-                'id_createur' => $id_createur,
-            ]);
-            $this->createRandomCard($id_deck, $id_createur);
-        }
-        if ($id_administration) {
-            $creation =  Carte::getInstance()->create([
-                'id_deck' => $id_deck,
-                'text_carte' => $text_carte,
-                'valeurs_choix1' => $valeurs_choix1,
-                'valeurs_choix2' => $valeurs_choix2,
-                'date_soumission' => $date_soumission,
-                'ordre_soumission' => $ordre_soumission,
-                'id_createur' => $id_createur,
-            ]);
-        }
+        try {
+            if (isset($id_createur)) {
+                $creation = Carte::getInstance()->create([
+                    'id_deck' => $id_deck,
+                    'texte_carte' => $text_carte,
+                    'valeurs_choix1' => $valeurs_choix1,
+                    'valeurs_choix2' => $valeurs_choix2,
+                    'date_soumission' => $date_soumission,
+                    'ordre_soumission' => $ordre_soumission,
+                    'id_createur' => $id_createur,
+                ]);
 
-        if ($creation) {
-            echo json_encode([
-                'status' => 'success',
-                'message' => 'Carte créée avec succès'
-            ]);
-        } else {
+                if ($creation) {
+                    $this->createRandomCard($id_deck, $id_createur);
+                }
+            }
+
+            if (isset($id_administration)) {
+                $creation =  Carte::getInstance()->create([
+                    'id_deck' => $id_deck,
+                    'text_carte' => $text_carte,
+                    'valeurs_choix1' => $valeurs_choix1,
+                    'valeurs_choix2' => $valeurs_choix2,
+                    'date_soumission' => $date_soumission,
+                    'ordre_soumission' => $ordre_soumission,
+                    'id_administration' => $id_createur,
+                ]);
+            }
+
+            if ($creation) {
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Carte créée avec succès'
+                ]);
+            } else {
+                throw new \Exception('Échec de création de carte');
+            }
+        } catch (\Exception $e) {
+            http_response_code(500);
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Erreur lors de la création de la carte'
+                'message' => $e->getMessage()
             ]);
         }
     }
@@ -176,7 +198,6 @@ class CreateurController extends Controller
         int|string $id_deck,
         int|string $id_createur
     ) {
-        $this->options();
         $id_deck = (int) $id_deck;
         $id_createur = (int) $id_createur;
 
@@ -189,14 +210,22 @@ class CreateurController extends Controller
 
             $all_card = Carte::getInstance()->findAll();
 
-            if ($all_card) {
-                $id_random = mt_rand(0, count($all_card) - 1);
+            $id_possible = [];
+            foreach ($all_card as $card) {
+                if ($card['id_deck'] === $id_deck) {
+                    $id_possible[] = $card['id_carte'];
+                }
             }
+
+            $id_random_key = array_rand($id_possible); // Obtenir une clé aléatoire
+            $id_random = $id_possible[$id_random_key]; // Obtenir l'ID correspondant
+
+
 
             $carteAleatoire = CarteAleatoire::getInstance()->create([
                 'id_deck' => $id_deck,
                 'id_createur' => $id_createur,
-                'id_carte' => $id_random
+                'id_carte' => $id_random,
             ]);
 
             if ($carteAleatoire) {
@@ -234,37 +263,39 @@ class CreateurController extends Controller
     public function getRandomCard(
         int|string $id
     ) {
-        $this->options();
         $id = (int) $id;
+        // 1. vérifier les données soumises
+        $card = Carte::getInstance()->findOneBy([
+            'id_createur' => $id,
+        ]);;
 
-        if ($this->isGetMethod()) {
-            // 1. vérifier les données soumises
-            $card = CarteAleatoire::getInstance()->find($id);
-            if ($card) {
-                echo json_encode([
-                    'status' => 'success',
-                    'card' => $card
-                ]);
-            } else {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Erreur lors de la récupération de la carte aléatoire'
-                ]);
-            }
+
+        $cardalea = CarteAleatoire::getInstance()->findOneBy([
+            'id_createur' => $card['id_createur'],
+        ]);
+        if ($cardalea) {
+            echo json_encode([
+                'status' => 'success',
+                'card' => $cardalea
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Erreur lors de la récupération de la carte aléatoire'
+            ]);
         }
     }
     public function getDeck(
-       int|string $id
+        int|string $id
     ) {
-       
-       $this->options();
+
         // 1. vérifier les données soumises
         $id = (int) $id;
 
         $deck = Deck::getInstance()->findOneBy([
             'id_deck' => $id
         ]);
-       
+
         if ($deck) {
             echo json_encode([
                 'status' => 'success',
@@ -280,7 +311,6 @@ class CreateurController extends Controller
     public function getCard(
         int|string $id
     ) {
-        $this->options();
         // 1. vérifier les données soumises
         $id = (int) $id;
         $card = Carte::getInstance()->findOneBy([
@@ -301,7 +331,6 @@ class CreateurController extends Controller
     public function getCardByDeck(
         int|string $id
     ) {
-        $this->options();
         // 1. vérifier les données soumises
         $id = (int) $id;
         $cards = Carte::getInstance()->findAllBy([
