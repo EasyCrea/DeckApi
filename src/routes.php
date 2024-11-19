@@ -20,14 +20,14 @@ return [
     ['POST', '/createurs/login', 'createur@login'],
 
     //Token
-    ['GET', '/createurs/checkToken', 'controller@checkToken'],
-
+    ['GET', '/createurs/checkToken', 'authorization@checkToken'],
+    ['OPTIONS', '/createurs/checkToken', 'authorization@options'],
     //Création carte
     ['POST', '/createur', 'createur@createCard'],
 
     //Récupérer informations deck pour le créateur
     ['GET', '/createur', 'createur@getAllDecks'],
-    ['GET', '/createu/deck/{id:\d+}', 'createur@getDeck'],
+    ['GET', '/createur/deck/{id:\d+}', 'createur@getDeck'],
 
     //Récupérer informations carte pour le créateur 
     ['GET', '/createur/random/{id:\d+}', 'createur@getRandomCard'],
@@ -36,7 +36,7 @@ return [
 
     //OPTIONS
     ['OPTIONS', '/createurs/login', 'authorization@options'],
-    ['OPTIONS', '/createurs/checkToken', 'authorization@options'],
+
 
 
     // Gérer la connexion des administrateurs

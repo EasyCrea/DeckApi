@@ -195,3 +195,87 @@
     exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Controller\CreateurController.php'
     exception-code: 'Trying to access array offset on value of type null'
 >>>>>>> c14c5716035a0acb1f818118f219bd44984f6ce6
+[2024-11-19 21:38:26]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:38:27]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:38:27]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:41:01]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:41:34]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:41:34]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:41:34]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:43:54]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:43:54]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:43:54]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:46:35]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:46:35]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:46:35]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:49:45]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:49:45]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:51:18]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:51:18]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:51:18]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:53:46]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:54:12]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:55:31]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:56:53]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:56:53]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:56:53]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:57:42]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:58:13]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 21:58:29]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 22:01:26]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 22:01:27]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 22:01:29]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+[2024-11-19 22:19:29]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@createDeck',
+        2 => array(),
+    )
+    exception-line: 105
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'Trying to access array offset on value of type null'
+[2024-11-19 22:20:12]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@createDeck',
+        2 => array(),
+    )
+    exception-line: 105
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'Trying to access array offset on value of type null'
+[2024-11-19 22:21:49]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@createDeck',
+        2 => array(),
+    )
+    exception-line: 105
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'Trying to access array offset on value of type null'
+[2024-11-19 22:25:09]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@createDeck',
+        2 => array(),
+    )
+    exception-line: 105
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'Trying to access array offset on value of type null'
+[2024-11-19 22:27:20]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@createDeck',
+        2 => array(),
+    )
+    exception-line: 105
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'Trying to access array offset on value of type null'
+[2024-11-19 22:28:03]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@createDeck',
+        2 => array(),
+    )
+    exception-line: 107
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'Trying to access array offset on value of type null'

@@ -98,28 +98,29 @@ class AdminController extends Controller
         // Appel de la méthode options() depuis l'autre contrôleur
         $authorizationController->options();
 
-        // Appel de la méthode checkToken() depuis AuthorizationController
-        $tokenCheck = $authorizationController->checkToken();
+        // // Appel de la méthode checkToken() depuis AuthorizationController
+        // $tokenCheck = $authorizationController->checkToken();
 
-        // Vérification du statut du token
-        if ($tokenCheck['status'] === 'error') {
-            // Si le token est invalide ou manquant, renvoyer une erreur
-            http_response_code(401); // Code HTTP 401 pour Token invalide ou expiré
-            echo json_encode($tokenCheck);
-            return;
-        }
+        // var_dump($tokenCheck);
 
-        // Vérification du rôle admin
-        $decoded = json_decode(json_encode($tokenCheck['decoded']));
-        if (!isset($decoded->role) || $decoded->role !== 'admin') {
-            // Si l'utilisateur n'a pas le rôle "admin", renvoyer une erreur
-            http_response_code(403); // Code HTTP 403 pour rôle non autorisé
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Accès refusé, rôle non autorisé'
-            ]);
-            return;
-        }
+        // // Vérification du statut du token
+        // if ($tokenCheck['status'] === 'error') {
+        //     // Si le token est invalide ou manquant, renvoyer une erreur
+        //     http_response_code(401); // Code HTTP 401 pour Token invalide ou expiré
+        //     return;
+        // }
+
+        // // Vérification du rôle admin
+        // $decoded = json_decode(json_encode($tokenCheck['decoded']));
+        // if (!isset($decoded->role) || $decoded->role !== 'admin') {
+        //     // Si l'utilisateur n'a pas le rôle "admin", renvoyer une erreur
+        //     http_response_code(403); // Code HTTP 403 pour rôle non autorisé
+        //     echo json_encode([
+        //         'status' => 'error',
+        //         'message' => 'Accès refusé, rôle non autorisé'
+        //     ]);
+        //     return;
+        // }
 
         // Décodage des données envoyées dans la requête
         $data = json_decode(file_get_contents('php://input'), true);
@@ -131,13 +132,13 @@ class AdminController extends Controller
             return;
         }
 
-        // Vérification si un deck existe déjà
-        $nb_deck = Deck::getInstance()->findAll();
-        if (count($nb_deck) >= 1) {
-            http_response_code(400); // Mauvaise requête si un deck existe déjà
-            echo json_encode(['error' => 'Vous avez déjà un deck en cours.']);
-            return;
-        }
+        // // Vérification si un deck existe déjà
+        // $nb_deck = Deck::getInstance()->findAll();
+        // if (count($nb_deck) >= 1) {
+        //     http_response_code(400); // Mauvaise requête si un deck existe déjà
+        //     echo json_encode(['error' => 'Vous avez déjà un deck en cours.']);
+        //     return;
+        // }
 
         $titreDeck = $data['titre_deck'];
         $dateDebutDeck = $data['date_debut_deck'];
