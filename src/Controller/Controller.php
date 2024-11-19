@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
 class Controller
 {
     protected $twig;

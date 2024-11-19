@@ -20,7 +20,7 @@ return [
     ['POST', '/createurs/login', 'createur@login'],
 
     //Token
-    ['GET', '/createurs/checkToken', 'createur@checkToken'],
+    ['GET', '/createurs/checkToken', 'controller@checkToken'],
 
     //Création carte
     ['POST', '/createur', 'createur@createCard'],
@@ -34,30 +34,29 @@ return [
     ['GET', '/createur/selfCard/{id:\d+}', 'createur@getCard'],
     ['GET', '/createur/deckCard/{id:\d+}', 'createur@getCardByDeck'],
 
-
     //OPTIONS
-    ['OPTIONS', '/createurs/login', 'createur@options'],
-    ['OPTIONS', '/createurs/checkToken', 'createur@options'],
+    ['OPTIONS', '/createurs/login', 'authorization@options'],
+    ['OPTIONS', '/createurs/checkToken', 'authorization@options'],
 
 
     // Gérer la connexion des administrateurs
     ['POST', '/admin/login', 'admin@login'],
-    ['OPTIONS', '/admin/login', 'admin@options'],
+    ['OPTIONS', '/admin/login', 'authorization@options'],
 
 
     // Gérer les actions quand admin est connecté
     ['GET', '/createDeck', 'admin@createDeck'],
     ['POST', '/createDeck', 'admin@createDeck'],
-    ['OPTIONS', '/createDeck', 'admin@options'],
+    ['OPTIONS', '/createDeck', 'authorization@options'],
 
     ['GET', '/createFirstCard', 'admin@createFirstCard'],
     ['POST', '/createFirstCard', 'admin@createFirstCard'],
-    ['OPTIONS', '/createFirstCard', 'admin@options'],
+    ['OPTIONS', '/createFirstCard', 'authorization@options'],
 
 
     // Gérer le tableau de bord de l'administrateur
     ['GET', '/admin/dashboard', 'admin@dashboard'],
-    ['OPTIONS', '/admin/dashboard', 'admin@options'],
+    ['OPTIONS', '/admin/dashboard', 'authorization@options'],
     ['GET', '/admin/delete/{id:\d+}', 'admin@delete'],
     ['GET', '/admin/deactivate/{id:\d+}', 'admin@deactivate'],
     ['GET', '/admin/activate/{id:\d+}', 'admin@activate'],
@@ -67,8 +66,8 @@ return [
     // Getion des patch des decks
     ['PATCH', '/admin/deactivate/{id:\d+}', 'admin@deactivate'],
     ['PATCH', '/admin/activate/{id:\d+}', 'admin@activate'],
-    ['OPTIONS', '/admin/deactivate/{id:\d+}', 'admin@options'],
-    ['OPTIONS', '/admin/activate/{id:\d+}', 'admin@options'],
+    ['OPTIONS', '/admin/deactivate/{id:\d+}', 'authorization@options'],
+    ['OPTIONS', '/admin/activate/{id:\d+}', 'authorization@options'],
 
 
 
