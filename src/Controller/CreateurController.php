@@ -249,28 +249,36 @@ class CreateurController extends Controller
         $id_deck = (int) $id_deck;
         $id_createur = (int) $id_createur;
 
-        $all_card = Carte::getInstance()->findAll();
-        if ($all_card) {
-            $id_random = mt_rand(0, count($all_card) - 1);
-        }
-
-
-        $carteAleatoire = CarteAleatoire::getInstance()->create([
-            'id_deck' => $id_deck,
+        $verif = CarteAleatoire::getInstance()->findOneBy([
             'id_createur' => $id_createur,
-            'id_carte' => $id_random
         ]);
-
-        if ($carteAleatoire) {
-            echo json_encode([
-                'status' => 'success',
-                'message' => 'Carte aléatoire créée avec succès'
-            ]);
+        if ($verif) {
+            return;
         } else {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Erreur lors de la création de la carte aléatoire'
+
+            $all_card = Carte::getInstance()->findAll();
+
+            if ($all_card) {
+                $id_random = mt_rand(0, count($all_card) - 1);
+            }
+            
+            $carteAleatoire = CarteAleatoire::getInstance()->create([
+                'id_deck' => $id_deck,
+                'id_createur' => $id_createur,
+                'id_carte' => $id_random
             ]);
+
+            if ($carteAleatoire) {
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Carte aléatoire créée avec succès'
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Erreur lors de la création de la carte aléatoire'
+                ]);
+            }
         }
     }
 
