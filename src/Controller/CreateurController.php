@@ -108,6 +108,7 @@ class CreateurController extends Controller
             $payload = [
                 'id' => $createur['id_createur'],
                 'email' => $createur['ad_email_createur'],
+                'role' => 'createur',
                 'exp' => time() + 3600 // Expiration dans 1 heure
             ];
 
@@ -121,7 +122,7 @@ class CreateurController extends Controller
                 'createur' => [
                     'id' => $createur['id_createur'],
                     'email' => $createur['ad_email_createur'],
-                    'role' => 'admin'
+                    'role' => 'createur'
                 ]
             ]);
         } else {
@@ -152,23 +153,45 @@ class CreateurController extends Controller
 
         // Extraction du token de l'en-tête Authorization
         $token = str_replace('Bearer ', '', $headers['Authorization']);
+
         try {
             // Tentative de décodage du token JWT
             $key = new Key(JWT_SECRET, 'HS256');
             $decoded = JWT::decode($token, $key);
 
-            // Si le token est valide, renvoyer les informations de l'utilisateur
-            echo json_encode([
-                'status' => 'success',
-                'message' => 'Token valide',
-                'createur' => [
-                    'id' => $decoded->id,
-                    'email' => $decoded->email,
-                    'role' => 'admin'
-                ]
-            ]);
+            // Vérification du rôle encodé dans le token
+            if (isset($decoded->role) && $decoded->role === 'admin') {
+                // Si l'utilisateur est un admin
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Token valide',
+                    'admin' => [
+                        'id' => $decoded->id,
+                        'email' => $decoded->email,
+                        'role' => $decoded->role
+                    ]
+                ]);
+            } elseif (isset($decoded->role) && $decoded->role === 'createur') {
+                // Si l'utilisateur est un créateur
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Token valide',
+                    'createur' => [
+                        'id' => $decoded->id,
+                        'email' => $decoded->email,
+                        'role' => $decoded->role
+                    ]
+                ]);
+            } else {
+                // Si le rôle n'est pas reconnu
+                http_response_code(403); // Code HTTP 403 pour rôle non autorisé
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Rôle non autorisé ou non spécifié'
+                ]);
+            }
         } catch (\Exception $e) {
-            // Si une erreur se produit (token invalide, expiré, etc.), renvoyer un message d'erreur
+            // Si une erreur se produit (token invalide, expiré, etc.)
             http_response_code(401); // Code HTTP 401 pour Token invalide ou expiré
             echo json_encode([
                 'status' => 'error',
@@ -177,6 +200,7 @@ class CreateurController extends Controller
             ]);
         }
     }
+
 
 
 

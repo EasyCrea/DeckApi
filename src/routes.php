@@ -42,6 +42,7 @@ return [
     // Gérer la connexion des administrateurs
     ['GET', '/admin/login', 'admin@login'],
     ['POST', '/admin/login', 'admin@login'],
+    ['OPTIONS', '/admin/login', 'admin@options'],
 
     // Gérer les déconnexions des administrateurs
     ['GET', '/admin/logout', 'admin@logout'],
