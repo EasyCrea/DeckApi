@@ -30,9 +30,9 @@ return [
     ['GET', '/createu/deck/{id:\d+}', 'createur@getDeck'],
 
     //Récupérer informations carte pour le créateur 
-    ['GET', '/createu/random/{id:\d+}', 'createur@getRandomCard'],
-    ['GET', '/createu/selfCard/{id:\d+}', 'createur@getCard'],
-    ['GET', '/createu/deckCard/{id:\d+}', 'createur@getCardByDeck'],
+    ['GET', '/createur/random/{id:\d+}', 'createur@getRandomCard'],
+    ['GET', '/createur/selfCard/{id:\d+}', 'createur@getCard'],
+    ['GET', '/createur/deckCard/{id:\d+}', 'createur@getCardByDeck'],
 
 
     //OPTIONS
