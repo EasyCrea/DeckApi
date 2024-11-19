@@ -120,7 +120,8 @@ class CreateurController extends Controller
                 'token' => $token,
                 'createur' => [
                     'id' => $createur['id_createur'],
-                    'email' => $createur['ad_email_createur']
+                    'email' => $createur['ad_email_createur'],
+                    'role' => 'admin'
                 ]
             ]);
         } else {
@@ -162,7 +163,8 @@ class CreateurController extends Controller
                 'message' => 'Token valide',
                 'createur' => [
                     'id' => $decoded->id,
-                    'email' => $decoded->email
+                    'email' => $decoded->email,
+                    'role' => 'admin'
                 ]
             ]);
         } catch (\Exception $e) {

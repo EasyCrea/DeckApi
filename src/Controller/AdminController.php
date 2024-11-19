@@ -199,6 +199,7 @@ class AdminController extends Controller
 
     public function deactivate(int|string $id)
     {
+        $this->options();
         $id = (int)$id;
         $success = Deck::getInstance()->update($id, ['live' => 0]);
         if ($success) {
@@ -210,6 +211,7 @@ class AdminController extends Controller
 
     public function activate(int|string $id)
     {
+        $this->options();
         $id = (int)$id;
         $success = Deck::getInstance()->update($id, ['live' => 1]);
         if ($success) {
