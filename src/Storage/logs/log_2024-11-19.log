@@ -213,3 +213,56 @@
     exception-line: 175
     exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Controller\CreateurController.php'
     exception-code: 'Undefined variable $id_administration'
+[2024-11-19 17:38:31]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@getRandomCard',
+        2 => array(
+            'id' => '9',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-19 17:38:39]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@getRandomCard',
+        2 => array(
+            'id' => '9',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-19 17:39:00]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@getRandomCard',
+        2 => array(
+            'id' => '9',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-19 17:39:23]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@getRandomCard',
+        2 => array(
+            'id' => '9',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-19 17:46:11]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 31
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Undefined array key "name"'
