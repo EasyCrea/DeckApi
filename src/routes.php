@@ -42,6 +42,7 @@ return [
 
     // Gérer la connexion des administrateurs
     ['POST', '/admin/login', 'admin@login'],
+    ['OPTIONS', '/admin/login', 'admin@options'],
 
 
     // Gérer les actions quand admin est connecté

@@ -5,10 +5,13 @@ declare(strict_types=1); // strict mode
 namespace App\Controller;
 
 use App\Helper\HTTP;
-use App\Model\Admin;
-use App\Model\Carte;
 use App\Model\Createur;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use App\Model\Deck;
+use App\Model\Carte;
+
+use App\Model\Admin;
 
 class AdminController extends Controller
 {
@@ -46,27 +49,55 @@ class AdminController extends Controller
 
     public function login()
     {
-        // Vérifie si la méthode de la requête est GET
+        $this->options();
+        $data = json_decode(file_get_contents('php://input'), true);
 
+        if (!isset($data['email'], $data['password'])) {
+            http_response_code(400); // Code 400 Bad Request pour les données manquantes
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Données manquantes'
+            ]);
+            return;
+        }
 
-        // 1. Vérifier les données soumises
-        $email = trim($_POST['email']);
-        $password = trim($_POST['password']);
+        $email = $data['email'];
+        $password = $data['password'];
 
-        // 2. Exécuter la requête de recherche
+        // Rechercher le créateur dans la base de données
         $admin = Admin::getInstance()->findOneBy([
             'ad_email_admin' => $email
         ]);
 
-        // Debugging : affiche les informations de l'admin et la session
-
-        // 3. Si l'administrateur est trouvé, vérifier le mot de passe
         if ($admin && password_verify($password, $admin['mdp_admin'])) {
-            // 4. Stocker l'identifiant de l'administrateur dans la session
-            $_SESSION['id_administrateur'] = $admin['id_administrateur']; // Correction de 'id_adminstrateur' à 'id_admin'
+            // Générer le token JWT
+            $payload = [
+                'id' => $admin['id_administrateur'],
+                'email' => $admin['ad_email_admin'],
+                'role' => 'admin',
+                'exp' => time() + 3600 // Expiration dans 1 heure
+            ];
 
+            $token = JWT::encode($payload, JWT_SECRET, 'HS256');
 
+            // Retourner la réponse avec le token
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Connexion réussie',
+                'token' => $token,
+                'admin' => [
+                    'id' => $admin['id_administrateur'],
+                    'email' => $admin['ad_email_admin'],
+                    'role' => 'admin'
+                ]
+            ]);
         } else {
+            // Identifiants incorrects
+            http_response_code(401); // Code 401 Unauthorized pour identifiants incorrects
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Identifiants incorrects'
+            ]);
         }
     }
 
@@ -199,6 +230,7 @@ class AdminController extends Controller
 
     public function deactivate(int|string $id)
     {
+        $this->options();
         $id = (int)$id;
         $success = Deck::getInstance()->update($id, ['live' => 0]);
         if ($success) {
@@ -210,6 +242,7 @@ class AdminController extends Controller
 
     public function activate(int|string $id)
     {
+        $this->options();
         $id = (int)$id;
         $success = Deck::getInstance()->update($id, ['live' => 1]);
         if ($success) {
