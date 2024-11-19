@@ -42,6 +42,7 @@
     exception-line: 255
     exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Model\Model.php'
     exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+<<<<<<< HEAD
 [2024-11-19 16:21:33]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
 [2024-11-19 16:21:33]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
 [2024-11-19 16:21:33]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
@@ -58,3 +59,139 @@
 [2024-11-19 16:43:06]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
 [2024-11-19 16:43:06]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
 [2024-11-19 16:43:06]	[ALERT]	500 - le contrôleur App\Controller\ControllerController n'existe pas
+=======
+[2024-11-19 15:59:25]	[ALERT]	404 - commande non existante :: /createur/deck/{id:/d+}
+[2024-11-19 15:59:59]	[ALERT]	404 - commande non existante :: /createur/selfCard/{id:/d+}
+[2024-11-19 16:00:44]	[ALERT]	404 - commande non existante :: /createur/selfCard/{id:/d+}
+[2024-11-19 16:04:23]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@createCard',
+        2 => array(),
+    )
+    exception-line: 192
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Trying to access array offset on value of type null'
+[2024-11-19 16:08:54]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@createCard',
+        2 => array(),
+    )
+    exception-line: 194
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Trying to access array offset on value of type null'
+[2024-11-19 16:09:47]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@getDeck',
+        2 => array(
+            'id' => '10',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-19 16:10:23]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@createCard',
+        2 => array(),
+    )
+    exception-line: 194
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Trying to access array offset on value of type null'
+[2024-11-19 16:12:46]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@getDeck',
+        2 => array(
+            'id' => '10',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-19 16:14:18]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@getDeck',
+        2 => array(),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-19 16:14:19]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@getDeck',
+        2 => array(),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-19 16:15:36]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@getDeck',
+        2 => array(
+            'id' => '10',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-19 16:16:08]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@getDeck',
+        2 => array(
+            'id' => '10',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-19 16:16:23]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@getDeck',
+        2 => array(
+            'id' => '10',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-19 16:16:39]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@getDeck',
+        2 => array(
+            'id' => '10',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-19 16:16:56]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@getDeck',
+        2 => array(
+            'id' => '10',
+        ),
+    )
+    exception-line: 255
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-11-19 16:20:44]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@createCard',
+        2 => array(),
+    )
+    exception-line: 193
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Trying to access array offset on value of type null'
+>>>>>>> c14c5716035a0acb1f818118f219bd44984f6ce6
