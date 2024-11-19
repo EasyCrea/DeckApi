@@ -18,6 +18,10 @@ return [
     // Gérer les connexions de créateurs
     ['GET', '/createurs/login', 'createur@login'],
     ['POST', '/createurs/login', 'createur@login'],
+    ['OPTIONS', '/createurs/login', 'createur@options'],
+
+    // Récupère les informations du créateur via token
+    ['GET', '/createurs/me', 'createur@me'],
 
     // Gérer les déconnexions de créateurs
     ['GET', '/createurs/logout', 'createur@logout'],

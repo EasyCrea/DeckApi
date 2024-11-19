@@ -1,0 +1,22 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+	<section>
+		<div class="container">
+			<h2 class="form-title">Connexion admin</h2>
+			<form action="{{ url('/admin/login') }}" method="POST" class="login-form">
+				<label for="email">Email :</label>
+				<input type="email" id="email" name="email" required><br>
+
+				<label for="password">Mot de passe :</label>
+				<input type="password" id="password" name="password" required><br>
+				{% if error %}
+					<span class="text-danger">&#10008; Identififaint ou mot de passe incorrect</span>
+				{% endif %}
+
+				<button type="submit" class="submit-button">Se connecter</button>
+			</form>
+		</section>
+
+	</div>
+{% endblock %}

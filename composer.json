@@ -4,7 +4,8 @@
     "twig/twig": "^3.4",
     "filp/whoops": "^2.14",
     "nikic/fast-route": "^1.3",
-    "katzgrau/klogger": "dev-master"
+    "katzgrau/klogger": "dev-master",
+    "firebase/php-jwt": "^6.10"
   },
   "require-dev":
   {
