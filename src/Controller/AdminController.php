@@ -51,6 +51,7 @@ class AdminController extends Controller
             $payload = [
                 'id' => $admin['id_administrateur'],
                 'email' => $admin['ad_email_admin'],
+                'role' => 'admin',
                 'exp' => time() + 3600 // Le token expire après 1 heure
             ];
 

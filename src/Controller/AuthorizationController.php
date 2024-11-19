@@ -18,6 +18,7 @@ class AuthorizationController extends Controller
         header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS');
         header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With');
         header('Access-Control-Allow-Credentials: true');
+        header('Content-Type: application/json');
     }
 
     /**
@@ -26,9 +27,6 @@ class AuthorizationController extends Controller
     public function checkToken(): void
     {
         $this->options();
-
-        // Spécifiez que le retour sera en JSON
-        header('Content-Type: application/json');
 
         $headers = getallheaders();
         if (!isset($headers['Authorization'])) {
