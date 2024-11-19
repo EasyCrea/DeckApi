@@ -233,3 +233,14 @@
 [2024-11-19 13:01:40]	[ALERT]	404 - commande non existante :: /createurs/me
 [2024-11-19 13:02:40]	[ALERT]	404 - commande non existante :: /createurs/me
 [2024-11-19 13:02:40]	[ALERT]	404 - commande non existante :: /createurs/me
+[2024-11-19 15:27:15]	[ALERT]	404 - commande non existante :: /
+[2024-11-19 15:27:18]	[ALERT]	404 - commande non existante :: /
+[2024-11-19 15:30:47]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@createCard',
+        2 => array(),
+    )
+    exception-line: 188
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Trying to access array offset on value of type null'

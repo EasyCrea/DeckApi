@@ -55,14 +55,16 @@ class CreateurController extends Controller
             ]);
         }
         if ($this->isPostMethod()) {
+            $data = json_decode(file_get_contents('php://input'), true);
             // 1. vérifier les données soumises
             // 2. exécuter la requête d'insertion
+
             $request = Createur::getInstance()->create([
-                'nom_createur' => trim($_POST['name']),
-                'ad_email_createur' => trim($_POST['email']),
-                'mdp_createur' => trim(password_hash($_POST['password'], PASSWORD_BCRYPT)),
-                'ddn' => trim($_POST['ddn']),
-                'genre' => trim($_POST['genre']),
+                'nom_createur' => trim($data['name']),
+                'ad_email_createur' => trim($data['email']),
+                'mdp_createur' => trim(password_hash($data['password'], PASSWORD_BCRYPT)),
+                'ddn' => trim($data['ddn']),
+                'genre' => trim($data['genre']),
             ]);
 
             if ($request) {
@@ -181,20 +183,23 @@ class CreateurController extends Controller
     public function createCard()
     {
         if ($this->isPostMethod()) {
+
+            $data = json_decode(file_get_contents('php://input'), true);
+       
             // 1. vérifier les données soumises
-            $id_deck = trim($_POST['id_deck']);
-            $text_carte = trim($_POST['text_carte']);
-            $valeurs_choix1 = trim($_POST['valeurs_choix1']);
-            $valeurs_choix2 = trim($_POST['valeurs_choix2']);
+            $id_deck = trim($data['id_deck']);
+            $text_carte = trim($data['text_carte']);
+            $valeurs_choix1 = trim($data['valeurs_choix1']);
+            $valeurs_choix2 = trim($data['valeurs_choix2']);
             $date_soumission = date('Y-m-d');
-            $ordre_soumission = trim($_POST['ordre_soumission']);
+            $ordre_soumission = trim($data['ordre_soumission']);
 
 
             if ($_POST['id_createur'] != null) {
-                $id_createur = trim($_POST['id_createur']);
+                $id_createur = trim($data['id_createur']);
             }
             if ($_POST['id_administrateur'] != null) {
-                $id_administration = trim($_POST['id_administrateur']);
+                $id_administration = trim($data['id_administrateur']);
             }
 
             if ($id_createur) {
