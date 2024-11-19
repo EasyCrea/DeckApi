@@ -1,195 +1,217 @@
 <?php
 
-declare(strict_types=1); // strict mode
+declare(strict_types=1);
 
 namespace App\Controller;
 
 use App\Helper\HTTP;
-use App\Model\Createur;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use App\Model\Createur;
+use App\Model\Admin;
 use App\Model\Deck;
 use App\Model\Carte;
-
-use App\Model\Admin;
+use App\Model\CarteAleatoire;
 
 class AdminController extends Controller
 {
-
-    public function register()
+    // Gérer les en-têtes CORS
+    public function cors()
     {
-        if ($this->isGetMethod()) {
-        } else {
-            // 1. Vérifier les données soumises
-            // 2. Exécuter la requête d'insertion
-            Admin::getInstance()->create([
-                'ad_email_admin' => trim($_POST['email']),
-                'mdp_admin' => trim(password_hash($_POST['password'], PASSWORD_BCRYPT)),
-            ]);
-
-            // 3. Rediriger vers la page de connexion
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: X-Requested-With, Content-Type, Authorization');
+        header('Content-Type: application/json');
+        
+        // Si la requête est de type OPTIONS, on arrête le script pour éviter toute exécution inutile
+        if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+            http_response_code(200);
+            exit;
         }
     }
+    
 
+    // Connexion API
     public function login()
     {
-        // Création d'une instance de l'autre contrôleur (par exemple, AuthorizationController)
-        $authorizationController = new AuthorizationController();
-
-        // Appel de la méthode options() depuis l'autre contrôleur
-        $authorizationController->options();
+        // Cette méthode permet de définir des options supplémentaires, si nécessaire
+        $this->cors();
+    
+        // Lire les données JSON envoyées dans la requête
         $data = json_decode(file_get_contents('php://input'), true);
-
+    
+        // Vérifier si les données requises (email et mot de passe) sont présentes
         if (!isset($data['email'], $data['password'])) {
-            http_response_code(400); // Code 400 Bad Request pour les données manquantes
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Données manquantes'
             ]);
             return;
         }
-
+    
+        // Récupérer les données envoyées
         $email = $data['email'];
         $password = $data['password'];
-
-        // Rechercher le créateur dans la base de données
+    
+        // Rechercher l'administrateur dans la base de données
         $admin = Admin::getInstance()->findOneBy([
             'ad_email_admin' => $email
         ]);
-
+    
+        // Vérifier si l'administrateur existe et si le mot de passe est correct
         if ($admin && password_verify($password, $admin['mdp_admin'])) {
-            // Générer le token JWT
+            // Générer un token JWT
             $payload = [
                 'id' => $admin['id_administrateur'],
                 'email' => $admin['ad_email_admin'],
-                'role' => 'admin',
-                'exp' => time() + 3600 // Expiration dans 1 heure
+                'exp' => time() + 3600 // Le token expire après 1 heure
             ];
-
+    
+            // Utiliser une clé secrète pour encoder le token (assurez-vous d'avoir défini JWT_SECRET dans votre projet)
             $token = JWT::encode($payload, JWT_SECRET, 'HS256');
-
-            // Retourner la réponse avec le token
+    
+            // Retourner la réponse avec le token généré
             echo json_encode([
                 'status' => 'success',
                 'message' => 'Connexion réussie',
                 'token' => $token,
                 'admin' => [
                     'id' => $admin['id_administrateur'],
-                    'email' => $admin['ad_email_admin'],
-                    'role' => 'admin'
+                    'email' => $admin['ad_email_admin']
                 ]
             ]);
         } else {
-            // Identifiants incorrects
-            http_response_code(401); // Code 401 Unauthorized pour identifiants incorrects
+            // Si les identifiants sont incorrects
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Identifiants incorrects'
             ]);
         }
     }
+    
 
-
+    // Créer un deck API
     public function createDeck()
     {
-        // Création d'une instance de l'autre contrôleur (par exemple, AuthorizationController)
-        $authorizationController = new AuthorizationController();
-
-        // Appel de la méthode options() depuis l'autre contrôleur
-        $authorizationController->options();
-
-        // Appel de la méthode checkToken() depuis AuthorizationController
-        $tokenCheck = $authorizationController->checkToken();
-
-        // Vérification du statut du token
-        if ($tokenCheck['status'] === 'error') {
-            // Si le token est invalide ou manquant, renvoyer une erreur
-            http_response_code(401); // Code HTTP 401 pour Token invalide ou expiré
-            echo json_encode($tokenCheck);
-            return;
-        }
-
-        // Vérification du rôle admin
-        $decoded = json_decode(json_encode($tokenCheck['decoded']));
-        if (!isset($decoded->role) || $decoded->role !== 'admin') {
-            // Si l'utilisateur n'a pas le rôle "admin", renvoyer une erreur
-            http_response_code(403); // Code HTTP 403 pour rôle non autorisé
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Accès refusé, rôle non autorisé'
-            ]);
-            return;
-        }
-
-        // Décodage des données envoyées dans la requête
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        // Vérification des données envoyées
-        if (!isset($data['titre_deck'], $data['date_debut_deck'], $data['date_fin_deck'], $data['nb_cartes'])) {
-            http_response_code(400); // Mauvaise requête si des champs sont manquants
-            echo json_encode(['error' => 'Données manquantes.']);
-            return;
-        }
-
-        // Vérification si un deck existe déjà
-        $nb_deck = Deck::getInstance()->findAll();
-        if (count($nb_deck) >= 1) {
-            http_response_code(400); // Mauvaise requête si un deck existe déjà
-            echo json_encode(['error' => 'Vous avez déjà un deck en cours.']);
-            return;
-        }
-
-        $titreDeck = $data['titre_deck'];
-        $dateDebutDeck = $data['date_debut_deck'];
-        $dateFinDeck = $data['date_fin_deck'];
-        $nbCarte = $data['nb_cartes'];
-
-        // Créer un nouveau deck
-        $deckId = Deck::getInstance()->create([
-            'titre_deck' => $titreDeck,
-            'date_debut_deck' => $dateDebutDeck,
-            'date_fin_deck' => $dateFinDeck,
-            'nb_cartes' => $nbCarte,
-        ]);
-
-        // Réponse de succès avec les détails du deck créé
-        http_response_code(201); // Code HTTP 201 pour la création réussie
-        echo json_encode(['success' => true, 'deckId' => $deckId]);
-    }
-
-
-
-
-    public function createFirstCard()
-    {
-        // Démarrer la session si elle n'est pas déjà démarrée
+        $this->cors();
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
-        // Vérifiez que l'administrateur est connecté
-        if (!isset($_SESSION['id_administrateur'])) {
-            HTTP::redirect('/admin/login');
+        // Vérifier que l'administrateur est connecté
+        // if (!isset($_SESSION['id_administrateur'])) {
+        //     echo json_encode(['error' => 'Non autorisé']);
+        //     http_response_code(403);
+        //     return;
+        // }
+
+        // Si la méthode est GET, retourner un message indiquant que nous sommes prêts à créer un deck
+        if ($this->isGetMethod()) {
+            echo json_encode(['message' => 'Ready to create deck']);
+        } else {
+            // Traiter les données envoyées par POST
+            $titreDeck = trim($_POST['titre_deck']);
+            $dateDebutDeck = trim($_POST['date_debut_deck']);
+            $dateFinDeck = trim($_POST['date_fin_deck']);
+            $nbCarte = (int) trim($_POST['nb_carte']);
+
+            // Validation des données
+            if (empty($titreDeck) || empty($dateDebutDeck) || empty($dateFinDeck) || $nbCarte <= 0) {
+                echo json_encode(['error' => 'Données invalides ou manquantes']);
+                http_response_code(400);
+                return;
+            }
+
+            // Créer le deck
+            $deckCreated = Deck::getInstance()->create([
+                'titre_deck' => $titreDeck,
+                'date_debut_deck' => $dateDebutDeck,
+                'date_fin_deck' => $dateFinDeck,
+                'nb_cartes' => $nbCarte,
+            ]);
+
+            if ($deckCreated) {
+                echo json_encode(['success' => 'Deck créé avec succès']);
+            } else {
+                echo json_encode(['error' => 'Une erreur est survenue lors de la création du deck']);
+            }
+        }
+    }
+
+    // Dashboard API
+    public function dashboard()
+    {
+        $this->cors();
+        $decks = Deck::getInstance()->findAll();
+        echo json_encode($decks);
+    }
+
+    // Supprimer un deck ou une carte
+    public function delete(int|string $id)
+    {
+        $this->cors();
+        $id = (int) $id;
+        $type = $_GET['type'] ?? null;
+
+        if ($type === 'deck') {
+            Deck::getInstance()->delete($id);
+            echo json_encode(['message' => 'Deck supprimé avec succès']);
+        } elseif ($type === 'carte') {
+            Carte::getInstance()->delete($id);
+            echo json_encode(['message' => 'Carte supprimée avec succès']);
+        } else {
+            echo json_encode(['error' => 'Type non valide'], JSON_PRETTY_PRINT);
+        }
+    }
+
+    // Désactiver un deck
+    public function deactivate(int|string $id)
+    {
+        $this->cors();
+        $id = (int) $id;
+        $success = Deck::getInstance()->update($id, ['live' => 0]);
+        echo json_encode(['success' => $success ? 'Deck désactivé avec succès' : 'Échec de la désactivation']);
+    }
+
+    // Activer un deck
+    public function activate(int|string $id)
+    {
+        $this->cors();
+        $id = (int) $id;
+        $success = Deck::getInstance()->update($id, ['live' => 1]);
+        echo json_encode(['success' => $success ? 'Deck activé avec succès' : 'Échec de l\'activation']);
+    }
+
+    //Créer premiere carte
+    public function createFirstCard()
+    {
+        $this->cors();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
         }
 
+        // Vérifier que l'administrateur est connecté
+        // if (!isset($_SESSION['id_administrateur'])) {
+        //     echo json_encode(['error' => 'Non autorisé']);
+        //     http_response_code(403);
+        //     return;
+        // }
+
         if ($this->isGetMethod()) {
-            $this->display('admin/createFirstCard.html.twig');
+            echo json_encode(['message' => 'Ready to create first card']);
         } else {
-            // Récupérer les données du formulaire
             $texteCarte = trim($_POST['texte_carte']);
             $valeursChoix1 = trim($_POST['valeurs_choix1']);
             $valeursChoix2 = trim($_POST['valeurs_choix2']);
             $valeurs_choix1bis = trim($_POST['valeurs_choix1bis']);
             $valeurs_choix2bis = trim($_POST['valeurs_choix2bis']);
-            $deckId = (int)trim($_POST['deckId']);
+            $deckId = (int) trim($_POST['deckId']);
 
             $valeur_choixFinal = $valeursChoix1 . ',' . $valeurs_choix1bis;
             $valeur_choixFinal2 = $valeursChoix2 . ',' . $valeurs_choix2bis;
 
-
-            // Créer la carte
             $carteCreated = Carte::getInstance()->create([
-                'date_soumission' => (new \DateTime())->format('Y-m-d'), // Format de date adapté
+                'date_soumission' => (new \DateTime())->format('Y-m-d'),
                 'ordre_soumission' => 1,
                 'valeurs_choix1' => $valeur_choixFinal,
                 'texte_carte' => $texteCarte,
@@ -198,181 +220,104 @@ class AdminController extends Controller
                 'id_administrateur' => $_SESSION['id_administrateur'],
             ]);
 
-            // Vérifier si l'insertion a réussi
             if ($carteCreated) {
-                // Rediriger vers une page de succès ou le tableau de bord
-                HTTP::redirect('/admin/dashboard');
+                echo json_encode(['success' => 'Carte créée avec succès']);
             } else {
-                // Afficher un message d'erreur si l'insertion a échoué
-                $this->display('admin/createFirstCard.html.twig', [
-                    'error' => 'Une erreur est survenue lors de la création de la carte.'
-                ]);
+                echo json_encode(['error' => 'Une erreur est survenue lors de la création de la carte']);
             }
         }
     }
 
-    public function dashboard()
+    // Afficher les cartes d'un deck
+    public function showDeck($deckId)
     {
-        // Création d'une instance de l'autre contrôleur (par exemple, AuthorizationController)
-        $authorizationController = new AuthorizationController();
-
-        // Appel de la méthode options() depuis l'autre contrôleur
-        $authorizationController->options();
-        $decks = Deck::getInstance()->findAll();
-        echo json_encode($decks);
-    }
-
-
-    public function delete(int|string $id)
-    {
-
-        $id = (int)$id;
-        $type = $_GET['type'] ?? null; // Récupérer le paramètre 'type' depuis la requête
-
-        // Vérifier que le type est valide
-        if ($type === 'deck') {
-            Deck::getInstance()->delete($id);
-        } elseif ($type === 'carte') {
-            Carte::getInstance()->delete($id);
+        $this->cors(); // Gestion des en-têtes CORS
+        // Convertir l'ID du deck en entier et vérifier sa validité
+        $deckId = (int) $deckId;
+        if ($deckId <= 0) {
+            http_response_code(400);
+            echo json_encode(['error' => 'L\'ID du deck est invalide.', 'status' => 400]);
+            return;
+        }
+    
+        // Récupérer toutes les cartes associées à ce deck
+        $cards = Deck::getInstance()->getCardsByDeckId($deckId);
+    
+        // Vérifier si des cartes sont trouvées
+        if (!empty($cards)) {
+            // Retourner les cartes trouvées avec un statut 200
+            echo json_encode(['cards' => $cards, 'status' => 200]);
         } else {
-            // Gérer le cas où le type est invalide
-        }
-
-        // Rediriger vers le tableau de bord après la suppression
-    }
-
-
-    public function deactivate(int|string $id)
-    {
-        // Création d'une instance de l'autre contrôleur (par exemple, AuthorizationController)
-        $authorizationController = new AuthorizationController();
-
-        // Appel de la méthode options() depuis l'autre contrôleur
-        $authorizationController->options();
-        $id = (int)$id;
-        $success = Deck::getInstance()->update($id, ['live' => 0]);
-        if ($success) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false]);
+            // Si aucune carte n'est trouvée, retourner un message d'erreur avec statut 404
+            http_response_code(404);
+            echo json_encode(['message' => 'Aucune carte trouvée pour ce deck.', 'status' => 404]);
         }
     }
+    
+    
+    
 
-    public function activate(int|string $id)
-    {
-        // Création d'une instance de l'autre contrôleur (par exemple, AuthorizationController)
-        $authorizationController = new AuthorizationController();
-
-        // Appel de la méthode options() depuis l'autre contrôleur
-        $authorizationController->options();
-        $id = (int)$id;
-        $success = Deck::getInstance()->update($id, ['live' => 1]);
-        if ($success) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false]);
-        }
-    }
-
-
-    public function showDeck(int|string $id)
-    {
-
-        $success = $_GET['success'] ?? null;
-        $id = (int)$id;
-
-        // Récupérer les cartes du deck
-        $cartes = Carte::getInstance()->findAllBy(['id_deck' => $id]);
-
-
-        // Préparer les données des cartes avec les valeurs séparées et le nom du créateur
-        $cartesAvecValeurs = [];
-
-        foreach ($cartes as $carte) {
-            // Récupérer le nom du créateur en fonction de l'id_createur ou de l'ad_email_admin
-            if (!empty($carte['id_createur'])) {
-                $nomCreateur = Createur::getInstance()->findCreatorName($carte['id_createur']) ?? 'Inconnu';
-            } else {
-                // Si l'id_createur n'est pas défini, utiliser l'email de l'administrateur
-                $administrateur = Admin::getInstance()->getAdminEmail($carte['id_administrateur']);
-
-                $nomCreateur = $administrateur ?? 'Administrateur inconnu';
-            }
-
-            $valeursChoix1 = explode(',', $carte['valeurs_choix1']);
-            $valeursChoix2 = explode(',', $carte['valeurs_choix2']);
-
-            $cartesAvecValeurs[] = [
-                'id_carte' => $carte['id_carte'],
-                'texte_carte' => $carte['texte_carte'],
-                'valeurs_choix1' => [
-                    'Population' => $valeursChoix1[0] ?? null,
-                    'Finances' => $valeursChoix1[1] ?? null
-                ],
-                'valeurs_choix2' => [
-                    'Population' => $valeursChoix2[0] ?? null,
-                    'Finances' => $valeursChoix2[1] ?? null
-                ],
-                'ordre_soumission' => $carte['ordre_soumission'],
-                'nom_createur' => $nomCreateur
-            ];
-        }
-    }
-
-
-
-
-
+    // Edit Carte
     public function edit(int|string $id)
     {
+        $this->cors();
+        $id = (int) $id;
 
-        $id = (int)$id;
-
-        // Récupérer les données de la carte à modifier
+        // Récupérer la carte par ID
         $carte = Carte::getInstance()->findOneBy(['id_carte' => $id]);
 
         // Vérifier si la carte existe
         if (!$carte) {
+            echo json_encode(['error' => 'Carte non trouvée']);
+            return;
         }
 
-
-        // Vérifier si la méthode de la requête est GET
+        // Vérifier si la requête est de type GET pour renvoyer les données de la carte
         if ($this->isGetMethod()) {
+            echo json_encode($carte);
         } else {
-            // Récupérer les données du formulaire
+            // Récupérer les données envoyées en POST
+            $texteCarte = trim($_POST['texte_carte'] ?? '');
+            $valeursChoix1 = trim($_POST['valeurs_choix1'] ?? '');
+            $valeursChoix2 = trim($_POST['valeurs_choix2'] ?? '');
+            $valeursChoix1bis = trim($_POST['valeurs_choix1bis'] ?? '');
+            $valeursChoix2bis = trim($_POST['valeurs_choix2bis'] ?? '');
 
-            $texteCarte = trim($_POST['texte_carte']);
-            $valeursChoix1 = trim($_POST['valeurs_choix1']);
-            $valeursChoix2 = trim($_POST['valeurs_choix2']);
-            $valeurs_choix1bis = trim($_POST['valeurs_choix1bis']);
-            $valeurs_choix2bis = trim($_POST['valeurs_choix2bis']);
+            // Vérifier si les champs requis sont remplis
+            if (!$texteCarte || !$valeursChoix1 || !$valeursChoix2) {
+                echo json_encode(['error' => 'Champs requis manquants']);
+                return;
+            }
 
-            $valeur_choixFinal = $valeursChoix1 . ',' . $valeurs_choix1bis;
-            $valeur_choixFinal2 = $valeursChoix2 . ',' . $valeurs_choix2bis;
+            // Construire les valeurs combinées
+            $valeurChoixFinal1 = $valeursChoix1 . ',' . $valeursChoix1bis;
+            $valeurChoixFinal2 = $valeursChoix2 . ',' . $valeursChoix2bis;
 
             // Mettre à jour la carte
-            $newCard = Carte::getInstance()->updateCard($id, [
+            $success = Carte::getInstance()->updateCard($id, [
                 'texte_carte' => $texteCarte,
-                'valeurs_choix1' => $valeur_choixFinal,
-                'valeurs_choix2' => $valeur_choixFinal2
+                'valeurs_choix1' => $valeurChoixFinal1,
+                'valeurs_choix2' => $valeurChoixFinal2,
             ]);
 
-            // Rediriger vers le tableau de bord après la mise à jour
-            HTTP::redirect('/admin/deck/' . $carte['id_deck'] . '?success=carte_modifiee');
+            // Retourner le résultat de la mise à jour
+            if ($success) {
+                echo json_encode(['success' => 'Carte modifiée avec succès']);
+            } else {
+                echo json_encode(['error' => 'Erreur lors de la mise à jour de la carte']);
+            }
         }
     }
 
+    // Déconnexion API
     public function logout()
     {
-        // Démarrer la session si elle n'est pas déjà démarrée
+        $this->cors();
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
-        // Détruire la session
         session_destroy();
-
-        // Rediriger vers la page de connexion
-        HTTP::redirect('/admin/login');
+        echo json_encode(['message' => 'Déconnexion réussie']);
     }
 }
