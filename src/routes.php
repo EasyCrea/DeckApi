@@ -21,7 +21,8 @@ return [
     ['OPTIONS', '/createurs/login', 'createur@options'],
 
     // Récupère les informations du créateur via token
-    ['GET', '/createurs/me', 'createur@me'],
+    ['GET', '/createurs/checkToken', 'createur@checkToken'],
+    ['OPTIONS', '/createurs/checkToken', 'createur@options'],
 
     // Gérer les déconnexions de créateurs
     ['GET', '/createurs/logout', 'createur@logout'],
@@ -52,6 +53,7 @@ return [
     ['POST', '/createFirstCard', 'admin@createFirstCard'],
     // Gérer le tableau de bord de l'administrateur
     ['GET', '/admin/dashboard', 'admin@dashboard'],
+    ['OPTIONS', '/admin/dashboard', 'admin@options'],
     ['GET', '/admin/delete/{id:\d+}', 'admin@delete'],
     ['GET', '/admin/deactivate/{id:\d+}', 'admin@deactivate'],
     ['GET', '/admin/activate/{id:\d+}', 'admin@activate'],

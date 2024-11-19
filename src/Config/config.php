@@ -46,7 +46,7 @@ define('APP_STORAGE_DIRECTORY', APP_SRC_DIRECTORY . 'Storage' . DS);
 define('APP_DEBUG_FILE_PATH', APP_STORAGE_DIRECTORY . 'logs');
 
 /** JWT secret key */
-define('JWT_SECRET', 'votre_chaine_secrete_longue_et_aleatoire');
+define('JWT_SECRET', 'lasignaturedujwtpourlasaemmi3');
 
 /** URL complète de l'application en http:// ou https:// */
 define(

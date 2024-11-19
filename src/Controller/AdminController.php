@@ -16,11 +16,19 @@ class AdminController extends Controller
 
     public function options()
     {
-        header('Access-Control-Allow-Origin: *');
+        // Permet uniquement localhost:5173 (ou votre URL frontend)
+        header('Access-Control-Allow-Origin: http://localhost:5173');
+
+        // Ajoutez les méthodes autorisées
         header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS');
-        header('Access-Control-Allow-Headers: X-Requested-With');
-        header('Content-Type: application/json');
+
+        // Ajoutez les en-têtes autorisés
+        header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With');
+
+        // Si vous utilisez des cookies ou des informations d'identification
+        header('Access-Control-Allow-Credentials: true');
     }
+
     public function register()
     {
         if ($this->isGetMethod()) {
