@@ -19,11 +19,11 @@ class AdminController extends Controller
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS');
         header('Access-Control-Allow-Headers: X-Requested-With');
+        header('Content-Type: application/json');
     }
     public function register()
     {
         if ($this->isGetMethod()) {
-           
         } else {
             // 1. Vérifier les données soumises
             // 2. Exécuter la requête d'insertion
@@ -39,42 +39,26 @@ class AdminController extends Controller
     public function login()
     {
         // Vérifie si la méthode de la requête est GET
-        if ($this->isGetMethod()) {
+
+
+        // 1. Vérifier les données soumises
+        $email = trim($_POST['email']);
+        $password = trim($_POST['password']);
+
+        // 2. Exécuter la requête de recherche
+        $admin = Admin::getInstance()->findOneBy([
+            'ad_email_admin' => $email
+        ]);
+
+        // Debugging : affiche les informations de l'admin et la session
+
+        // 3. Si l'administrateur est trouvé, vérifier le mot de passe
+        if ($admin && password_verify($password, $admin['mdp_admin'])) {
+            // 4. Stocker l'identifiant de l'administrateur dans la session
+            $_SESSION['id_administrateur'] = $admin['id_administrateur']; // Correction de 'id_adminstrateur' à 'id_admin'
+
+
         } else {
-            // 1. Vérifier les données soumises
-            $email = trim($_POST['email']);
-            $password = trim($_POST['password']);
-
-            // 2. Exécuter la requête de recherche
-            $admin = Admin::getInstance()->findOneBy([
-                'ad_email_admin' => $email
-            ]);
-
-            // Démarrer la session (à faire en début de script, normalement)
-            if (session_status() === PHP_SESSION_NONE) {
-                session_start([
-                    'cookie_path' => '/',
-                    'cookie_lifetime' => 0,
-                    'cookie_secure' => true,
-                    'cookie_httponly' => true,
-                    'cookie_samesite' => 'Strict', // 'Strict' pour le paramètre SameSite
-                ]);
-            }
-
-            // Debugging : affiche les informations de l'admin et la session
-
-
-            // 3. Si l'administrateur est trouvé, vérifier le mot de passe
-            if ($admin && password_verify($password, $admin['mdp_admin'])) {
-                // 4. Stocker l'identifiant de l'administrateur dans la session
-                $_SESSION['id_administrateur'] = $admin['id_administrateur']; // Correction de 'id_adminstrateur' à 'id_admin'
-
-                // 5. Rediriger vers la page d'accueil
-                HTTP::redirect('/admin/dashboard');
-            } else {
-                // 6. Sinon, afficher un message d'erreur
-                $this->display('admin/login.html.twig', ['error' => 'Identifiant ou mot de passe incorrect']);
-            }
         }
     }
 
@@ -270,7 +254,6 @@ class AdminController extends Controller
                 'nom_createur' => $nomCreateur
             ];
         }
-
     }
 
 

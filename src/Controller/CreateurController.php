@@ -10,31 +10,48 @@ use App\Model\Createur;
 class CreateurController extends Controller
 
 {
+    public function options()
+    {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: X-Requested-With');
+        header('Content-Type: application/json');
+    }
 
     public function register()
     {
-        if ($this->isGetMethod()) {
-            $this->display('createurs/register.html.twig');
-        } else {
+        if ($this->isPostMethod()){
             // 1. vérifier les données soumises
             // 2. exécuter la requête d'insertion
-            Createur::getInstance()->create([
+            $request = Createur::getInstance()->create([
                 'nom_createur' => trim($_POST['name']),
                 'ad_email_createur' => trim($_POST['email']),
                 'mdp_createur' => trim(password_hash($_POST['password'], PASSWORD_BCRYPT)),
                 'ddn' => trim($_POST['ddn']),
                 'genre' => trim($_POST['genre']),
             ]);
-            // 3. rediriger vers la page de connexion
-            HTTP::redirect('/createurs/login');
+            if ($request){
+                echo json_encode([
+                    'status' => 'success',
+                    'nom_createur' => trim($_POST['name']),
+                    'ad_email_createur' => trim($_POST['email']),
+                    
+                ]);
+            }else{
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Erreur lors de l\'enregistrement'
+                ]);
+            }
+           
         }
+
+      
     }
 
     public function login()
     {
-        if ($this->isGetMethod()) {
-            $this->display('createurs/login.html.twig');
-        } else {
+        if ($this->isPostMethod()) {
             // 1. Vérifier les données soumises
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
@@ -44,29 +61,23 @@ class CreateurController extends Controller
                 'ad_email_createur' => $email
             ]);
 
-            session_start([
-                'cookie_path' => '/',
-                'cookie_lifetime' => 0,
-                'cookie_secure' => true,
-                'cookie_httponly' => true,
-                'cookie_samesite' => 'strict',
-            ]);
-
-            // 3. Si le créateur est trouvé, vérifier le mot de passe
             if ($createur && password_verify($password, $createur['mdp_createur'])) {
-                // 4. Stocker l'identifiant du créateur dans la session
-                $_SESSION['id_createur'] = $createur['id_createur'];
-
-                // 5. Rediriger vers la page d'accueil
-                HTTP::redirect('/game');
-            } else {
-                // 6. Sinon, afficher un message d'erreur
-                $this->display('createurs/login.html.twig', ['error' => 'Identifiant ou mot de passe incorrect']);
+              echo json_encode([
+                'status' => 'success',
+                'message' => 'Connexion réussie',
+                'createur' => $createur
+              ]);
             }
+            else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Identifiants incorrects'
+                ]);
+            }
+    
         }
     }
-
-
+    
 
 
 
@@ -80,6 +91,5 @@ class CreateurController extends Controller
             'cookie_samesite' => 'strict',
         ]);
         session_destroy();
-        HTTP::redirect('/');
     }
 }

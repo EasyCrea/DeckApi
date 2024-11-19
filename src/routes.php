@@ -54,6 +54,12 @@ return [
     ['GET', '/admin/edit/{id:\d+}', 'admin@edit'],
     ['POST', '/admin/edit/{id:\d+}', 'admin@edit'],
 
+    // Getion des patch des decks
+    ['PATCH', '/admin/deactivate/{id:\d+}', 'admin@deactivate'],
+    ['PATCH', '/admin/activate/{id:\d+}', 'admin@activate'],
+    ['OPTIONS', '/admin/deactivate/{id:\d+}', 'admin@options'],
+    ['OPTIONS', '/admin/activate/{id:\d+}', 'admin@options'],
+
 
 
     ['GET', '/admin/deck/{id:\d+}', 'admin@showDeck'],
