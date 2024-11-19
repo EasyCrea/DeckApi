@@ -21,7 +21,7 @@ class CreateurController extends Controller
 
     public function register()
     {
-        $this->options();
+
         $data = json_decode(file_get_contents('php://input'), true);
         // 1. vérifier les données soumises
         // 2. exécuter la requête d'insertion
@@ -116,7 +116,6 @@ class CreateurController extends Controller
     public function createCard()
     {
        
-        $this->options();
 
         $data = json_decode(file_get_contents('php://input'), true);
         // 1. vérifier les données soumises
@@ -182,7 +181,6 @@ class CreateurController extends Controller
         int|string $id_deck,
         int|string $id_createur
     ) {
-        $this->options();
         $id_deck = (int) $id_deck;
         $id_createur = (int) $id_createur;
 
@@ -240,7 +238,6 @@ class CreateurController extends Controller
     public function getRandomCard(
         int|string $id
     ) {
-        $this->options();
         $id = (int) $id;
 
         if ($this->isGetMethod()) {
@@ -263,7 +260,6 @@ class CreateurController extends Controller
        int|string $id
     ) {
        
-       $this->options();
         // 1. vérifier les données soumises
         $id = (int) $id;
 
@@ -286,7 +282,6 @@ class CreateurController extends Controller
     public function getCard(
         int|string $id
     ) {
-        $this->options();
         // 1. vérifier les données soumises
         $id = (int) $id;
         $card = Carte::getInstance()->findOneBy([
@@ -307,7 +302,6 @@ class CreateurController extends Controller
     public function getCardByDeck(
         int|string $id
     ) {
-        $this->options();
         // 1. vérifier les données soumises
         $id = (int) $id;
         $cards = Carte::getInstance()->findAllBy([
