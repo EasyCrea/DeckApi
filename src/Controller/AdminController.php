@@ -16,22 +16,6 @@ use App\Model\Admin;
 class AdminController extends Controller
 {
 
-
-    public function options()
-    {
-        // Permet uniquement localhost:5173 (ou votre URL frontend)
-        header('Access-Control-Allow-Origin: http://localhost:5173');
-
-        // Ajoutez les méthodes autorisées
-        header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS');
-
-        // Ajoutez les en-têtes autorisés
-        header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With');
-
-        // Si vous utilisez des cookies ou des informations d'identification
-        header('Access-Control-Allow-Credentials: true');
-    }
-
     public function register()
     {
         if ($this->isGetMethod()) {
@@ -49,7 +33,11 @@ class AdminController extends Controller
 
     public function login()
     {
-        $this->options();
+        // Création d'une instance de l'autre contrôleur (par exemple, AuthorizationController)
+        $authorizationController = new AuthorizationController();
+
+        // Appel de la méthode options() depuis l'autre contrôleur
+        $authorizationController->options();
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (!isset($data['email'], $data['password'])) {
@@ -104,50 +92,72 @@ class AdminController extends Controller
 
     public function createDeck()
     {
-        // Démarrer la session si elle n'est pas déjà démarrée
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
+        // Création d'une instance de l'autre contrôleur (par exemple, AuthorizationController)
+        $authorizationController = new AuthorizationController();
+
+        // Appel de la méthode options() depuis l'autre contrôleur
+        $authorizationController->options();
+
+        // Appel de la méthode checkToken() depuis AuthorizationController
+        $tokenCheck = $authorizationController->checkToken();
+
+        // Vérification du statut du token
+        if ($tokenCheck['status'] === 'error') {
+            // Si le token est invalide ou manquant, renvoyer une erreur
+            http_response_code(401); // Code HTTP 401 pour Token invalide ou expiré
+            echo json_encode($tokenCheck);
+            return;
         }
 
-        // Vérifiez que l'administrateur est connecté
-        if (!isset($_SESSION['id_administrateur'])) {
-            HTTP::redirect('/admin/login');
+        // Vérification du rôle admin
+        $decoded = json_decode(json_encode($tokenCheck['decoded']));
+        if (!isset($decoded->role) || $decoded->role !== 'admin') {
+            // Si l'utilisateur n'a pas le rôle "admin", renvoyer une erreur
+            http_response_code(403); // Code HTTP 403 pour rôle non autorisé
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Accès refusé, rôle non autorisé'
+            ]);
+            return;
         }
 
+        // Décodage des données envoyées dans la requête
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        // Vérification des données envoyées
+        if (!isset($data['titre_deck'], $data['date_debut_deck'], $data['date_fin_deck'], $data['nb_cartes'])) {
+            http_response_code(400); // Mauvaise requête si des champs sont manquants
+            echo json_encode(['error' => 'Données manquantes.']);
+            return;
+        }
+
+        // Vérification si un deck existe déjà
         $nb_deck = Deck::getInstance()->findAll();
         if (count($nb_deck) >= 1) {
-            HTTP::redirect('/admin/dashboard?error=Un seul deck ne peut être créé à la fois');
+            http_response_code(400); // Mauvaise requête si un deck existe déjà
+            echo json_encode(['error' => 'Vous avez déjà un deck en cours.']);
+            return;
         }
 
-        if ($this->isGetMethod()) {
-            $this->display('admin/createDeck.html.twig');
-        } else {
+        $titreDeck = $data['titre_deck'];
+        $dateDebutDeck = $data['date_debut_deck'];
+        $dateFinDeck = $data['date_fin_deck'];
+        $nbCarte = $data['nb_cartes'];
 
-            // Récupérer les données du formulaire
-            $titreDeck = trim($_POST['titre_deck']);
-            $dateDebutDeck = trim($_POST['date_debut_deck']);
-            $dateFinDeck = trim($_POST['date_fin_deck']);
-            $nbCarte = (int)trim($_POST['nb_carte']); // Convertir en entie
+        // Créer un nouveau deck
+        $deckId = Deck::getInstance()->create([
+            'titre_deck' => $titreDeck,
+            'date_debut_deck' => $dateDebutDeck,
+            'date_fin_deck' => $dateFinDeck,
+            'nb_cartes' => $nbCarte,
+        ]);
 
-
-            // Vérifier si les choix sont bien définis
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                // Gérer l'erreur de JSON ici
-                $this->display('admin/createDeck.html.twig', ['error' => 'Valeurs de choix invalides.']);
-                return;
-            }
-
-            // 1. Créer un nouveau deck
-            $deckId = Deck::getInstance()->create([
-                'titre_deck' => $titreDeck,
-                'date_debut_deck' => $dateDebutDeck,
-                'date_fin_deck' => $dateFinDeck,
-                'nb_cartes' => $nbCarte,
-            ]);
-
-            $this->display('admin/createFirstCard.html.twig', compact('deckId'));
-        }
+        // Réponse de succès avec les détails du deck créé
+        http_response_code(201); // Code HTTP 201 pour la création réussie
+        echo json_encode(['success' => true, 'deckId' => $deckId]);
     }
+
+
 
 
     public function createFirstCard()
@@ -203,7 +213,11 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        $this->options();
+        // Création d'une instance de l'autre contrôleur (par exemple, AuthorizationController)
+        $authorizationController = new AuthorizationController();
+
+        // Appel de la méthode options() depuis l'autre contrôleur
+        $authorizationController->options();
         $decks = Deck::getInstance()->findAll();
         echo json_encode($decks);
     }
@@ -230,7 +244,11 @@ class AdminController extends Controller
 
     public function deactivate(int|string $id)
     {
-        $this->options();
+        // Création d'une instance de l'autre contrôleur (par exemple, AuthorizationController)
+        $authorizationController = new AuthorizationController();
+
+        // Appel de la méthode options() depuis l'autre contrôleur
+        $authorizationController->options();
         $id = (int)$id;
         $success = Deck::getInstance()->update($id, ['live' => 0]);
         if ($success) {
@@ -242,7 +260,11 @@ class AdminController extends Controller
 
     public function activate(int|string $id)
     {
-        $this->options();
+        // Création d'une instance de l'autre contrôleur (par exemple, AuthorizationController)
+        $authorizationController = new AuthorizationController();
+
+        // Appel de la méthode options() depuis l'autre contrôleur
+        $authorizationController->options();
         $id = (int)$id;
         $success = Deck::getInstance()->update($id, ['live' => 1]);
         if ($success) {
