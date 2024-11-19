@@ -185,36 +185,42 @@ class CreateurController extends Controller
 
     public function createCard()
     {
+       
         $this->options();
 
         $data = json_decode(file_get_contents('php://input'), true);
-
         // 1. vérifier les données soumises
-        $id_deck = trim($data['id_deck']);
-        $text_carte = trim($data['text_carte']);
-        $valeurs_choix1 = trim($data['valeurs_choix1']);
-        $valeurs_choix2 = trim($data['valeurs_choix2']);
-        $date_soumission = date('Y-m-d');
-        $ordre_soumission = trim($data['ordre_soumission']);
+        $id_deck = $data['id_deck'];
+        $text_carte = $data['texte_carte'];
+        $valeurs_choix1 = $data['valeurs_choix1'];
+        $valeurs_choix2 = $data['valeurs_choix2'];
 
+        $date = new \DateTime();
+        $date_soumission = $date->format('Y-m-d');
 
-        if ($_POST['id_createur'] != null) {
-            $id_createur = trim($data['id_createur']);
+        $ordre_soumission = $data['ordre_soumission'];
+
+       
+
+        if (isset($data['id_createur'])) {
+            $id_createur = $data['id_createur'];
         }
-        if ($_POST['id_administrateur'] != null) {
-            $id_administration = trim($data['id_administrateur']);
+        if (isset($data['id_administrateur'])) {
+            $id_administration = $data['id_administrateur'];
         }
-
+        
         if ($id_createur) {
             $creation =  Carte::getInstance()->create([
                 'id_deck' => $id_deck,
-                'text_carte' => $text_carte,
+                'texte_carte' => $text_carte,
                 'valeurs_choix1' => $valeurs_choix1,
                 'valeurs_choix2' => $valeurs_choix2,
                 'date_soumission' => $date_soumission,
                 'ordre_soumission' => $ordre_soumission,
                 'id_createur' => $id_createur,
             ]);
+            var_dump($creation);
+            
             $this->createRandomCard($id_deck, $id_createur);
         }
         if ($id_administration) {
