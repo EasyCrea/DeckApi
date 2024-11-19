@@ -23,7 +23,7 @@ class AdminController extends Controller
     public function register()
     {
         if ($this->isGetMethod()) {
-            $this->display('admin/register.html.twig');
+           
         } else {
             // 1. Vérifier les données soumises
             // 2. Exécuter la requête d'insertion
@@ -33,7 +33,6 @@ class AdminController extends Controller
             ]);
 
             // 3. Rediriger vers la page de connexion
-            HTTP::redirect('/admin/login');
         }
     }
 
@@ -41,7 +40,6 @@ class AdminController extends Controller
     {
         // Vérifie si la méthode de la requête est GET
         if ($this->isGetMethod()) {
-            $this->display('admin/login.html.twig');
         } else {
             // 1. Vérifier les données soumises
             $email = trim($_POST['email']);
@@ -190,15 +188,6 @@ class AdminController extends Controller
 
     public function delete(int|string $id)
     {
-        // Démarrer la session si elle n'est pas déjà démarrée
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        // Vérifiez que l'administrateur est connecté
-        if (!isset($_SESSION['id_administrateur'])) {
-            HTTP::redirect('/admin/login');
-        }
 
         $id = (int)$id;
         $type = $_GET['type'] ?? null; // Récupérer le paramètre 'type' depuis la requête
@@ -210,12 +199,9 @@ class AdminController extends Controller
             Carte::getInstance()->delete($id);
         } else {
             // Gérer le cas où le type est invalide
-            HTTP::redirect('/admin/dashboard?error=invalid_type');
-            return;
         }
 
         // Rediriger vers le tableau de bord après la suppression
-        HTTP::redirect('/admin/dashboard');
     }
 
 
@@ -244,15 +230,6 @@ class AdminController extends Controller
 
     public function showDeck(int|string $id)
     {
-        // Démarrer la session si elle n'est pas déjà démarrée
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        // Vérifiez que l'administrateur est connecté
-        if (!isset($_SESSION['id_administrateur'])) {
-            HTTP::redirect('/admin/login');
-        }
 
         $success = $_GET['success'] ?? null;
         $id = (int)$id;
@@ -294,8 +271,6 @@ class AdminController extends Controller
             ];
         }
 
-        // Afficher les cartes du deck avec les valeurs séparées et le nom du créateur
-        $this->display('admin/showDeck.html.twig', compact('cartesAvecValeurs', 'success'));
     }
 
 
@@ -304,15 +279,6 @@ class AdminController extends Controller
 
     public function edit(int|string $id)
     {
-        // Démarrer la session si elle n'est pas déjà démarrée
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        // Vérifiez que l'administrateur est connecté
-        if (!isset($_SESSION['id_administrateur'])) {
-            HTTP::redirect('/admin/login');
-        }
 
         $id = (int)$id;
 
@@ -321,14 +287,11 @@ class AdminController extends Controller
 
         // Vérifier si la carte existe
         if (!$carte) {
-            HTTP::redirect('/admin/showDeck');
-            return;
         }
 
 
         // Vérifier si la méthode de la requête est GET
         if ($this->isGetMethod()) {
-            $this->display('admin/edit.html.twig', compact('carte'));
         } else {
             // Récupérer les données du formulaire
 
