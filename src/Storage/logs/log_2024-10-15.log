@@ -1,0 +1,396 @@
+[2024-10-15 9:45:57]	[ALERT]	500 - la méthode dashboard n'existe pas
+[2024-10-15 10:14:48]	[ALERT]	404 - commande non existante :: /admin/url('/admin/delete/8')
+[2024-10-15 10:19:54]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@delete',
+        2 => array(
+            'id' => '8',
+        ),
+    )
+    exception-line: 241
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-10-15 10:23:37]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@delete',
+        2 => array(
+            'id' => '33',
+        ),
+    )
+    exception-line: 241
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-10-15 10:25:21]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@delete',
+        2 => array(
+            'id' => '22',
+        ),
+    )
+    exception-line: 241
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-10-15 10:42:24]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@delete',
+        2 => array(
+            'id' => '1',
+        ),
+    )
+    exception-line: 241
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id' in 'where clause''
+[2024-10-15 10:57:59]	[ALERT]	404 - commande non existante :: /admin/deck/2
+[2024-10-15 11:08:38]	[ALERT]	404 - commande non existante :: /admin/delete/2
+[2024-10-15 11:14:15]	[ALERT]	404 - commande non existante :: /admin/delete/2
+[2024-10-15 11:14:34]	[ALERT]	404 - commande non existante :: /admin/edit/2
+[2024-10-15 11:14:43]	[ALERT]	404 - commande non existante :: /admin/delete/2
+[2024-10-15 11:16:22]	[ALERT]	404 - commande non existante :: /admin/delete/2
+[2024-10-15 11:17:19]	[ALERT]	404 - commande non existante :: /admin/edit/3
+[2024-10-15 11:21:18]	[ALERT]	404 - commande non existante :: /admin/carte/3
+[2024-10-15 12:24:40]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 12:31:30]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 12:45:48]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 64
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Controller\GameController.php'
+    exception-code: 'Undefined array key "choix1"'
+[2024-10-15 12:46:10]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 64
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Controller\GameController.php'
+    exception-code: 'Undefined array key "choix1"'
+[2024-10-15 12:46:44]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 64
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Controller\GameController.php'
+    exception-code: 'Undefined array key "choix1"'
+[2024-10-15 12:49:45]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 12:49:47]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 12:49:48]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 12:50:11]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 12:50:19]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 12:51:54]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 12:53:22]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 12:56:09]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 12:56:10]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 12:57:15]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 12:57:16]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 12:59:08]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 12:59:09]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 13:00:19]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 13:00:20]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 13:02:05]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 13:02:05]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 13:02:13]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 13:02:15]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 13:02:23]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 13:03:33]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 13:03:34]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 13:03:34]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 13:05:44]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 13:08:53]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 227
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\vendor\twig\twig\src\Loader\FilesystemLoader.php'
+    exception-code: 'Unable to find template "base.html.twig" (looked into: D:\IUT\3ème année\-EasyCrea-\src\View) in "game/index.html.twig" at line 1.'
+[2024-10-15 16:49:48]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 107
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Controller\GameController.php'
+    exception-code: 'compact(): Undefined variable $messageErreur'
+[2024-10-15 16:50:05]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 107
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Controller\GameController.php'
+    exception-code: 'compact(): Undefined variable $messageErreur'
+[2024-10-15 16:50:07]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 107
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Controller\GameController.php'
+    exception-code: 'compact(): Undefined variable $messageErreur'
+[2024-10-15 16:53:09]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 108
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Controller\GameController.php'
+    exception-code: 'compact(): Undefined variable $messageErreur'
+[2024-10-15 17:12:12]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 106
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Controller\GameController.php'
+    exception-code: 'compact(): Undefined variable $error'
+[2024-10-15 17:12:20]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 106
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Controller\GameController.php'
+    exception-code: 'compact(): Undefined variable $error'
+[2024-10-15 17:14:28]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 248
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_createur' in 'field list''
+[2024-10-15 17:14:39]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 248
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_createur' in 'field list''

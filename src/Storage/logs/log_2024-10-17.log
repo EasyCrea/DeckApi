@@ -1,0 +1,54 @@
+[2024-10-17 16:19:45]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 98
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Controller\GameController.php'
+    exception-code: 'compact(): Undefined variable $carteAleatoire'
+[2024-10-17 16:20:00]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 98
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Controller\GameController.php'
+    exception-code: 'compact(): Undefined variable $carteAleatoire'
+[2024-10-17 16:20:11]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 98
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Controller\GameController.php'
+    exception-code: 'compact(): Undefined variable $carteAleatoire'
+[2024-10-17 16:21:42]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 99
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Controller\GameController.php'
+    exception-code: 'compact(): Undefined variable $carteAleatoire'
+[2024-10-17 16:22:10]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 99
+    exception-file: 'D:\IUT\3ème année\-EasyCrea-\src\Controller\GameController.php'
+    exception-code: 'compact(): Undefined variable $carteAleatoire'
+[2024-10-17 23:53:33]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@dashboard',
+        2 => array(),
+    )
+    exception-line: 28
+    exception-file: 'D:\IUT\3ème année\EasyCrea\src\View\admin\dashboard.html.twig'
+    exception-code: 'Unexpected ")".'

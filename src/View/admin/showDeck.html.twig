@@ -1,0 +1,58 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+	<section>
+		<div class="container">
+			<a href="{{ url('/admin/dashboard') }}" class="btn logout-btn">Retour</a>
+			<h2 class="section-title">Cartes du deck</h2>
+			{% if success %}
+				<div class="alert {% if success == 'carte_modifiee' %}alert-success{% else %}alert-danger{% endif %}" role="alert">
+					{% if success == 'carte_modifiee' %}
+						La carte a été modifiée avec succès.
+					{% else %}
+						Une erreur s'est produite.
+					{% endif %}
+				</div>
+			{% endif %}
+
+
+			<div class="card-list">
+				{% for carte in cartesAvecValeurs %}
+					<div class="card-item">
+						<h3 class="card-title">{{ carte.texte_carte }}</h3>
+						<p>
+							<strong>Valeur choix 1 :</strong>
+						</p>
+						<ul>
+							<li>Population :
+								{{ carte.valeurs_choix1.Population }}</li>
+							<li>Finances :
+								{{ carte.valeurs_choix1.Finances }}</li>
+						</ul>
+						<p>
+							<strong>Valeur choix 2 :</strong>
+						</p>
+						<ul>
+							<li>Population :
+								{{ carte.valeurs_choix2.Population }}</li>
+							<li>Finances :
+								{{ carte.valeurs_choix2.Finances }}</li>
+						</ul>
+						<p>
+							<strong>Date de soumission :</strong>
+							{{ carte.date_soumission|date('d/m/Y') }}</p>
+						<p>
+							<strong>Ordre de soumission :</strong>
+							{{ carte.ordre_soumission }}</p>
+						<div class="card-actions">
+							<a href="{{ url('/admin/delete/' ~ carte.id_carte) }}?type=carte" class="btn btn-danger action-btn">Supprimer</a>
+						</div>
+						<div class="card-actions">
+							<a href="{{ url('/admin/edit/' ~ carte.id_carte) }}?type=carte" class="btn btn-primary action-btn">Modifier</a>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+{% endblock %}

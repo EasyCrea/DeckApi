@@ -1,0 +1,435 @@
+html,
+body {
+  overflow-y: auto;
+  height: auto;
+}
+
+body {
+  background-color: #f8f9fa;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  padding: 1rem;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.input {
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: border-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background-color: transparent;
+  border-top: none;
+}
+.card-title {
+  font-size: 0.8rem;
+}
+
+.choice-text {
+  font-size: 0.9em;
+}
+
+/* Titre du formulaire */
+.form-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+/* Formulaire */
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Champs de saisie */
+.login-form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+/* Message d'erreur */
+.text-danger {
+  color: #d9534f;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Bouton de soumission */
+.submit-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+/* Changement de couleur au survol */
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Texte du bas du formulaire */
+.register-text {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 0.9em;
+}
+
+/* Lien d'inscription */
+.register-text a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+/* Adaptation pour les petits écrans */
+@media (max-width: 576px) {
+  .container {
+    width: 90%;
+  }
+}
+
+.form-input {
+  width: 30%;
+  font-size: 0.6rem;
+  line-height: 3;
+  border-radius: 5px;
+  background-color: rgba(96, 211, 231, 0.2);
+  border: 1px solid #e0e0e0;
+  border-bottom: 2px solid rgb(96, 211, 231);
+}
+
+.textarea {
+  resize: none;
+  background-color: rgba(96, 211, 231, 0.2);
+  border-bottom: 2px solid rgb(96, 211, 231);
+}
+
+.label {
+  margin-right: 0.5rem;
+  font-size: 0.8rem;
+}
+.button-contained-icons {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #add8e6; /* Remplace $blue-light par la couleur exacte */
+  color: #333;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.button-contained-icons:hover {
+  background-color: #e0e0e0;
+}
+.button-contained-icons svg {
+  margin-right: 0.5rem;
+}
+
+.button-contained {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #4e889b; /* Remplace $blue-light par la couleur exacte */
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.button-contained:hover {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .button-contained {
+    width: 100%;
+    font-size: 1em;
+    padding: 0.8rem 1rem;
+  }
+}
+
+.button-outlined {
+  padding: 0.5rem 1rem;
+  border: 2px solid #add8e6; /* Remplace $blue-light par la couleur exacte */
+  border-radius: 0.5rem;
+  background-color: transparent;
+  color: #4a9d9c;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.button-outlined:hover {
+  background-color: #add8e6; /* Remplace $blue-light par la couleur exacte */
+  color: #fff;
+}
+
+.button-text {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: transparent;
+  color: #428a89;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.button-text:hover {
+  background-color: #e0e0e0;
+}
+
+.button-disabled {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #e0e0e0;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 768px) {
+  .button-contained-icons,
+  .button-contained,
+  .button-outlined,
+  .button-text,
+  .button-disabled {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.7rem;
+  }
+}
+
+/* Titre de la section */
+.section-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+  color: #333;
+}
+
+/* Bouton d'ajout de deck */
+.add-deck-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 15px;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 1em;
+}
+
+.add-deck-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Liste de decks */
+.deck-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Carte de deck */
+.deck-card {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre du deck */
+.deck-title {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+/* Actions sur les decks */
+.deck-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+/* Boutons d'action */
+.action-btn {
+  display: block;
+  text-align: center;
+  padding: 8px 10px;
+  font-size: 0.9em;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.action-btn.btn-primary {
+  background-color: #007bff;
+}
+
+.action-btn.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.action-btn.btn-danger {
+  background-color: #dc3545;
+}
+
+.action-btn.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* Adaptation pour les petits écrans */
+@media (max-width: 576px) {
+  .container {
+    width: 90%;
+  }
+
+  .deck-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
+/* Liste des cartes */
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Carte d'élément */
+.card-item {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+}
+
+/* Titre de la carte */
+.card-title {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+/* Actions sur la carte */
+.card-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* Boutons d'action */
+.action-btn {
+  display: inline-block;
+  text-align: center;
+  padding: 8px 12px;
+  font-size: 0.9em;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.action-btn.btn-danger {
+  background-color: #dc3545;
+}
+
+.action-btn.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* Adaptation pour les petits écrans */
+@media (max-width: 576px) {
+  .container {
+    width: 90%;
+  }
+
+  .card-actions {
+    justify-content: center;
+  }
+
+  .action-btn {
+    width: 100%;
+    margin-top: 5px;
+  }
+}
+
+/* CSS */
+.logout-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+
+/* Styles spécifiques pour les petits écrans */
+@media (max-width: 576px) {
+  .logout-btn {
+    position: fixed; /* Fixer le bouton en haut à droite même lors du défilement */
+    top: 10px;
+    right: 10px;
+    font-size: 0.5rem; /* Taille de police adaptée pour les téléphones */
+    padding: 2.5px 5px; /* Réduire légèrement le padding pour un meilleur rendu */
+    background-color: #4e889b;
+  }
+}

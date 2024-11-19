@@ -1,0 +1,9 @@
+[2024-11-18 14:16:21]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'game@index',
+        2 => array(),
+    )
+    exception-line: 118
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\EasyCrea\src\Controller\GameController.php'
+    exception-code: 'compact(): Undefined variable $carteAleatoire'
