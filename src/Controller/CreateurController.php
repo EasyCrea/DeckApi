@@ -10,6 +10,7 @@ use Firebase\JWT\Key;
 use App\Model\Deck;
 use App\Model\Carte;
 use App\Model\CarteAleatoire;
+use App\Controller\AuthorizationController;
 
 
 
@@ -138,41 +139,48 @@ class CreateurController extends Controller
             $id_administration = $data['id_administrateur'];
         }
         
-        if ($id_createur) {
-            $creation =  Carte::getInstance()->create([
-                'id_deck' => $id_deck,
-                'texte_carte' => $text_carte,
-                'valeurs_choix1' => $valeurs_choix1,
-                'valeurs_choix2' => $valeurs_choix2,
-                'date_soumission' => $date_soumission,
-                'ordre_soumission' => $ordre_soumission,
-                'id_createur' => $id_createur,
-            ]);
-            var_dump($creation);
-            
-            $this->createRandomCard($id_deck, $id_createur);
-        }
-        if ($id_administration) {
-            $creation =  Carte::getInstance()->create([
-                'id_deck' => $id_deck,
-                'text_carte' => $text_carte,
-                'valeurs_choix1' => $valeurs_choix1,
-                'valeurs_choix2' => $valeurs_choix2,
-                'date_soumission' => $date_soumission,
-                'ordre_soumission' => $ordre_soumission,
-                'id_createur' => $id_createur,
-            ]);
-        }
+        try {
+            if (isset($id_createur)) {
+                $creation = Carte::getInstance()->create([
+                    'id_deck' => $id_deck,
+                    'texte_carte' => $text_carte,
+                    'valeurs_choix1' => $valeurs_choix1,
+                    'valeurs_choix2' => $valeurs_choix2,
+                    'date_soumission' => $date_soumission,
+                    'ordre_soumission' => $ordre_soumission,
+                    'id_createur' => $id_createur,
+                ]);
+    
+                if ($creation) {
+                    $this->createRandomCard($id_deck, $id_createur);
+                }
+            }
 
-        if ($creation) {
-            echo json_encode([
-                'status' => 'success',
-                'message' => 'Carte créée avec succès'
-            ]);
-        } else {
+            if (isset($id_administration)) {
+                $creation =  Carte::getInstance()->create([
+                    'id_deck' => $id_deck,
+                    'text_carte' => $text_carte,
+                    'valeurs_choix1' => $valeurs_choix1,
+                    'valeurs_choix2' => $valeurs_choix2,
+                    'date_soumission' => $date_soumission,
+                    'ordre_soumission' => $ordre_soumission,
+                    'id_administration' => $id_createur,
+                ]);
+            }
+    
+            if ($creation) {
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Carte créée avec succès'
+                ]);
+            } else {
+                throw new \Exception('Échec de création de carte');
+            }
+        } catch (\Exception $e) {
+            http_response_code(500);
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Erreur lors de la création de la carte'
+                'message' => $e->getMessage()
             ]);
         }
     }
@@ -193,14 +201,22 @@ class CreateurController extends Controller
 
             $all_card = Carte::getInstance()->findAll();
 
-            if ($all_card) {
-                $id_random = mt_rand(0, count($all_card) - 1);
+            $id_possible = [];
+            foreach ($all_card as $card) {
+                if ($card['id_deck'] === $id_deck) {
+                    $id_possible[] = $card['id_carte'];
             }
+            }
+
+            $id_random_key = array_rand($id_possible); // Obtenir une clé aléatoire
+            $id_random = $id_possible[$id_random_key]; // Obtenir l'ID correspondant
+           
+
 
             $carteAleatoire = CarteAleatoire::getInstance()->create([
                 'id_deck' => $id_deck,
                 'id_createur' => $id_createur,
-                'id_carte' => $id_random
+                'id_carte' => $id_random,
             ]);
 
             if ($carteAleatoire) {

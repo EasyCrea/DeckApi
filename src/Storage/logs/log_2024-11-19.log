@@ -195,3 +195,21 @@
     exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Controller\CreateurController.php'
     exception-code: 'Trying to access array offset on value of type null'
 >>>>>>> c14c5716035a0acb1f818118f219bd44984f6ce6
+[2024-11-19 16:55:31]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@createCard',
+        2 => array(),
+    )
+    exception-line: 175
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Undefined variable $id_administration'
+[2024-11-19 16:56:53]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@createCard',
+        2 => array(),
+    )
+    exception-line: 175
+    exception-file: 'C:\Users\maloc\Documents\GitHub\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Undefined variable $id_administration'
