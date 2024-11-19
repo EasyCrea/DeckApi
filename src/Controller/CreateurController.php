@@ -4,7 +4,6 @@ declare(strict_types=1); // strict mode
 
 namespace App\Controller;
 
-use App\Helper\HTTP;
 use App\Model\Createur;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
@@ -33,19 +32,23 @@ class CreateurController extends Controller
 
     public function register()
     {
+        $data = json_decode(file_get_contents('php://input'), true);
+        // 1. vérifier les données soumises
+        // 2. exécuter la requête d'insertion
 
         $request = Createur::getInstance()->create([
-            'nom_createur' => trim($_POST['name']),
-            'ad_email_createur' => trim($_POST['email']),
-            'mdp_createur' => trim(password_hash($_POST['password'], PASSWORD_BCRYPT)),
-            'ddn' => trim($_POST['ddn']),
-            'genre' => trim($_POST['genre']),
+            'nom_createur' => trim($data['name']),
+            'ad_email_createur' => trim($data['email']),
+            'mdp_createur' => trim(password_hash($data['password'], PASSWORD_BCRYPT)),
+            'ddn' => trim($data['ddn']),
+            'genre' => trim($data['genre']),
         ]);
+
         if ($request) {
             echo json_encode([
                 'status' => 'success',
-                'nom_createur' => trim($_POST['name']),
-                'ad_email_createur' => trim($_POST['email']),
+                'nom_createur' => trim($data['name']),
+                'ad_email_createur' => trim($data['email']),
 
             ]);
         } else {
@@ -53,31 +56,6 @@ class CreateurController extends Controller
                 'status' => 'error',
                 'message' => 'Erreur lors de l\'enregistrement'
             ]);
-        }
-        if ($this->isPostMethod()) {
-            // 1. vérifier les données soumises
-            // 2. exécuter la requête d'insertion
-            $request = Createur::getInstance()->create([
-                'nom_createur' => trim($_POST['name']),
-                'ad_email_createur' => trim($_POST['email']),
-                'mdp_createur' => trim(password_hash($_POST['password'], PASSWORD_BCRYPT)),
-                'ddn' => trim($_POST['ddn']),
-                'genre' => trim($_POST['genre']),
-            ]);
-
-            if ($request) {
-                echo json_encode([
-                    'status' => 'success',
-                    'nom_createur' => trim($_POST['name']),
-                    'ad_email_createur' => trim($_POST['email']),
-
-                ]);
-            } else {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Erreur lors de l\'enregistrement'
-                ]);
-            }
         }
     }
 
@@ -207,20 +185,23 @@ class CreateurController extends Controller
     public function createCard()
     {
         if ($this->isPostMethod()) {
+
+            $data = json_decode(file_get_contents('php://input'), true);
+
             // 1. vérifier les données soumises
-            $id_deck = trim($_POST['id_deck']);
-            $text_carte = trim($_POST['text_carte']);
-            $valeurs_choix1 = trim($_POST['valeurs_choix1']);
-            $valeurs_choix2 = trim($_POST['valeurs_choix2']);
+            $id_deck = trim($data['id_deck']);
+            $text_carte = trim($data['text_carte']);
+            $valeurs_choix1 = trim($data['valeurs_choix1']);
+            $valeurs_choix2 = trim($data['valeurs_choix2']);
             $date_soumission = date('Y-m-d');
-            $ordre_soumission = trim($_POST['ordre_soumission']);
+            $ordre_soumission = trim($data['ordre_soumission']);
 
 
             if ($_POST['id_createur'] != null) {
-                $id_createur = trim($_POST['id_createur']);
+                $id_createur = trim($data['id_createur']);
             }
             if ($_POST['id_administrateur'] != null) {
-                $id_administration = trim($_POST['id_administrateur']);
+                $id_administration = trim($data['id_administrateur']);
             }
 
             if ($id_createur) {
@@ -331,22 +312,66 @@ class CreateurController extends Controller
             }
         }
     }
-    public function getDeck()
-    {
+    public function getDeck(
+        int|string $id
+    ) {
         if ($this->isGetMethod()) {
             // 1. vérifier les données soumises
+            $id = (int) $id;
+            $deck = Deck::getInstance()->find($id);
+            if ($deck) {
+                echo json_encode([
+                    'status' => 'success',
+                    'deck' => $deck
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Deck not found'
+                ]);
+            }
         }
     }
-    public function getCard()
-    {
+    public function getCard(
+        int|string $id
+    ) {
         if ($this->isGetMethod()) {
             // 1. vérifier les données soumises
+            $id = (int) $id;
+            $card = Carte::getInstance()->find($id);
+            if ($card) {
+                echo json_encode([
+                    'status' => 'success',
+                    'card' => $card
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Carte not found'
+                ]);
+            }
         }
     }
-    public function getCardByDeck()
-    {
+    public function getCardByDeck(
+        int|string $id
+    ) {
         if ($this->isGetMethod()) {
             // 1. vérifier les données soumises
+            $id = (int) $id;
+            $cards = Carte::getInstance()->findAllBy([
+                'id_deck' => $id
+            ]);
+            if ($cards) {
+                echo json_encode([
+                    'status' => 'success',
+                    'cards' => $cards
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Cartes not found'
+                ]);
+            }
         }
     }
 }

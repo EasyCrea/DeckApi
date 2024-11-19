@@ -8,44 +8,42 @@ les routes
  */
 
 return [
-    // Gérer l'accueil
-    ['GET', '/', 'createur@login'],
 
-    // Gérer la création de créateurs
-    ['GET', '/createurs/register', 'createur@register'],
+    // Gérer l'administrateur
+
+
+    //Gérer les créateurs
+    //Inscription
     ['POST', '/createurs/register', 'createur@register'],
 
-    // Gérer les connexions de créateurs
-    ['GET', '/createurs/login', 'createur@login'],
+    //Connexion
     ['POST', '/createurs/login', 'createur@login'],
-    ['OPTIONS', '/createurs/login', 'createur@options'],
 
-    // Récupère les informations du créateur via token
+    //Token
     ['GET', '/createurs/checkToken', 'createur@checkToken'],
+
+    //Création carte
+    ['POST', '/createur', 'createur@createCard'],
+
+    //Récupérer informations deck pour le créateur
+    ['GET', '/createur','createur@getAllDecks'],
+    ['GET', '/createu/deck/{id:\d+}', 'createur@getDeck'],
+
+    //Récupérer informations carte pour le créateur 
+    ['GET', '/createu/random/{id:\d+}', 'createur@getRandomCard'],
+    ['GET', '/createu/selfCard/{id:\d+}', 'createur@getCard'],
+    ['GET', '/createu/deckCard/{id:\d+}', 'createur@getCardByDeck'],
+
+
+    //OPTIONS
+    ['OPTIONS', '/createurs/login', 'createur@options'],
     ['OPTIONS', '/createurs/checkToken', 'createur@options'],
 
-    // Gérer les déconnexions de créateurs
-    ['GET', '/createurs/logout', 'createur@logout'],
-
-    // Gérer les actions quand utilisateur est connecté
-    ['GET', '/game', 'game@index'],
-    ['POST', '/game', 'game@index'],
-
-
-    // Gérer la déconnexion de l'utilisateur
-    ['GET', '/createur/logout', 'createur@logout'],
-
-    // Gérer la création de l'administrateur
-    // ['GET', '/admin/register', 'admin@register'],
-    // ['POST', '/admin/register', 'admin@register'],
 
     // Gérer la connexion des administrateurs
-    ['GET', '/admin/login', 'admin@login'],
     ['POST', '/admin/login', 'admin@login'],
     ['OPTIONS', '/admin/login', 'admin@options'],
 
-    // Gérer les déconnexions des administrateurs
-    ['GET', '/admin/logout', 'admin@logout'],
 
     // Gérer les actions quand admin est connecté
     ['GET', '/createDeck', 'admin@createDeck'],
@@ -72,8 +70,5 @@ return [
     ['GET', '/admin/deck/{id:\d+}', 'admin@showDeck'],
 
     ['GET', '/noDecks', 'game@noDecks']
-
-
-
 
 ];
