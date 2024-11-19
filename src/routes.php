@@ -26,8 +26,8 @@ return [
     ['POST', '/createur', 'createur@createCard'],
 
     //Récupérer informations deck pour le créateur
-    ['GET', '/createur','createur@getAllDecks'],
-    ['GET', '/createur/deck/{id:\d+}', 'createur@getDeck'],
+    ['GET', '/createur', 'createur@getAllDecks'],
+    ['GET', '/createu/deck/{id:\d+}', 'createur@getDeck'],
 
     //Récupérer informations carte pour le créateur 
     ['GET', '/createur/random/{id:\d+}', 'createur@getRandomCard'],
@@ -48,8 +48,13 @@ return [
     // Gérer les actions quand admin est connecté
     ['GET', '/createDeck', 'admin@createDeck'],
     ['POST', '/createDeck', 'admin@createDeck'],
+    ['OPTIONS', '/createDeck', 'admin@options'],
+
     ['GET', '/createFirstCard', 'admin@createFirstCard'],
     ['POST', '/createFirstCard', 'admin@createFirstCard'],
+    ['OPTIONS', '/createFirstCard', 'admin@options'],
+
+
     // Gérer le tableau de bord de l'administrateur
     ['GET', '/admin/dashboard', 'admin@dashboard'],
     ['OPTIONS', '/admin/dashboard', 'admin@options'],
