@@ -7,10 +7,19 @@ namespace App\Controller;
 use App\Helper\HTTP;
 use App\Model\Admin;
 use App\Model\Carte;
+use App\Model\Createur;
 use App\Model\Deck;
 
 class AdminController extends Controller
 {
+
+
+    public function options()
+    {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS');
+        header('Access-Control-Allow-Headers: X-Requested-With');
+    }
     public function register()
     {
         if ($this->isGetMethod()) {
@@ -22,6 +31,9 @@ class AdminController extends Controller
                 'ad_email_admin' => trim($_POST['email']),
                 'mdp_admin' => trim(password_hash($_POST['password'], PASSWORD_BCRYPT)),
             ]);
+
+            // 3. Rediriger vers la page de connexion
+            HTTP::redirect('/admin/login');
         }
     }
 
@@ -54,32 +66,32 @@ class AdminController extends Controller
             // Debugging : affiche les informations de l'admin et la session
 
 
-            // // 3. Si l'administrateur est trouvé, vérifier le mot de passe
-            // if ($admin && password_verify($password, $admin['mdp_admin'])) {
-            //     // 4. Stocker l'identifiant de l'administrateur dans la session
-            //     $_SESSION['id_administrateur'] = $admin['id_administrateur']; // Correction de 'id_adminstrateur' à 'id_admin'
+            // 3. Si l'administrateur est trouvé, vérifier le mot de passe
+            if ($admin && password_verify($password, $admin['mdp_admin'])) {
+                // 4. Stocker l'identifiant de l'administrateur dans la session
+                $_SESSION['id_administrateur'] = $admin['id_administrateur']; // Correction de 'id_adminstrateur' à 'id_admin'
 
-            //     // 5. Rediriger vers la page d'accueil
-            //     HTTP::redirect('/admin/dashboard');
-            // } else {
-            //     // 6. Sinon, afficher un message d'erreur
-            //     $this->display('admin/login.html.twig', ['error' => 'Identifiant ou mot de passe incorrect']);
-            // }
+                // 5. Rediriger vers la page d'accueil
+                HTTP::redirect('/admin/dashboard');
+            } else {
+                // 6. Sinon, afficher un message d'erreur
+                $this->display('admin/login.html.twig', ['error' => 'Identifiant ou mot de passe incorrect']);
+            }
         }
     }
 
 
     public function createDeck()
     {
-        // // Démarrer la session si elle n'est pas déjà démarrée
-        // if (session_status() === PHP_SESSION_NONE) {
-        //     session_start();
-        // }
+        // Démarrer la session si elle n'est pas déjà démarrée
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
-        // // Vérifiez que l'administrateur est connecté
-        // if (!isset($_SESSION['id_administrateur'])) {
-        //     HTTP::redirect('/admin/login');
-        // }
+        // Vérifiez que l'administrateur est connecté
+        if (!isset($_SESSION['id_administrateur'])) {
+            HTTP::redirect('/admin/login');
+        }
 
         $nb_deck = Deck::getInstance()->findAll();
         if (count($nb_deck) >= 1) {
@@ -170,24 +182,9 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        // Démarrer la session si elle n'est pas déjà démarrée
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        // Vérifiez que l'administrateur est connecté
-        if (!isset($_SESSION['id_administrateur'])) {
-            HTTP::redirect('/admin/login');
-        }
-
-        // Récupérer l'erreur s'il y en a une
-        $error = $_GET['error'] ?? null;
-
-        // Récupérer les decks créés par l'administrateur
+        $this->options();
         $decks = Deck::getInstance()->findAll();
-
-        // Afficher le tableau de bord
-        $this->display('admin/dashboard.html.twig', compact('decks', 'error'));
+        echo json_encode($decks);
     }
 
 
@@ -224,50 +221,24 @@ class AdminController extends Controller
 
     public function deactivate(int|string $id)
     {
-        // Démarrer la session si elle n'est pas déjà démarrée
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        // Vérifier que l'administrateur est connecté
-        if (!isset($_SESSION['id_administrateur'])) {
-            HTTP::redirect('/admin/login');
-        }
-
-        $id = (int) $id;
-        if ($id <= 0) {
-            HTTP::redirect('/admin/dashboard');
-            return;
-        }
-
-        // Désactiver le deck
+        $id = (int)$id;
         $success = Deck::getInstance()->update($id, ['live' => 0]);
-        var_dump($success);
-
-        // Rediriger vers le tableau de bord avec un message de succès ou d'erreur
-        $redirectUrl = $success ? '/admin/dashboard?success=desactivé' : '/admin/dashboard?success=désactivation_échouée';
-        HTTP::redirect($redirectUrl);
+        if ($success) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false]);
+        }
     }
 
     public function activate(int|string $id)
     {
-        // Démarrer la session si elle n'est pas déjà démarrée
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        // Vérifiez que l'administrateur est connecté
-        if (!isset($_SESSION['id_administrateur'])) {
-            HTTP::redirect('/admin/login');
-        }
-
         $id = (int)$id;
-
-        // Activer le deck
-        Deck::getInstance()->update($id, ['live' => 1]);
-
-        // Rediriger vers le tableau de bord après l'activation
-        HTTP::redirect('/admin/dashboard');
+        $success = Deck::getInstance()->update($id, ['live' => 1]);
+        if ($success) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false]);
+        }
     }
 
 
@@ -283,20 +254,27 @@ class AdminController extends Controller
             HTTP::redirect('/admin/login');
         }
 
-        if (isset($_GET['success'])) {
-            $success = $_GET['success'];
-        } else {
-            $success = null;
-        }
-
+        $success = $_GET['success'] ?? null;
         $id = (int)$id;
 
+        // Récupérer les cartes du deck
         $cartes = Carte::getInstance()->findAllBy(['id_deck' => $id]);
 
-        // Préparer les données des cartes avec les valeurs séparées
+
+        // Préparer les données des cartes avec les valeurs séparées et le nom du créateur
         $cartesAvecValeurs = [];
 
         foreach ($cartes as $carte) {
+            // Récupérer le nom du créateur en fonction de l'id_createur ou de l'ad_email_admin
+            if (!empty($carte['id_createur'])) {
+                $nomCreateur = Createur::getInstance()->findCreatorName($carte['id_createur']) ?? 'Inconnu';
+            } else {
+                // Si l'id_createur n'est pas défini, utiliser l'email de l'administrateur
+                $administrateur = Admin::getInstance()->getAdminEmail($carte['id_administrateur']);
+
+                $nomCreateur = $administrateur ?? 'Administrateur inconnu';
+            }
+
             $valeursChoix1 = explode(',', $carte['valeurs_choix1']);
             $valeursChoix2 = explode(',', $carte['valeurs_choix2']);
 
@@ -311,13 +289,18 @@ class AdminController extends Controller
                     'Population' => $valeursChoix2[0] ?? null,
                     'Finances' => $valeursChoix2[1] ?? null
                 ],
-                'ordre_soumission' => $carte['ordre_soumission']
+                'ordre_soumission' => $carte['ordre_soumission'],
+                'nom_createur' => $nomCreateur
             ];
         }
 
-        // Afficher les cartes du deck avec les valeurs séparées
+        // Afficher les cartes du deck avec les valeurs séparées et le nom du créateur
         $this->display('admin/showDeck.html.twig', compact('cartesAvecValeurs', 'success'));
     }
+
+
+
+
 
     public function edit(int|string $id)
     {
