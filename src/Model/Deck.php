@@ -38,4 +38,15 @@ class Deck extends Model
         $sth = $this->query($sql, [':deckId' => $deckId]);
         return $sth->rowCount() > 0;
     }
+
+    
+    public function getCardsByDeckId(int $deckId): array
+    {
+        $sql = "SELECT * FROM carte WHERE id_deck = :deckId";
+        $stmt = $this->query($sql, [':deckId' => $deckId]);
+        if ($stmt) {
+            return $stmt->fetchAll(); // Renvoie toutes les cartes trouvées
+        }
+        return []; // Si aucune carte n'est trouvée, renvoie un tableau vide
+    }
 }
