@@ -45,9 +45,9 @@ return [
 
 
     // Gérer les actions quand admin est connecté
-    ['GET', '/createDeck', 'admin@createDeck'],
-    ['POST', '/createDeck', 'admin@createDeck'],
-    ['OPTIONS', '/createDeck', 'authorization@options'],
+    ['GET', '/admin/createDeck', 'admin@createDeck'],
+    ['POST', '/admin/createDeck', 'admin@createDeck'],
+    ['OPTIONS', '/admin/createDeck', 'authorization@options'],
 
     ['GET', '/createFirstCard', 'admin@createFirstCard'],
     ['POST', '/createFirstCard', 'admin@createFirstCard'],

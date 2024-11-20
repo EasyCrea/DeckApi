@@ -89,29 +89,11 @@ class AdminController extends Controller
         // Appel de la méthode options() depuis l'autre contrôleur
         $authorizationController->options();
 
-        // // Appel de la méthode checkToken() depuis AuthorizationController
-        // $tokenCheck = $authorizationController->checkToken();
-
-        // var_dump($tokenCheck);
-
-        // // Vérification du statut du token
-        // if ($tokenCheck['status'] === 'error') {
-        //     // Si le token est invalide ou manquant, renvoyer une erreur
-        //     http_response_code(401); // Code HTTP 401 pour Token invalide ou expiré
-        //     return;
-        // }
-
-        // // Vérification du rôle admin
-        // $decoded = json_decode(json_encode($tokenCheck['decoded']));
-        // if (!isset($decoded->role) || $decoded->role !== 'admin') {
-        //     // Si l'utilisateur n'a pas le rôle "admin", renvoyer une erreur
-        //     http_response_code(403); // Code HTTP 403 pour rôle non autorisé
-        //     echo json_encode([
-        //         'status' => 'error',
-        //         'message' => 'Accès refusé, rôle non autorisé'
-        //     ]);
-        //     return;
-        // }
+        $decodedToken = $authorizationController->validateAdminToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
 
         // Décodage des données envoyées dans la requête
         $data = json_decode(file_get_contents('php://input'), true);
@@ -163,27 +145,36 @@ class AdminController extends Controller
     }
 
     // Supprimer un deck
-    public function deleteDeck(int|string $id)
+    public function deleteDeck(int|string $id): void
     {
-        // Création d'une instance de l'autre contrôleur pour gérer les options (CORS)
+
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
-
-        // Validation de l'entrée
-        $id = (int) $id;
-        if ($id <= 0) {
-            echo json_encode(['error' => 'ID invalide']);
+        $decodedToken = $authorizationController->validateAdminToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
             return;
         }
 
-        // Supprimer le deck 
+        // Validation de l'ID
+        $id = (int) $id;
+        if ($id <= 0) {
+            http_response_code(400);
+            echo json_encode(['error' => 'ID invalide'], JSON_PRETTY_PRINT);
+            return;
+        }
+
+        // Suppression du deck
         $success = Deck::getInstance()->delete($id);
         if ($success) {
-            echo json_encode(['success' => 'Deck supprimé avec succès']);
+            http_response_code(200);
+            echo json_encode(['success' => 'Deck supprimé avec succès'], JSON_PRETTY_PRINT);
         } else {
-            echo json_encode(['error' => 'Une erreur est survenue lors de la suppression du deck']);
+            http_response_code(500);
+            echo json_encode(['error' => 'Une erreur est survenue lors de la suppression du deck'], JSON_PRETTY_PRINT);
         }
     }
+
 
     // Supprimer une carte
     public function deleteCard(int|string $id)
