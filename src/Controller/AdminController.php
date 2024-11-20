@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Helper\HTTP;
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-use App\Model\Createur;
 use App\Model\Admin;
 use App\Model\Deck;
 use App\Model\Carte;
 use App\Model\CarteAleatoire;
-use Exception;
+
 
 class AdminController extends Controller
 {
@@ -105,13 +102,13 @@ class AdminController extends Controller
             return;
         }
 
-        // // Vérification si un deck existe déjà
-        // $nb_deck = Deck::getInstance()->findAll();
-        // if (count($nb_deck) >= 1) {
-        //     http_response_code(400); // Mauvaise requête si un deck existe déjà
-        //     echo json_encode(['error' => 'Vous avez déjà un deck en cours.']);
-        //     return;
-        // }
+        // Vérification si un deck existe déjà
+        $nb_deck = Deck::getInstance()->findAll();
+        if (count($nb_deck) >= 1) {
+            http_response_code(400); // Mauvaise requête si un deck existe déjà
+            echo json_encode(['error' => 'Vous avez déjà un deck en cours.']);
+            return;
+        }
 
         $titreDeck = $data['titre_deck'];
         $dateDebutDeck = $data['date_debut_deck'];
@@ -140,6 +137,11 @@ class AdminController extends Controller
         $authorizationController = new AuthorizationController();
 
         $authorizationController->options();
+        $decodedToken = $authorizationController->validateAdminToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
         $decks = Deck::getInstance()->findAll();
         echo json_encode($decks);
     }
@@ -183,7 +185,13 @@ class AdminController extends Controller
         $authorizationController = new AuthorizationController();
 
         $authorizationController->options();
+        $decodedToken = $authorizationController->validateAdminToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
         $id = (int) $id;
+        // echo json_encode($id);
         $success = Carte::getInstance()->delete($id);
         if ($success) {
             echo json_encode(['success' => 'Carte supprimée avec succès']);
@@ -201,6 +209,11 @@ class AdminController extends Controller
         $authorizationController = new AuthorizationController();
 
         $authorizationController->options();
+        $decodedToken = $authorizationController->validateAdminToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
         $id = (int) $id;
         $success = Deck::getInstance()->update($id, ['live' => 0]);
         echo json_encode(['success' => $success ? 'Deck désactivé avec succès' : 'Échec de la désactivation']);
@@ -213,6 +226,12 @@ class AdminController extends Controller
         $authorizationController = new AuthorizationController();
 
         $authorizationController->options();
+        $decodedToken = $authorizationController->validateAdminToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
+
         $id = (int) $id;
         $success = Deck::getInstance()->update($id, ['live' => 1]);
         echo json_encode(['success' => $success ? 'Deck activé avec succès' : 'Échec de l\'activation']);
@@ -298,78 +317,5 @@ class AdminController extends Controller
             http_response_code(404);
             echo json_encode(['message' => 'Aucune carte trouvée pour ce deck.', 'status' => 404]);
         }
-    }
-
-
-
-
-    // Edit Carte
-    public function edit(int|string $id)
-    {
-        // Création d'une instance de l'autre contrôleur
-        $authorizationController = new AuthorizationController();
-
-        $authorizationController->options();
-        $id = (int) $id;
-
-        // Récupérer la carte par ID
-        $carte = Carte::getInstance()->findOneBy(['id_carte' => $id]);
-
-        // Vérifier si la carte existe
-        if (!$carte) {
-            echo json_encode(['error' => 'Carte non trouvée']);
-            return;
-        }
-
-        // Vérifier si la requête est de type GET pour renvoyer les données de la carte
-        if ($this->isGetMethod()) {
-            echo json_encode($carte);
-        } else {
-            // Récupérer les données envoyées en POST
-            $texteCarte = trim($_POST['texte_carte'] ?? '');
-            $valeursChoix1 = trim($_POST['valeurs_choix1'] ?? '');
-            $valeursChoix2 = trim($_POST['valeurs_choix2'] ?? '');
-            $valeursChoix1bis = trim($_POST['valeurs_choix1bis'] ?? '');
-            $valeursChoix2bis = trim($_POST['valeurs_choix2bis'] ?? '');
-
-            // Vérifier si les champs requis sont remplis
-            if (!$texteCarte || !$valeursChoix1 || !$valeursChoix2) {
-                echo json_encode(['error' => 'Champs requis manquants']);
-                return;
-            }
-
-            // Construire les valeurs combinées
-            $valeurChoixFinal1 = $valeursChoix1 . ',' . $valeursChoix1bis;
-            $valeurChoixFinal2 = $valeursChoix2 . ',' . $valeursChoix2bis;
-
-            // Mettre à jour la carte
-            $success = Carte::getInstance()->updateCard($id, [
-                'texte_carte' => $texteCarte,
-                'valeurs_choix1' => $valeurChoixFinal1,
-                'valeurs_choix2' => $valeurChoixFinal2,
-            ]);
-
-            // Retourner le résultat de la mise à jour
-            if ($success) {
-                echo json_encode(['success' => 'Carte modifiée avec succès']);
-            } else {
-                echo json_encode(['error' => 'Erreur lors de la mise à jour de la carte']);
-            }
-        }
-    }
-
-    // Déconnexion API
-    public function logout()
-    {
-        // Création d'une instance de l'autre contrôleur
-        $authorizationController = new AuthorizationController();
-
-        $authorizationController->options();
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        session_destroy();
-        echo json_encode(['message' => 'Déconnexion réussie']);
     }
 };

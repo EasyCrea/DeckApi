@@ -117,75 +117,90 @@ class CreateurController extends Controller
         }
     }
 
-
-
-
-
-
-
     public function createCard()
     {
+        // Création d'une instance de l'autre contrôleur (par exemple, AuthorizationController)
+        $authorizationController = new AuthorizationController();
 
+        // Appel de la méthode options() depuis l'autre contrôleur
+        $authorizationController->options();
 
+        // Vérification du token administrateur
+        $decodedAdmin = $authorizationController->validateAdminToken();
+        if ($decodedAdmin) {
+            // Si le token admin est valide, on l'utilise
+            $decoded = $decodedAdmin;
+        } else {
+            // Sinon, on vérifie le token du créateur
+            $decodedCreateur = $authorizationController->validateCreateurToken();
+            if (!$decodedCreateur) {
+                // Si aucun token valide, retour erreur
+                http_response_code(403);
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Accès refusé : aucun token valide trouvé'
+                ], JSON_PRETTY_PRINT);
+                return;
+            }
+            $decoded = $decodedCreateur;
+        }
+
+        // Récupération des données envoyées dans la requête
         $data = json_decode(file_get_contents('php://input'), true);
-        // 1. vérifier les données soumises
+
+        // Récupération des informations de la carte
         $id_deck = $data['id_deck'];
         $text_carte = $data['texte_carte'];
         $valeurs_choix1 = $data['valeurs_choix1'];
         $valeurs_choix2 = $data['valeurs_choix2'];
-
-        $date = new \DateTime();
-        $date_soumission = $date->format('Y-m-d');
-
         $ordre_soumission = $data['ordre_soumission'];
 
-
-
-        if (isset($data['id_createur'])) {
-            $id_createur = $data['id_createur'];
-        }
-        if (isset($data['id_administrateur'])) {
-            $id_administration = $data['id_administrateur'];
-        }
+        // Variables pour id_createur ou id_administrateur
+        $id_createur = $data['id_createur'] ?? null;
+        $id_administrateur = $data['id_administrateur'] ?? null;
 
         try {
+            $date_soumission = (new \DateTime())->format('Y-m-d H:i:s');
+
+            // Création de la carte pour le créateur
             if (isset($id_createur)) {
                 $creation = Carte::getInstance()->create([
-                    'id_deck' => $id_deck,
-                    'texte_carte' => $text_carte,
-                    'valeurs_choix1' => $valeurs_choix1,
-                    'valeurs_choix2' => $valeurs_choix2,
                     'date_soumission' => $date_soumission,
                     'ordre_soumission' => $ordre_soumission,
+                    'valeurs_choix1' => $valeurs_choix1,
+                    'texte_carte' => $text_carte,
+                    'valeurs_choix2' => $valeurs_choix2,
+                    'id_deck' => $id_deck,
                     'id_createur' => $id_createur,
                 ]);
-
-                if ($creation) {
-                    $this->createRandomCard($id_deck, $id_createur);
+                if (!$creation) {
+                    throw new \Exception('Échec de la création de la carte pour le créateur');
                 }
             }
 
-            if (isset($id_administration)) {
-                $creation =  Carte::getInstance()->create([
-                    'id_deck' => $id_deck,
-                    'text_carte' => $text_carte,
-                    'valeurs_choix1' => $valeurs_choix1,
-                    'valeurs_choix2' => $valeurs_choix2,
+            // Création de la carte pour l'administrateur
+            if (isset($id_administrateur)) {
+                $creation = Carte::getInstance()->create([
                     'date_soumission' => $date_soumission,
                     'ordre_soumission' => $ordre_soumission,
-                    'id_administration' => $id_createur,
+                    'valeurs_choix1' => $valeurs_choix1,
+                    'texte_carte' => $text_carte,
+                    'valeurs_choix2' => $valeurs_choix2,
+                    'id_deck' => $id_deck,
+                    'id_administrateur' => $id_administrateur,
                 ]);
+                if (!$creation) {
+                    throw new \Exception('Échec de la création de la carte pour l\'administrateur');
+                }
             }
 
-            if ($creation) {
-                echo json_encode([
-                    'status' => 'success',
-                    'message' => 'Carte créée avec succès'
-                ]);
-            } else {
-                throw new \Exception('Échec de création de carte');
-            }
+            // Retourner un message de succès si la création est réussie
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Carte créée avec succès'
+            ]);
         } catch (\Exception $e) {
+            // Gestion des erreurs
             http_response_code(500);
             echo json_encode([
                 'status' => 'error',
@@ -193,6 +208,10 @@ class CreateurController extends Controller
             ]);
         }
     }
+
+
+
+
 
     public function createRandomCard(
         int|string $id_deck,
