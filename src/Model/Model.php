@@ -8,6 +8,8 @@ declare(strict_types=1);
 namespace App\Model;
 
 use PDOStatement;
+use \InvalidArgumentException;
+use \PDOException;
 
 /**
  * Classe CRUD modèle qui contient les 7 méthodes :
@@ -219,22 +221,32 @@ class Model
     /**
      * Efface l'identifiant.
      *
-     * @param  integer  $id identifiant à effacer
-     * @return bool
+     * @param  int  $id Identifiant à effacer
+     * @return bool Retourne true si une ligne a été supprimée, sinon false
      */
-    public function delete(
-        int $id
-    ): bool {
-        // Déterminer le nom de la colonne en fonction de la table
+    public function delete(int $id): bool
+    {
+        // Valider la table et déterminer la colonne
+        if (!in_array($this->tableName, ['deck', 'carte'], true)) {
+            throw new InvalidArgumentException('Table non valide.');
+        }
+
         $column = $this->tableName === 'deck' ? 'id_deck' : 'id_carte';
 
         // Requête SQL pour supprimer l'enregistrement
-        $sql = "DELETE FROM `{$this->tableName}` WHERE {$column} = :id";
-        $sth = $this->query($sql, [':id' => $id]);
+        $sql = "DELETE FROM `{$this->tableName}` WHERE `{$column}` = :id";
+        try {
+            $sth = $this->query($sql, [':id' => $id]);
 
-        // Vérifier si une ligne a été supprimée
-        return $sth->rowCount() > 0;
+            // Vérifier si une ligne a été supprimée
+            return $sth->rowCount() > 0;
+        } catch (PDOException $e) {
+            // Logger ou gérer l'erreur ici si nécessaire
+            error_log("Erreur lors de la suppression : " . $e->getMessage());
+            return false;
+        }
     }
+
 
 
     /**

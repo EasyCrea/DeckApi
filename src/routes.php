@@ -63,6 +63,14 @@ return [
     ['GET', '/admin/edit/{id:\d+}', 'admin@edit'],
     ['POST', '/admin/edit/{id:\d+}', 'admin@edit'],
 
+    // Delete des decks et cartes
+    ['DELETE', '/admin/delete/deck/{id:\d+}', 'admin@deleteDeck'],
+    ['DELETE', '/admin/delete/card/{id:\d+}', 'admin@deleteCard'],
+    ['OPTIONS', '/admin/delete/deck/{id:\d+}', 'authorization@options'],
+    ['OPTIONS', '/admin/delete/card/{id:\d+}', 'authorization@options'],
+
+
+
     // Getion des patch des decks
     ['PATCH', '/admin/deactivate/{id:\d+}', 'admin@deactivate'],
     ['PATCH', '/admin/activate/{id:\d+}', 'admin@activate'],

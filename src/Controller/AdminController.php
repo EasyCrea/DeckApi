@@ -12,6 +12,7 @@ use App\Model\Admin;
 use App\Model\Deck;
 use App\Model\Carte;
 use App\Model\CarteAleatoire;
+use Exception;
 
 class AdminController extends Controller
 {
@@ -161,26 +162,46 @@ class AdminController extends Controller
         echo json_encode($decks);
     }
 
-    // Supprimer un deck ou une carte
-    public function delete(int|string $id)
+    // Supprimer un deck
+    public function deleteDeck(int|string $id)
+    {
+        // Création d'une instance de l'autre contrôleur pour gérer les options (CORS)
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+
+        // Validation de l'entrée
+        $id = (int) $id;
+        if ($id <= 0) {
+            echo json_encode(['error' => 'ID invalide']);
+            return;
+        }
+
+        // Supprimer le deck 
+        $success = Deck::getInstance()->delete($id);
+        if ($success) {
+            echo json_encode(['success' => 'Deck supprimé avec succès']);
+        } else {
+            echo json_encode(['error' => 'Une erreur est survenue lors de la suppression du deck']);
+        }
+    }
+
+    // Supprimer une carte
+    public function deleteCard(int|string $id)
     {
         // Création d'une instance de l'autre contrôleur
         $authorizationController = new AuthorizationController();
 
         $authorizationController->options();
         $id = (int) $id;
-        $type = $_GET['type'] ?? null;
-
-        if ($type === 'deck') {
-            Deck::getInstance()->delete($id);
-            echo json_encode(['message' => 'Deck supprimé avec succès']);
-        } elseif ($type === 'carte') {
-            Carte::getInstance()->delete($id);
-            echo json_encode(['message' => 'Carte supprimée avec succès']);
+        $success = Carte::getInstance()->delete($id);
+        if ($success) {
+            echo json_encode(['success' => 'Carte supprimée avec succès']);
         } else {
-            echo json_encode(['error' => 'Type non valide'], JSON_PRETTY_PRINT);
+            echo json_encode(['error' => 'Une erreur est survenue lors de la suppression de la carte']);
         }
     }
+
+
 
     // Désactiver un deck
     public function deactivate(int|string $id)

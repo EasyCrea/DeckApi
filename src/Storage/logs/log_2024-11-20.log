@@ -1,0 +1,13 @@
+[2024-11-20 10:19:24]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@delete',
+        2 => array(
+            'type' => 'deck',
+            'id' => '19',
+        ),
+    )
+    exception-line: 175
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'Undefined variable $string'
+[2024-11-20 10:22:01]	[ALERT]	500 - la méthode delete n'existe pas
