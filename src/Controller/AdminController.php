@@ -272,8 +272,12 @@ class AdminController extends Controller
     {
         // Création d'une instance de l'autre contrôleur
         $authorizationController = new AuthorizationController();
-
         $authorizationController->options();
+        $decodedToken = $authorizationController->validateAdminToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
         // Convertir l'ID du deck en entier et vérifier sa validité
         $deckId = (int) $deckId;
         if ($deckId <= 0) {

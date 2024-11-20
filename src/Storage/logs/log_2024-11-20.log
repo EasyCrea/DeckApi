@@ -11,3 +11,5 @@
     exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\AdminController.php'
     exception-code: 'Undefined variable $string'
 [2024-11-20 10:22:01]	[ALERT]	500 - la méthode delete n'existe pas
+[2024-11-20 12:07:41]	[ALERT]	404 - commande non existante :: /admin/deck/undefined
+[2024-11-20 12:07:41]	[ALERT]	404 - commande non existante :: /admin/deck/undefined

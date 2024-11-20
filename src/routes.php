@@ -80,6 +80,9 @@ return [
 
 
     ['GET', '/admin/deck/{id:\d+}', 'admin@showDeck'],
+    ['OPTIONS', '/admin/deck/{id:\d+}', 'authorization@options'],
+
+
 
     ['GET', '/noDecks', 'game@noDecks']
 
