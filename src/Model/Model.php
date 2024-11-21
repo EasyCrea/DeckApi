@@ -206,7 +206,7 @@ class Model
             $sql .= " {$k} = :{$k},";
         }
         $sql = rtrim($sql, ','); // Enlever la dernière virgule
-        $sql .= ' WHERE id_deck = :id';
+        $sql .= ' WHERE id_carte = :id';
 
         $attributes = [];
         foreach ($datas as $k => $v) {

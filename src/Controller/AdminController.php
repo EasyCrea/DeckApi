@@ -236,54 +236,7 @@ class AdminController extends Controller
         echo json_encode(['success' => $success ? 'Deck activé avec succès' : 'Échec de l\'activation']);
     }
 
-    //Créer premiere carte
-    public function createFirstCard()
-    {
-        // Création d'une instance de l'autre contrôleur
-        $authorizationController = new AuthorizationController();
 
-        $authorizationController->options();
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        // Vérifier que l'administrateur est connecté
-        // if (!isset($_SESSION['id_administrateur'])) {
-        //     echo json_encode(['error' => 'Non autorisé']);
-        //     http_response_code(403);
-        //     return;
-        // }
-
-        if ($this->isGetMethod()) {
-            echo json_encode(['message' => 'Ready to create first card']);
-        } else {
-            $texteCarte = trim($_POST['texte_carte']);
-            $valeursChoix1 = trim($_POST['valeurs_choix1']);
-            $valeursChoix2 = trim($_POST['valeurs_choix2']);
-            $valeurs_choix1bis = trim($_POST['valeurs_choix1bis']);
-            $valeurs_choix2bis = trim($_POST['valeurs_choix2bis']);
-            $deckId = (int) trim($_POST['deckId']);
-
-            $valeur_choixFinal = $valeursChoix1 . ',' . $valeurs_choix1bis;
-            $valeur_choixFinal2 = $valeursChoix2 . ',' . $valeurs_choix2bis;
-
-            $carteCreated = Carte::getInstance()->create([
-                'date_soumission' => (new \DateTime())->format('Y-m-d'),
-                'ordre_soumission' => 1,
-                'valeurs_choix1' => $valeur_choixFinal,
-                'texte_carte' => $texteCarte,
-                'valeurs_choix2' => $valeur_choixFinal2,
-                'id_deck' => $deckId,
-                'id_administrateur' => $_SESSION['id_administrateur'],
-            ]);
-
-            if ($carteCreated) {
-                echo json_encode(['success' => 'Carte créée avec succès']);
-            } else {
-                echo json_encode(['error' => 'Une erreur est survenue lors de la création de la carte']);
-            }
-        }
-    }
 
     // Afficher les cartes d'un deck
     public function showDeck($deckId)
@@ -315,6 +268,69 @@ class AdminController extends Controller
             // Si aucune carte n'est trouvée, retourner un message d'erreur avec statut 404
             http_response_code(404);
             echo json_encode(['message' => 'Aucune carte trouvée pour ce deck.', 'status' => 404]);
+        }
+    }
+
+    // Récuper les infos d'une carte
+    public function getCard(int|string $id)
+    {
+        // Création d'une instance de l'autre contrôleur
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+        $decodedToken = $authorizationController->validateAdminToken();
+        if ($decodedToken === null) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
+
+        $id = (int) $id;
+        $card = Carte::getInstance()->findOneBy(['id_carte' => $id]);
+
+        if ($card) {
+            echo json_encode(['card' => $card]);
+        } else {
+            echo json_encode(['error' => 'Carte non trouvée']);
+        }
+    }
+
+
+    // Editer une carte
+    public function editCard(int|string $id)
+    {
+        // Création d'une instance de l'autre contrôleur
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+        $decodedToken = $authorizationController->validateAdminToken();
+        if ($decodedToken === null) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
+
+        $id = (int) $id;
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (!isset($data['texte_carte'], $data['valeurs_choix1'], $data['valeurs_choix2'], $data['id_deck'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Données manquantes']);
+            return;
+        }
+
+        $texte_carte = $data['texte_carte'];
+        $valeurs_choix1 = $data['valeurs_choix1'];
+        $valeurs_choix2 = $data['valeurs_choix2'];
+        $deckId = $data['id_deck'];
+
+        $success = Carte::getInstance()->update($id, [
+            'texte_carte' => $texte_carte,
+            'valeurs_choix1' => $valeurs_choix1,
+            'valeurs_choix2' => $valeurs_choix2,
+            'id_deck' => $deckId
+        ]);
+
+        if ($success) {
+            echo json_encode(['success' => 'Carte modifiée avec succès']);
+        } else {
+            echo json_encode(['error' => 'Une erreur est survenue lors de la modification de la carte']);
         }
     }
 };

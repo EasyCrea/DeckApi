@@ -9,3 +9,21 @@
     exception-line: 140
     exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\CreateurController.php'
     exception-code: 'Undefined array key "texte_carte"'
+[2024-11-21 12:54:40]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 12:54:41]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 12:54:51]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 12:54:51]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 12:55:07]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 12:55:11]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 12:55:11]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 12:56:24]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 12:56:25]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 12:56:59]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 12:59:33]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 12:59:44]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 12:59:44]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 13:00:43]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 13:01:02]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 13:01:06]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 13:01:06]	[ALERT]	404 - commande non existante :: /admin/card/undefined
+[2024-11-21 13:27:05]	[ALERT]	500 - la méthode editCard n'existe pas

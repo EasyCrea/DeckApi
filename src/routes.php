@@ -25,6 +25,14 @@ return [
     ['POST', '/createCard{id:\d+}', 'createur@createCard'],
     ['OPTIONS', '/createCard{id:\d+}', 'authorization@options'],
 
+    // Edition d'une carte
+    ['PATCH', '/admin/edit/card/{id:\d+}', 'admin@editCard'],
+    ['OPTIONS', '/admin/edit/card/{id:\d+}', 'authorization@options'],
+
+    // Récupérer informations sur une carte la modification
+    ['GET', '/admin/card/{id:\d+}', 'admin@getCard'],
+    ['OPTIONS', '/admin/card/{id:\d+}', 'authorization@options'],
+
     // Récupérer informations deck pour le créateur
     ['GET', '/createur', 'createur@getAllDecks'],
     ['GET', '/createur/deck/{id:\d+}', 'createur@getDeck'],
