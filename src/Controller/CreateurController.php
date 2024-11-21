@@ -117,86 +117,6 @@ class CreateurController extends Controller
         }
     }
 
-    public function createCard(int|string $id)
-    {
-        $id = (int) $id;
-        $authorizationController = new AuthorizationController();
-        $authorizationController->options();
-
-        // Vérification du token
-        $decoded = $authorizationController->validateAdminToken() ?: $authorizationController->validateCreateurToken();
-
-        if (!$decoded) {
-            http_response_code(403);
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Accès refusé : aucun token valide ou rôle incorrect',
-            ]);
-            return;
-        }
-
-        $role = $decoded->role ?? null; // Récupérer le rôle
-        $userId = $decoded->id ?? null; // Récupérer l'ID utilisateur
-
-        if (!$role || !$userId) {
-            http_response_code(403);
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Accès refusé : rôle ou ID utilisateur manquant',
-            ]);
-            return;
-        }
-
-        // Traitement des données
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        if (!isset($data['texte_carte'], $data['valeurs_choix1'], $data['valeurs_choix2'])) {
-            http_response_code(400);
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Données invalides ou incomplètes',
-            ]);
-            return;
-        }
-
-        $carteDansLeDeck = Carte::getInstance()->getNumberOfCardsInDeck($id);
-        $date_soumission = (new \DateTime())->format('Y-m-d');
-
-        $cardData = [
-            'texte_carte' => $data['texte_carte'],
-            'valeurs_choix1' => $data['valeurs_choix1'],
-            'valeurs_choix2' => $data['valeurs_choix2'],
-            'date_soumission' => $date_soumission,
-            'ordre_soumission' => $carteDansLeDeck + 1,
-            'id_deck' => $id,
-        ];
-
-        // Associer l'utilisateur selon le rôle
-        if ($role === 'admin') {
-            $cardData['id_administrateur'] = $userId;
-        } elseif ($role === 'createur') {
-            $cardData['id_createur'] = $userId;
-        }
-
-        try {
-            Carte::getInstance()->create($cardData);
-            echo json_encode([
-                'status' => 'success',
-                'message' => 'Carte créée avec succès',
-            ]);
-        } catch (\Exception $e) {
-            http_response_code(500);
-            echo json_encode([
-                'status' => 'error',
-                'message' => $e->getMessage(),
-            ]);
-        }
-    }
-
-
-
-
-
 
 
     public function createRandomCard(
@@ -350,6 +270,80 @@ class CreateurController extends Controller
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Cartes not found'
+            ]);
+        }
+    }
+
+    public function getLiveDeck()
+    {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+        $decodedToken = $authorizationController->validateCreateurToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
+        $deck = Deck::getInstance()->getLiveDeck();
+        if ($deck) {
+            echo json_encode([
+                'status' => 'success',
+                'deck' => $deck
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Deck not found'
+            ]);
+        }
+    }
+
+    public function getLiveDeckCards($id_deck)
+    {
+
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+        $decodedToken = $authorizationController->validateCreateurToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
+        // 1. vérifier les données soumises
+        $id_deck = (int) $id_deck;
+        $cards = Deck::getInstance()->getCardsByDeckId($id_deck);
+        if ($cards) {
+            echo json_encode([
+                'status' => 'success',
+                'cards' => $cards
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Cartes not found'
+            ]);
+        }
+    }
+
+    public function getCreatedCard($id_deck, $id_createur)
+    {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+        $decodedToken = $authorizationController->validateCreateurToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
+        $id_deck = (int) $id_deck;
+        $id_createur = (int) $id_createur;
+        $card = Carte::getInstance()->getIfCreatorHasCreatedCardInDeck($id_createur, $id_deck);
+        if ($card) {
+            echo json_encode([
+                'status' => 'success',
+                'card' => $card
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Carte not found'
             ]);
         }
     }

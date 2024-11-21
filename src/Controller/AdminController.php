@@ -214,7 +214,7 @@ class AdminController extends Controller
             return;
         }
         $id = (int) $id;
-        $success = Deck::getInstance()->update($id, ['live' => 0]);
+        $success = Deck::getInstance()->updateDeck($id, ['live' => 0]);
         echo json_encode(['success' => $success ? 'Deck désactivé avec succès' : 'Échec de la désactivation']);
     }
 
@@ -232,7 +232,7 @@ class AdminController extends Controller
         }
 
         $id = (int) $id;
-        $success = Deck::getInstance()->update($id, ['live' => 1]);
+        $success = Deck::getInstance()->updateDeck($id, ['live' => 1]);
         echo json_encode(['success' => $success ? 'Deck activé avec succès' : 'Échec de l\'activation']);
     }
 
@@ -320,7 +320,7 @@ class AdminController extends Controller
         $valeurs_choix2 = $data['valeurs_choix2'];
         $deckId = $data['id_deck'];
 
-        $success = Carte::getInstance()->update($id, [
+        $success = Carte::getInstance()->updateCarte($id, [
             'texte_carte' => $texte_carte,
             'valeurs_choix1' => $valeurs_choix1,
             'valeurs_choix2' => $valeurs_choix2,

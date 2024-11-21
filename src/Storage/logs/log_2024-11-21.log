@@ -27,3 +27,88 @@
 [2024-11-21 13:01:06]	[ALERT]	404 - commande non existante :: /admin/card/undefined
 [2024-11-21 13:01:06]	[ALERT]	404 - commande non existante :: /admin/card/undefined
 [2024-11-21 13:27:05]	[ALERT]	500 - la méthode editCard n'existe pas
+[2024-11-21 14:40:16]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@deactivate',
+        2 => array(
+            'id' => '34',
+        ),
+    )
+    exception-line: 267
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_carte' in 'where clause''
+[2024-11-21 14:40:35]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@deactivate',
+        2 => array(
+            'id' => '34',
+        ),
+    )
+    exception-line: 267
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_carte' in 'where clause''
+[2024-11-21 14:42:48]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@deactivate',
+        2 => array(
+            'id' => '34',
+        ),
+    )
+    exception-line: 267
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_carte' in 'where clause''
+[2024-11-21 14:43:11]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@deactivate',
+        2 => array(
+            'id' => '34',
+        ),
+    )
+    exception-line: 267
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_carte' in 'where clause''
+[2024-11-21 14:43:15]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@activate',
+        2 => array(
+            'id' => '34',
+        ),
+    )
+    exception-line: 267
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_carte' in 'where clause''
+[2024-11-21 14:43:18]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@deactivate',
+        2 => array(
+            'id' => '34',
+        ),
+    )
+    exception-line: 267
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'id_carte' in 'where clause''
+[2024-11-21 15:41:10]	[ALERT]	500 - la méthode index n'existe pas
+[2024-11-21 16:10:45]	[ALERT]	404 - commande non existante :: /createur/liveDeckCards/undefined
+[2024-11-21 16:10:46]	[ALERT]	404 - commande non existante :: /createur/liveDeckCards/undefined
+[2024-11-21 16:12:11]	[ALERT]	404 - commande non existante :: /createur/liveDeckCards/undefined
+[2024-11-21 16:12:11]	[ALERT]	404 - commande non existante :: /createur/liveDeckCards/undefined
+[2024-11-21 16:12:41]	[ALERT]	404 - commande non existante :: /createur/liveDeckCards/undefined
+[2024-11-21 16:12:41]	[ALERT]	404 - commande non existante :: /createur/liveDeckCards/undefined
+[2024-11-21 16:15:15]	[ALERT]	404 - commande non existante :: /createur/liveDeckCards/undefined
+[2024-11-21 16:15:23]	[ALERT]	404 - commande non existante :: /createur/liveDeckCards/undefined
+[2024-11-21 16:15:23]	[ALERT]	404 - commande non existante :: /createur/liveDeckCards/undefined
+[2024-11-21 16:16:17]	[ALERT]	404 - commande non existante :: /createur/liveDeckCards/undefined
+[2024-11-21 16:16:17]	[ALERT]	404 - commande non existante :: /createur/liveDeckCards/undefined
+[2024-11-21 16:18:48]	[ALERT]	404 - commande non existante :: /createur/10/undefined
+[2024-11-21 16:18:48]	[ALERT]	404 - commande non existante :: /createur/10/undefined
+[2024-11-21 16:26:24]	[ALERT]	404 - commande non existante :: /createur/10/undefined
+[2024-11-21 16:26:24]	[ALERT]	404 - commande non existante :: /createur/10/undefined
+[2024-11-21 16:31:59]	[ALERT]	404 - commande non existante :: /createur/10/undefined
+[2024-11-21 16:31:59]	[ALERT]	404 - commande non existante :: /createur/10/undefined
+[2024-11-21 16:36:18]	[ALERT]	500 - la méthode createCard n'existe pas

@@ -39,7 +39,7 @@ class Deck extends Model
         return $sth->rowCount() > 0;
     }
 
-    
+
     public function getCardsByDeckId(int $deckId): array
     {
         $sql = "SELECT * FROM carte WHERE id_deck = :deckId";

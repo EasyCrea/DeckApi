@@ -33,6 +33,18 @@ return [
     ['GET', '/admin/card/{id:\d+}', 'admin@getCard'],
     ['OPTIONS', '/admin/card/{id:\d+}', 'authorization@options'],
 
+    // Récuperer le deck en live avec ses informations
+    ['GET', '/createur/liveDeck', 'createur@getLiveDeck'],
+    ['OPTIONS', '/createur/liveDeck', 'authorization@options'],
+
+    // Récupérer les cartes du deck en live
+    ['GET', '/createur/liveDeckCards/{id_deck:\d+}', 'createur@getLiveDeckCards'],
+    ['OPTIONS', '/createur/liveDeckCards/{id_deck:\d+}', 'authorization@options'],
+
+    // Récupérer la carte créée par le créateur connecté
+    ['GET', '/createur/{id_deck:\d+}/{id_createur:\d+}', 'createur@getCreatedCard'],
+    ['OPTIONS', '/createur/{id_deck:\d+}/{id_createur:\d+}', 'authorization@options'],
+
     // Récupérer informations deck pour le créateur
     ['GET', '/createur', 'createur@getAllDecks'],
     ['GET', '/createur/deck/{id:\d+}', 'createur@getDeck'],

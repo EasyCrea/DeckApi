@@ -186,13 +186,13 @@ class Model
     }
 
     /**
-     * Édite les  informations d'un identifiant.
+     * Édite les  informations d'une carte.
      *
      * @param  integer  $id     identifiant à modifier.
      * @param  array  $datas    tableau associatif des données à modifier.
      * @return bool
      */
-    public function update(
+    public function updateCarte(
         int $id,
         array $datas
     ): bool {
@@ -217,6 +217,41 @@ class Model
         $sth = $this->query($sql, $attributes);
         return $sth->rowCount() > 0;
     }
+
+
+    /**
+     * Édite les  informations d'une carte.
+     *
+     * @param  integer  $id     identifiant à modifier.
+     * @param  array  $datas    tableau associatif des données à modifier.
+     * @return bool
+     */
+    public function updateDeck(
+        int $id,
+        array $datas
+    ): bool {
+        if (empty($datas)) {
+            // Si aucune donnée à mettre à jour, renvoyer false
+            return false;
+        }
+
+        $sql = 'UPDATE `' . $this->tableName . '` SET ';
+        foreach (array_keys($datas) as $k) {
+            $sql .= " {$k} = :{$k},";
+        }
+        $sql = rtrim($sql, ','); // Enlever la dernière virgule
+        $sql .= ' WHERE id_deck = :id';
+
+        $attributes = [];
+        foreach ($datas as $k => $v) {
+            $attributes[':' . $k] = $v;
+        }
+        $attributes[':id'] = $id;
+
+        $sth = $this->query($sql, $attributes);
+        return $sth->rowCount() > 0;
+    }
+
 
     /**
      * Efface l'identifiant.
