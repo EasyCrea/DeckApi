@@ -246,6 +246,10 @@ class CreateurController extends Controller
     public function getAllDecks()
     {
         if ($this->isGetMethod()) {
+            $authorizationController = new AuthorizationController();
+
+            $authorizationController->options();
+    
             // 1. vérifier les données soumises
             $decks = Deck::getInstance()->findAll();
             if ($decks) {
@@ -289,6 +293,10 @@ class CreateurController extends Controller
     public function getDeck(
         int|string $id
     ) {
+        $authorizationController = new AuthorizationController();
+
+        $authorizationController->options();
+
 
         // 1. vérifier les données soumises
         $id = (int) $id;
