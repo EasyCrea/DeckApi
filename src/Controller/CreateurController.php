@@ -386,10 +386,15 @@ class CreateurController extends Controller
         // 1. vérifier les données soumises
         $id_deck = (int) $id_deck;
         $cards = Deck::getInstance()->getCardsByDeckId($id_deck);
-        if ($cards) {
+        $deck = Deck::getInstance()->findOneBy([
+            'id_deck' => $id_deck
+        ]);
+        $titleDeck = $deck['titre_deck'] ?? null;
+        if ($cards && $titleDeck) {
             echo json_encode([
                 'status' => 'success',
-                'cards' => $cards
+                'cards' => $cards,
+                'titleDeck' => $titleDeck
             ]);
         } else {
             echo json_encode([
