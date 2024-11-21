@@ -1,0 +1,11 @@
+[2024-11-21 11:40:26]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@createCard',
+        2 => array(
+            'id' => '10',
+        ),
+    )
+    exception-line: 140
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Undefined array key "texte_carte"'

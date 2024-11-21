@@ -117,97 +117,83 @@ class CreateurController extends Controller
         }
     }
 
-    public function createCard()
+    public function createCard(int|string $id)
     {
-        // Création d'une instance de l'autre contrôleur (par exemple, AuthorizationController)
+        $id = (int) $id;
         $authorizationController = new AuthorizationController();
-
-        // Appel de la méthode options() depuis l'autre contrôleur
         $authorizationController->options();
 
-        // Vérification du token administrateur
-        $decodedAdmin = $authorizationController->validateAdminToken();
-        if ($decodedAdmin) {
-            // Si le token admin est valide, on l'utilise
-            $decoded = $decodedAdmin;
-        } else {
-            // Sinon, on vérifie le token du créateur
-            $decodedCreateur = $authorizationController->validateCreateurToken();
-            if (!$decodedCreateur) {
-                // Si aucun token valide, retour erreur
-                http_response_code(403);
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Accès refusé : aucun token valide trouvé'
-                ], JSON_PRETTY_PRINT);
-                return;
-            }
-            $decoded = $decodedCreateur;
+        // Vérification du token
+        $decoded = $authorizationController->validateAdminToken() ?: $authorizationController->validateCreateurToken();
+
+        if (!$decoded) {
+            http_response_code(403);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Accès refusé : aucun token valide ou rôle incorrect',
+            ]);
+            return;
         }
 
-        // Récupération des données envoyées dans la requête
+        $role = $decoded->role ?? null; // Récupérer le rôle
+        $userId = $decoded->id ?? null; // Récupérer l'ID utilisateur
+
+        if (!$role || !$userId) {
+            http_response_code(403);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Accès refusé : rôle ou ID utilisateur manquant',
+            ]);
+            return;
+        }
+
+        // Traitement des données
         $data = json_decode(file_get_contents('php://input'), true);
 
-        // Récupération des informations de la carte
-        $id_deck = $data['id_deck'];
-        $text_carte = $data['texte_carte'];
-        $valeurs_choix1 = $data['valeurs_choix1'];
-        $valeurs_choix2 = $data['valeurs_choix2'];
-        $ordre_soumission = $data['ordre_soumission'];
+        if (!isset($data['texte_carte'], $data['valeurs_choix1'], $data['valeurs_choix2'])) {
+            http_response_code(400);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Données invalides ou incomplètes',
+            ]);
+            return;
+        }
 
-        // Variables pour id_createur ou id_administrateur
-        $id_createur = $data['id_createur'] ?? null;
-        $id_administrateur = $data['id_administrateur'] ?? null;
+        $carteDansLeDeck = Carte::getInstance()->getNumberOfCardsInDeck($id);
+        $date_soumission = (new \DateTime())->format('Y-m-d');
+
+        $cardData = [
+            'texte_carte' => $data['texte_carte'],
+            'valeurs_choix1' => $data['valeurs_choix1'],
+            'valeurs_choix2' => $data['valeurs_choix2'],
+            'date_soumission' => $date_soumission,
+            'ordre_soumission' => $carteDansLeDeck + 1,
+            'id_deck' => $id,
+        ];
+
+        // Associer l'utilisateur selon le rôle
+        if ($role === 'admin') {
+            $cardData['id_administrateur'] = $userId;
+        } elseif ($role === 'createur') {
+            $cardData['id_createur'] = $userId;
+        }
 
         try {
-            $date_soumission = (new \DateTime())->format('Y-m-d H:i:s');
-
-            // Création de la carte pour le créateur
-            if (isset($id_createur)) {
-                $creation = Carte::getInstance()->create([
-                    'date_soumission' => $date_soumission,
-                    'ordre_soumission' => $ordre_soumission,
-                    'valeurs_choix1' => $valeurs_choix1,
-                    'texte_carte' => $text_carte,
-                    'valeurs_choix2' => $valeurs_choix2,
-                    'id_deck' => $id_deck,
-                    'id_createur' => $id_createur,
-                ]);
-                if (!$creation) {
-                    throw new \Exception('Échec de la création de la carte pour le créateur');
-                }
-            }
-
-            // Création de la carte pour l'administrateur
-            if (isset($id_administrateur)) {
-                $creation = Carte::getInstance()->create([
-                    'date_soumission' => $date_soumission,
-                    'ordre_soumission' => $ordre_soumission,
-                    'valeurs_choix1' => $valeurs_choix1,
-                    'texte_carte' => $text_carte,
-                    'valeurs_choix2' => $valeurs_choix2,
-                    'id_deck' => $id_deck,
-                    'id_administrateur' => $id_administrateur,
-                ]);
-                if (!$creation) {
-                    throw new \Exception('Échec de la création de la carte pour l\'administrateur');
-                }
-            }
-
-            // Retourner un message de succès si la création est réussie
+            Carte::getInstance()->create($cardData);
             echo json_encode([
                 'status' => 'success',
-                'message' => 'Carte créée avec succès'
+                'message' => 'Carte créée avec succès',
             ]);
         } catch (\Exception $e) {
-            // Gestion des erreurs
             http_response_code(500);
             echo json_encode([
                 'status' => 'error',
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ]);
         }
     }
+
+
 
 
 

@@ -61,89 +61,50 @@ class AuthorizationController extends Controller
 
     public function validateAdminToken(): ?object
     {
-        header('Content-Type: application/json');
-
-        // Récupérer les headers
         $headers = getallheaders();
         if (!isset($headers['Authorization'])) {
-            http_response_code(400);
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Token manquant'
-            ], JSON_PRETTY_PRINT);
             return null;
         }
 
-        // Extraire le token
         $token = str_replace('Bearer ', '', $headers['Authorization']);
 
         try {
             $key = new Key(JWT_SECRET, 'HS256');
             $decoded = JWT::decode($token, $key);
 
-            // Vérifier le rôle dans le token
+            // Vérifier si le rôle est "admin"
             if ($decoded->role !== 'admin') {
-                http_response_code(403);
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Accès refusé : vous n\'êtes pas administrateur'
-                ], JSON_PRETTY_PRINT);
                 return null;
             }
 
-            return $decoded; // Retourner le token décodé si tout est valide
+            return $decoded;
         } catch (\Exception $e) {
-            http_response_code(401);
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Token invalide ou expiré',
-                'error' => $e->getMessage()
-            ], JSON_PRETTY_PRINT);
-            return null;
+            return null; // Retourner null en cas d'erreur ou d'invalidité
         }
     }
 
-    public function validateCreateurToken()
-    {
-        header('Content-Type: application/json');
 
-        // Récupérer les headers
+    public function validateCreateurToken(): ?object
+    {
         $headers = getallheaders();
         if (!isset($headers['Authorization'])) {
-            http_response_code(400);
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Token manquant'
-            ], JSON_PRETTY_PRINT);
             return null;
         }
 
-        // Extraire le token
         $token = str_replace('Bearer ', '', $headers['Authorization']);
 
         try {
             $key = new Key(JWT_SECRET, 'HS256');
             $decoded = JWT::decode($token, $key);
 
-            // Vérifier le rôle dans le token
+            // Vérifier si le rôle est "createur"
             if ($decoded->role !== 'createur') {
-                http_response_code(403);
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Accès refusé : vous n\'êtes pas créateur'
-                ], JSON_PRETTY_PRINT);
                 return null;
             }
 
-            return $decoded; // Retourner le token décodé si tout est valide
+            return $decoded;
         } catch (\Exception $e) {
-            http_response_code(401);
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Token invalide ou expiré',
-                'error' => $e->getMessage()
-            ], JSON_PRETTY_PRINT);
-            return null;
+            return null; // Retourner null en cas d'erreur ou d'invalidité
         }
     }
 }

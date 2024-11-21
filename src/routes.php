@@ -22,8 +22,8 @@ return [
     ['OPTIONS', '/createurs/checkToken', 'authorization@options'],
 
     // Création carte
-    ['POST', '/createCard', 'createur@createCard'],
-    ['OPTIONS', '/createCard', 'authorization@options'],
+    ['POST', '/createCard{id:\d+}', 'createur@createCard'],
+    ['OPTIONS', '/createCard{id:\d+}', 'authorization@options'],
 
     // Récupérer informations deck pour le créateur
     ['GET', '/createur', 'createur@getAllDecks'],

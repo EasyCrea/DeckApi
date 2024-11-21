@@ -80,31 +80,24 @@ class AdminController extends Controller
     // Créer un deck API
     public function createDeck()
     {
-        // Création d'une instance de l'autre contrôleur (par exemple, AuthorizationController)
         $authorizationController = new AuthorizationController();
-
-        // Appel de la méthode options() depuis l'autre contrôleur
         $authorizationController->options();
 
         $decodedToken = $authorizationController->validateAdminToken();
         if (!$decodedToken) {
-            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
             return;
         }
 
-        // Décodage des données envoyées dans la requête
         $data = json_decode(file_get_contents('php://input'), true);
 
-        // Vérification des données envoyées
         if (!isset($data['titre_deck'], $data['date_debut_deck'], $data['date_fin_deck'], $data['nb_cartes'])) {
             http_response_code(400); // Mauvaise requête si des champs sont manquants
             echo json_encode(['error' => 'Données manquantes.']);
             return;
         }
 
-        // Vérification si un deck existe déjà
         $nb_deck = Deck::getInstance()->findAll();
-        if (count($nb_deck) >= 1) {
+        if (count($nb_deck) >= 10) {
             http_response_code(400); // Mauvaise requête si un deck existe déjà
             echo json_encode(['error' => 'Vous avez déjà un deck en cours.']);
             return;
@@ -115,20 +108,26 @@ class AdminController extends Controller
         $dateFinDeck = $data['date_fin_deck'];
         $nbCarte = $data['nb_cartes'];
 
-        // Créer un nouveau deck
-        $deckCreated = Deck::getInstance()->create([
+        // Créer un nouveau deck et récupérer l'ID du deck
+        $idDeck = Deck::getInstance()->create([
             'titre_deck' => $titreDeck,
             'date_debut_deck' => $dateDebutDeck,
             'date_fin_deck' => $dateFinDeck,
             'nb_cartes' => $nbCarte,
         ]);
 
-        if ($deckCreated) {
-            echo json_encode(['success' => 'Deck créé avec succès'], $deckCreated);
+        if ($idDeck) {
+            http_response_code(201); // 201 Created
+            echo json_encode([
+                'success' => 'Deck créé avec succès',
+                'id_deck' => $idDeck, // Retourne l'ID du deck
+            ]);
         } else {
+            http_response_code(500); // Erreur serveur
             echo json_encode(['error' => 'Une erreur est survenue lors de la création du deck']);
         }
     }
+
 
     // Dashboard API
     public function dashboard()
