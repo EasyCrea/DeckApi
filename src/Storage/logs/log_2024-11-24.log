@@ -1,0 +1,144 @@
+[2024-11-24 15:14:26]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 44
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Undefined array key "name"'
+[2024-11-24 15:14:50]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 44
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Undefined array key "name"'
+[2024-11-24 15:15:10]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 44
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Undefined array key "name"'
+[2024-11-24 15:15:17]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 44
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Undefined array key "name"'
+[2024-11-24 15:16:39]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 44
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Undefined array key "name"'
+[2024-11-24 15:19:06]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 44
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Undefined array key "name"'
+[2024-11-24 15:19:55]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 44
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Undefined array key "name"'
+[2024-11-24 15:19:59]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 44
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Controller\CreateurController.php'
+    exception-code: 'Undefined array key "name"'
+[2024-11-24 15:30:54]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 302
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'eliot.pouplier@gmail.com' for key 'ad_email_createur''
+[2024-11-24 15:39:08]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 302
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'eliot.pouplier@gmail.com' for key 'ad_email_createur''
+[2024-11-24 15:41:14]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 302
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'totto' for key 'ad_email_createur''
+[2024-11-24 15:41:33]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 302
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'totto' for key 'ad_email_createur''
+[2024-11-24 15:45:04]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 302
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'totto' for key 'ad_email_createur''
+[2024-11-24 15:45:13]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 302
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'totto' for key 'ad_email_createur''
+[2024-11-24 15:45:40]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 302
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'totto' for key 'ad_email_createur''
+[2024-11-24 15:54:25]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@register',
+        2 => array(),
+    )
+    exception-line: 302
+    exception-file: 'D:\IUT\3ème année\DeckApi\src\Model\Model.php'
+    exception-code: 'SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'totto' for key 'ad_email_createur''

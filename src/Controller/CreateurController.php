@@ -11,6 +11,7 @@ use App\Model\Deck;
 use App\Model\Carte;
 use App\Model\CarteAleatoire;
 use App\Controller\AuthorizationController;
+use Exception;
 
 
 
@@ -22,10 +23,24 @@ class CreateurController extends Controller
 
     public function register()
     {
+        // Création d'une instance de l'autre contrôleur (AuthorizationController)
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options(); // Appel des options CORS si nécessaire
 
+        // Récupération et décodage des données JSON envoyées dans le body de la requête
         $data = json_decode(file_get_contents('php://input'), true);
-        // 1. vérifier les données soumises
-        // 2. exécuter la requête d'insertion
+
+        // Vérification des données soumises
+        if (empty($data['nom_createur']) || empty($data['ad_email_createur']) || empty($data['mdp_createur']) || empty($data['ddn']) || empty($data['genre'])) {
+            http_response_code(400); // Code 400 Bad Request
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Tous les champs sont obligatoires.'
+            ]);
+            return;
+        }
+
+        // Validation de la date de naissance
         $date = \DateTime::createFromFormat('Y-m-d', $data['ddn']);
         if (!$date || $date->format('Y-m-d') !== $data['ddn']) {
             http_response_code(400); // Code 400 Bad Request
@@ -36,28 +51,52 @@ class CreateurController extends Controller
             return;
         }
 
-        $request = Createur::getInstance()->create([
-            'nom_createur' => trim($data['name']),
-            'ad_email_createur' => trim($data['email']),
-            'mdp_createur' => trim(password_hash($data['password'], PASSWORD_BCRYPT)),
-            'ddn' => $date->format('Y-m-d'),
-            'genre' => trim($data['genre']),
-        ]);
-
-        if ($request) {
-            echo json_encode([
-                'status' => 'success',
-                'nom_createur' => trim($data['name']),
-                'ad_email_createur' => trim($data['email']),
-
-            ]);
-        } else {
+        // Hashage du mot de passe
+        $hashedPassword = password_hash($data['mdp_createur'], PASSWORD_BCRYPT);
+        if (!$hashedPassword) {
+            http_response_code(500); // Code 500 Internal Server Error
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Erreur lors de l\'enregistrement'
+                'message' => 'Erreur lors du hashage du mot de passe.'
+            ]);
+            return;
+        }
+
+        // Préparation des données pour l'insertion
+        $createurData = [
+            'nom_createur' => trim($data['nom_createur']),
+            'ad_email_createur' => trim($data['ad_email_createur']),
+            'mdp_createur' => $hashedPassword,
+            'ddn' => $date->format('Y-m-d'),
+            'genre' => trim($data['genre']),
+        ];
+
+        // Exécution de la requête d'insertion
+        try {
+            $request = Createur::getInstance()->create($createurData);
+
+            if ($request) {
+                http_response_code(201); // Code 201 Created
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Créateur enregistré avec succès.',
+                    'data' => [
+                        'nom_createur' => $createurData['nom_createur'],
+                        'ad_email_createur' => $createurData['ad_email_createur']
+                    ]
+                ]);
+            } else {
+                throw new Exception("Erreur lors de l'enregistrement.");
+            }
+        } catch (Exception $e) {
+            http_response_code(500); // Code 500 Internal Server Error
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Adresse e-mail déjà utilisée.'
             ]);
         }
     }
+
 
     public function login()
     {

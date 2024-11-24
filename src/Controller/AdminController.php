@@ -260,10 +260,16 @@ class AdminController extends Controller
         // Récupérer toutes les cartes associées à ce deck
         $cards = Deck::getInstance()->getCardsByDeckId($deckId);
 
+        // récuperer le nom du deck
+        $deck = Deck::getInstance()->findOneBy(['id_deck' => $deckId]);
+
+        $nomDeck = $deck['titre_deck'];
+
         // Vérifier si des cartes sont trouvées
         if (!empty($cards)) {
-            // Retourner les cartes trouvées avec un statut 200
-            echo json_encode(['cards' => $cards, 'status' => 200]);
+            // Retourner les cartes trouvées avec un statut 200 et le nom du deck
+            http_response_code(200);
+            echo json_encode(['cards' => $cards, 'nom_deck' => $nomDeck, 'status' => 200]);
         } else {
             // Si aucune carte n'est trouvée, retourner un message d'erreur avec statut 404
             http_response_code(404);

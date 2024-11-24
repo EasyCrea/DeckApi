@@ -13,6 +13,7 @@ return [
     // Gérer les créateurs (Créateurs, Inscription, Connexion, etc.)
     // Inscription
     ['POST', '/createurs/register', 'createur@register'],
+    ['OPTIONS', '/createurs/register', 'authorization@options'],
 
     // Connexion
     ['POST', '/createurs/login', 'createur@login'],
