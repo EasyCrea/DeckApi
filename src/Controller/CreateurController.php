@@ -22,6 +22,8 @@ class CreateurController extends Controller
 
     public function register()
     {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
 
         $data = json_decode(file_get_contents('php://input'), true);
         // 1. vérifier les données soumises
