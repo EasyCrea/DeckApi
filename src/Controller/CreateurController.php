@@ -119,6 +119,31 @@ class CreateurController extends Controller
         }
     }
 
+    public function getAllCreateur()
+    {
+        $authorizationController = new AuthorizationController();
+
+        $authorizationController->options();
+
+        // 1. vérifier les données soumises
+        $createurs = Createur::getInstance()->findAll();
+        $emails = array_map(function ($createur) {
+            return $createur['ad_email_createur'];
+        }, $createurs);
+
+        if ($createurs) {
+            echo json_encode([
+                'status' => 'success',
+                'emails' => $emails
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Erreur lors de la récupération des decks'
+            ]);
+        }
+    }
+
     public function createCard(int|string $id)
     {
         $id = (int) $id;
@@ -251,7 +276,7 @@ class CreateurController extends Controller
             $authorizationController = new AuthorizationController();
 
             $authorizationController->options();
-    
+
             // 1. vérifier les données soumises
             $decks = Deck::getInstance()->findAll();
             if ($decks) {

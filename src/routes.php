@@ -13,9 +13,14 @@ return [
     // Gérer les créateurs (Créateurs, Inscription, Connexion, etc.)
     // Inscription
     ['POST', '/createurs/register', 'createur@register'],
+    ['OPTIONS', '/createurs/register', 'authorization@options'],
 
     // Connexion
     ['POST', '/createurs/login', 'createur@login'],
+
+    // Récupérer tout les créateurs
+    ['GET', '/createurs', 'createur@getAllCreateur'],
+    ['OPTIONS', '/createurs', 'authorization@options'],
 
     // Vérification du token
     ['GET', '/createurs/checkToken', 'authorization@checkToken'],
