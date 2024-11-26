@@ -189,7 +189,7 @@ class CreateurController extends Controller
         // Traitement des données
         $data = json_decode(file_get_contents('php://input'), true);
 
-        if (!isset($data['texte_carte'], $data['valeurs_choix1'], $data['valeurs_choix2'])) {
+        if (!isset($data['event_description'], $data['choice_1'], $data['population_impact_1'], $data['finance_impact_1'], $data['choice_2'], $data['population_impact_2'], $data['finance_impact_2'])) {
             http_response_code(400);
             echo json_encode([
                 'status' => 'error',
@@ -202,10 +202,14 @@ class CreateurController extends Controller
         $date_soumission = (new \DateTime())->format('Y-m-d');
 
         $cardData = [
-            'texte_carte' => $data['texte_carte'],
-            'valeurs_choix1' => $data['valeurs_choix1'],
-            'valeurs_choix2' => $data['valeurs_choix2'],
-            'date_soumission' => $date_soumission,
+            'event_description' => $data['event_description'],
+            'choice_1' => $data['choice_1'],
+            'population_impact_1' => $data['population_impact_1'],
+            'finance_impact_1' => $data['finance_impact_1'],
+            'choice_2' => $data['choice_2'],
+            'population_impact_2' => $data['population_impact_2'],
+            'finance_impact_2' => $data['finance_impact_2'],
+            'created_at' => $date_soumission,
             'ordre_soumission' => $carteDansLeDeck + 1,
             'id_deck' => $id,
         ];
