@@ -50,6 +50,10 @@ return [
     ['GET', '/createur', 'createur@getAllDecks'],
     ['GET', '/createur/deck/{id:\d+}', 'createur@getDeck'],
 
+    // Ajout d'un like sur le deck
+    ['PATCH', '/likeDeck/{id:\d+}', 'createur@likeDeck'],
+    ['OPTIONS', '/likeDeck/{id:\d+}', 'authorization@options'],
+
     // Récupérer informations carte pour le créateur
     ['GET', '/createur/random/{id:\d+}', 'createur@getRandomCard'],
     ['GET', '/createur/selfCard/{id:\d+}', 'createur@getCard'],

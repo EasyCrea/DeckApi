@@ -471,4 +471,41 @@ class CreateurController extends Controller
             ]);
         }
     }
+
+    public function likeDeck($id_deck)
+    {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+        $decodedToken = $authorizationController->validateCreateurToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
+        $id_deck = (int) $id_deck;
+        $deck = Deck::getInstance()->findOneBy([
+            'id_deck' => $id_deck
+        ]);
+
+        if ($deck) {
+            $nb_jaime = $deck['nb_jaime'] + 1;
+            $update = Deck::getInstance()->updateDeck($id_deck, ['nb_jaime' => $nb_jaime]);
+            if ($update) {
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Like ajouté avec succès',
+                    'likes' => $nb_jaime
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Erreur lors de l\'ajout du like'
+                ]);
+            }
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Deck not found'
+            ]);
+        }
+    }
 }
