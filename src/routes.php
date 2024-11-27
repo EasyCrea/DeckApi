@@ -48,7 +48,11 @@ return [
 
     // Récupérer informations deck pour le créateur
     ['GET', '/createur', 'createur@getAllDecks'],
+    ['OPTIONS', '/createur', 'authorization@options'],
+    
+    // Récupérer les données d'un seul deck
     ['GET', '/createur/deck/{id:\d+}', 'createur@getDeck'],
+    ['OPTIONS', '/createur/deck/{id:\d+}', 'authorization@options'],
 
     // Ajout d'un like sur le deck
     ['PATCH', '/likeDeck/{id:\d+}', 'createur@likeDeck'],

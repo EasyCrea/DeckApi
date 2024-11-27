@@ -286,8 +286,16 @@ class CreateurController extends Controller
     {
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
+        // Vérification du token
+        $decodedToken = $authorizationController->validateCreateurToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
+
         // 1. vérifier les données soumises
         $decks = Deck::getInstance()->findAll();
+
         if ($decks) {
             echo json_encode([
                 'status' => 'success',
@@ -330,7 +338,11 @@ class CreateurController extends Controller
     ) {
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
-        // 1. vérifier les données soumises
+        $decodedToken = $authorizationController->validateCreateurToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
         $id = (int) $id;
         $cards = Carte::getInstance()->findAllBy([
             'id_deck' => $id
@@ -362,6 +374,13 @@ class CreateurController extends Controller
     ) {
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
+        // Vérification du token
+        $decodedToken = $authorizationController->validateCreateurToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
+       
 
         // 1. vérifier les données soumises
         $id = (int) $id;
