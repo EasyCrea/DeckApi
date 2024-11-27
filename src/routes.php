@@ -17,11 +17,18 @@ return [
 
     // Connexion
     ['POST', '/createurs/login', 'createur@login'],
+    ['OPTIONS', '/createurs/login', 'authorization@options'],
 
     // Vérification du token
-    ['GET', '/createurs/checkToken', 'authorization@checkToken'],
-    ['OPTIONS', '/createurs/checkToken', 'authorization@options'],
+    ['GET', '/authorization/checkToken', 'authorization@checkToken'],
+    ['OPTIONS', '/authorization/checkToken', 'authorization@options'],
 
+    // Attribuer une carte aléatoire à une createur
+    ['POST', '/createur/{id_deck:\d+}/{id_createur:\d+}', 'createur@assignRandomCard'],
+
+    // Check si le createur a déja une carte aléatoire dans ce deck
+    ['GET', '/createur/{id_deck:\d+}/{id_createur:\d+}/randomCard', 'createur@checkIfCreatorHasCard'],
+    ['OPTIONS', '/createur/{id_deck:\d+}/{id_createur:\d+}/randomCard', 'authorization@options'],
     // Création carte
     ['POST', '/createCard{id:\d+}', 'createur@createCard'],
     ['OPTIONS', '/createCard{id:\d+}', 'authorization@options'],
@@ -58,9 +65,6 @@ return [
     ['GET', '/createur/random/{id:\d+}', 'createur@getRandomCard'],
     ['GET', '/createur/selfCard/{id:\d+}', 'createur@getCard'],
     ['GET', '/createur/deckCard/{id:\d+}', 'createur@getCardByDeck'],
-
-    // OPTIONS pour /createurs/login
-    ['OPTIONS', '/createurs/login', 'authorization@options'],
 
 
     // Gérer la connexion des administrateurs
