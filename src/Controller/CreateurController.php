@@ -325,6 +325,38 @@ class CreateurController extends Controller
             ]);
         }
     }
+    public function getCreateurByDeck(
+        int|string $id
+    ) {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+        // 1. vérifier les données soumises
+        $id = (int) $id;
+        $cards = Carte::getInstance()->findAllBy([
+            'id_deck' => $id
+        ]);
+        $createurs = [];
+        foreach ($cards as $card) {
+            $createur = Createur::getInstance()->findOneBy([
+                'id_createur' => $card['id_createur']
+            ]);
+            if ($createur) {
+                $createurs[] = $createur;
+            }
+        }
+        if ($createur) {
+            echo json_encode([
+                'status' => 'success',
+                'createurs' => $createurs
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Createur not found'
+            ]);
+        }
+    }
+
     public function getDeck(
         int|string $id
     ) {

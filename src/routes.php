@@ -59,6 +59,10 @@ return [
     ['GET', '/createur/selfCard/{id:\d+}', 'createur@getCard'],
     ['GET', '/createur/deckCard/{id:\d+}', 'createur@getCardByDeck'],
 
+    //Récupérer les participants des différents decks
+    ['GET', '/createur/participants/{id:\d+}', 'createur@getCreateurByDeck'],
+    ['OPTIONS', '/createur/participants/{id:\d+}', 'authorization@options'],
+
     // OPTIONS pour /createurs/login
     ['OPTIONS', '/createurs/login', 'authorization@options'],
 
