@@ -328,6 +328,8 @@ class CreateurController extends Controller
     public function getDeck(
         int|string $id
     ) {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
 
         // 1. vérifier les données soumises
         $id = (int) $id;
