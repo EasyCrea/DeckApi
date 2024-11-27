@@ -288,20 +288,20 @@ class CreateurController extends Controller
 
     public function getAllDecks()
     {
-        if ($this->isGetMethod()) {
-            // 1. vérifier les données soumises
-            $decks = Deck::getInstance()->findAll();
-            if ($decks) {
-                echo json_encode([
-                    'status' => 'success',
-                    'decks' => $decks
-                ]);
-            } else {
-                echo json_encode([
-                    'status' => 'error',
-                    'message' => 'Erreur lors de la récupération des decks'
-                ]);
-            }
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+        // 1. vérifier les données soumises
+        $decks = Deck::getInstance()->findAll();
+        if ($decks) {
+            echo json_encode([
+                'status' => 'success',
+                'decks' => $decks
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Erreur lors de la récupération des decks'
+            ]);
         }
     }
     public function getRandomCard(
@@ -332,6 +332,8 @@ class CreateurController extends Controller
     public function getDeck(
         int|string $id
     ) {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
 
         // 1. vérifier les données soumises
         $id = (int) $id;
@@ -375,6 +377,8 @@ class CreateurController extends Controller
     public function getCardByDeck(
         int|string $id
     ) {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
         // 1. vérifier les données soumises
         $id = (int) $id;
         $cards = Carte::getInstance()->findAllBy([
