@@ -78,10 +78,6 @@ return [
     ['GET', '/createur/participants/{id:\d+}', 'createur@getCreateurByDeck'],
     ['OPTIONS', '/createur/participants/{id:\d+}', 'authorization@options'],
 
-    // OPTIONS pour /createurs/login
-    ['OPTIONS', '/createurs/login', 'authorization@options'],
-
-
     // Gérer la connexion des administrateurs
     ['POST', '/admin/login', 'admin@login'],
     ['OPTIONS', '/admin/login', 'authorization@options'],
