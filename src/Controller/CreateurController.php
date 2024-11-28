@@ -190,7 +190,7 @@ class CreateurController extends Controller
         // Traitement des données
         $data = json_decode(file_get_contents('php://input'), true);
 
-        if (!isset($data['event_description'], $data['choice_1'], $data['population_impact_1'], $data['finance_impact_1'], $data['choice_2'], $data['population_impact_2'], $data['finance_impact_2'])) {
+        if (!isset($data['texte_carte'], $data['valeurs_choix1'], $data['valeurs_choix2'])) {
             http_response_code(400);
             echo json_encode([
                 'status' => 'error',
@@ -200,35 +200,13 @@ class CreateurController extends Controller
         }
 
         $carteDansLeDeck = Carte::getInstance()->getNumberOfCardsInDeck($id);
-        if ($carteDansLeDeck >= 10) {
-            http_response_code(400);
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Le deck est complet',
-            ]);
-            return;
-        }
-
-        $userHasCreatedCard = Carte::getInstance()->getIfCreatorHasCreatedCardInDeck($userId, $id);
-        if ($userHasCreatedCard) {
-            http_response_code(400);
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Vous avez déjà créé une carte dans ce deck',
-            ]);
-            return;
-        }
         $date_soumission = (new \DateTime())->format('Y-m-d');
 
         $cardData = [
-            'event_description' => $data['event_description'],
-            'choice_1' => $data['choice_1'],
-            'population_impact_1' => $data['population_impact_1'],
-            'finance_impact_1' => $data['finance_impact_1'],
-            'choice_2' => $data['choice_2'],
-            'population_impact_2' => $data['population_impact_2'],
-            'finance_impact_2' => $data['finance_impact_2'],
-            'created_at' => $date_soumission,
+            'texte_carte' => $data['texte_carte'],
+            'valeurs_choix1' => $data['valeurs_choix1'],
+            'valeurs_choix2' => $data['valeurs_choix2'],
+            'date_soumission' => $date_soumission,
             'ordre_soumission' => $carteDansLeDeck + 1,
             'id_deck' => $id,
         ];
@@ -257,32 +235,18 @@ class CreateurController extends Controller
 
 
 
-    public function assignRandomCard(
+    public function createRandomCard(
         int|string $id_deck,
         int|string $id_createur
     ) {
         $id_deck = (int) $id_deck;
         $id_createur = (int) $id_createur;
 
-        $authorizationController = new AuthorizationController();
-        $authorizationController->options();
-
-        // Vérification du token
-        $decodedToken = $authorizationController->validateCreateurToken();
-        if (!$decodedToken) {
-            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
-            return;
-        }
-        // Verifier si le createur a déjà une carte aléatoire dans ce deck
         $verif = CarteAleatoire::getInstance()->findOneBy([
-            'id_deck' => $id_deck,
-            'id_createur' => $id_createur
+            'id_createur' => $id_createur,
         ]);
         if ($verif) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Vous avez déjà une carte aléatoire dans ce deck'
-            ]);
+            return;
         } else {
 
             $all_card = Carte::getInstance()->findAll();
@@ -308,8 +272,7 @@ class CreateurController extends Controller
             if ($carteAleatoire) {
                 echo json_encode([
                     'status' => 'success',
-                    'message' => 'Carte aléatoire créée avec succès',
-                    'carteAleatoire' => Carte::getInstance()->findOneBy(['id_carte' => $id_random])
+                    'message' => 'Carte aléatoire créée avec succès'
                 ]);
             } else {
                 echo json_encode([
@@ -317,38 +280,6 @@ class CreateurController extends Controller
                     'message' => 'Erreur lors de la création de la carte aléatoire'
                 ]);
             }
-        }
-    }
-
-    public function checkIfCreatorHasCard(
-        int|string $id_deck,
-        int|string $id_createur
-    ) {
-        $id_deck = (int) $id_deck;
-        $id_createur = (int) $id_createur;
-        $authorizationController = new AuthorizationController();
-        $authorizationController->options();
-        // Vérification du token
-        $decodedToken = $authorizationController->validateCreateurToken();
-        if (!$decodedToken) {
-            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
-            return;
-        }
-        $verif = CarteAleatoire::getInstance()->findOneBy([
-            'id_deck' => $id_deck,
-            'id_createur' => $id_createur
-        ]);
-        if ($verif) {
-            echo json_encode([
-                'status' => 'success',
-                'message' => 'Vous avez déjà une carte aléatoire dans ce deck',
-                'card' => Carte::getInstance()->findOneBy(['id_carte' => $verif['id_carte']])
-            ]);
-        } else {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Vous n\'avez pas de carte aléatoire dans ce deck'
-            ]);
         }
     }
 
