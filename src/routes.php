@@ -55,9 +55,13 @@ return [
     ['OPTIONS', '/createur/deck/{id:\d+}', 'authorization@options'],
 
     // Ajout d'un like sur le deck
-    ['PATCH', '/likeDeck/{id:\d+}', 'createur@likeDeck'],
+    ['PATCH', '/likeDeck/{id_deck:\d+}', 'createur@likeDeck'],
     ['OPTIONS', '/likeDeck/{id:\d+}', 'authorization@options'],
 
+    // Route POST
+    ['POST', '/like/{id_deck:\d+}/{id_createur:\d+}', 'createur@ajoutLike'],
+    ['OPTIONS', '/like/{id_deck:\d+}/{id_createur:\d+}', 'authorization@options'],
+    
     // Récupérer informations carte pour le créateur
     ['GET', '/createur/random/{id:\d+}', 'createur@getRandomCard'],
     ['GET', '/createur/selfCard/{id:\d+}', 'createur@getCard'],

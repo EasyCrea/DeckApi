@@ -10,6 +10,7 @@ use Firebase\JWT\Key;
 use App\Model\Deck;
 use App\Model\Carte;
 use App\Model\CarteAleatoire;
+use App\Model\Like;
 use App\Controller\AuthorizationController;
 use Exception;
 
@@ -380,7 +381,7 @@ class CreateurController extends Controller
             // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
             return;
         }
-       
+
 
         // 1. vérifier les données soumises
         $id = (int) $id;
@@ -525,6 +526,7 @@ class CreateurController extends Controller
 
     public function likeDeck($id_deck)
     {
+
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
         $decodedToken = $authorizationController->validateCreateurToken();
@@ -533,6 +535,7 @@ class CreateurController extends Controller
             return;
         }
         $id_deck = (int) $id_deck;
+
         $deck = Deck::getInstance()->findOneBy([
             'id_deck' => $id_deck
         ]);
@@ -540,6 +543,7 @@ class CreateurController extends Controller
         if ($deck) {
             $nb_jaime = $deck['nb_jaime'] + 1;
             $update = Deck::getInstance()->updateDeck($id_deck, ['nb_jaime' => $nb_jaime]);
+
             if ($update) {
                 echo json_encode([
                     'status' => 'success',
@@ -558,5 +562,46 @@ class CreateurController extends Controller
                 'message' => 'Deck not found'
             ]);
         }
+    }
+    public function ajoutLike($id_deck, $id_createur)
+    {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+        $decodedToken = $authorizationController->validateCreateurToken();
+
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
+        $id_createur = (int) $id_createur;
+        $id_deck = (int) $id_deck;
+        $existing = Like::getInstance()->findOneBy([
+            'id_deck' => $id_deck,
+            'id_createur' => $id_createur
+        ]);
+        if ($existing) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Like déjà ajouté'
+            ]);
+            return;
+
+        } else{
+            $createur = Like::getInstance()->create([
+                'id_deck' => $id_deck,
+                'id_createur' => $id_createur
+            ]);
+            if ($createur) {
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => 'Like ajouté avec succès'
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Erreur lors de l\'ajout du like'
+                ]);
+            }
+        }   
     }
 }
