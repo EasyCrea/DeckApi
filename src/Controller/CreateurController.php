@@ -503,11 +503,13 @@ class CreateurController extends Controller
             'id_deck' => $id_deck
         ]);
         $titleDeck = $deck['titre_deck'] ?? null;
+        $descriptionDeck = $deck['description'] ?? null;
         if ($cards && $titleDeck) {
             echo json_encode([
                 'status' => 'success',
                 'cards' => $cards,
-                'titleDeck' => $titleDeck
+                'titleDeck' => $titleDeck,
+                'descriptionDeck' => $descriptionDeck
             ]);
         } else {
             echo json_encode([
