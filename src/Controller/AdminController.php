@@ -69,6 +69,7 @@ class AdminController extends Controller
             ]);
         } else {
             // Si les identifiants sont incorrects
+            http_response_code(401); // Code 401 Unauthorized pour identifiants incorrects
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Identifiants incorrects'

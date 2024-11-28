@@ -17,11 +17,18 @@ return [
 
     // Connexion
     ['POST', '/createurs/login', 'createur@login'],
+    ['OPTIONS', '/createurs/login', 'authorization@options'],
 
     // Vérification du token
-    ['GET', '/createurs/checkToken', 'authorization@checkToken'],
-    ['OPTIONS', '/createurs/checkToken', 'authorization@options'],
+    ['GET', '/authorization/checkToken', 'authorization@checkToken'],
+    ['OPTIONS', '/authorization/checkToken', 'authorization@options'],
 
+    // Attribuer une carte aléatoire à une createur
+    ['POST', '/createur/{id_deck:\d+}/{id_createur:\d+}', 'createur@assignRandomCard'],
+
+    // Check si le createur a déja une carte aléatoire dans ce deck
+    ['GET', '/createur/{id_deck:\d+}/{id_createur:\d+}/randomCard', 'createur@checkIfCreatorHasCard'],
+    ['OPTIONS', '/createur/{id_deck:\d+}/{id_createur:\d+}/randomCard', 'authorization@options'],
     // Création carte
     ['POST', '/createCard{id:\d+}', 'createur@createCard'],
     ['OPTIONS', '/createCard{id:\d+}', 'authorization@options'],
@@ -48,20 +55,12 @@ return [
 
     // Récupérer informations deck pour le créateur
     ['GET', '/createur', 'createur@getAllDecks'],
-    ['OPTIONS', '/createur', 'authorization@options'],
-    
-    // Récupérer les données d'un seul deck
     ['GET', '/createur/deck/{id:\d+}', 'createur@getDeck'],
-    ['OPTIONS', '/createur/deck/{id:\d+}', 'authorization@options'],
 
     // Ajout d'un like sur le deck
-    ['PATCH', '/likeDeck/{id_deck:\d+}', 'createur@likeDeck'],
+    ['PATCH', '/likeDeck/{id:\d+}', 'createur@likeDeck'],
     ['OPTIONS', '/likeDeck/{id:\d+}', 'authorization@options'],
 
-    // Route POST
-    ['POST', '/like/{id_deck:\d+}/{id_createur:\d+}', 'createur@ajoutLike'],
-    ['OPTIONS', '/like/{id_deck:\d+}/{id_createur:\d+}', 'authorization@options'],
-    
     // Récupérer informations carte pour le créateur
     ['GET', '/createur/random/{id:\d+}', 'createur@getRandomCard'],
     ['GET', '/createur/selfCard/{id:\d+}', 'createur@getCard'],
