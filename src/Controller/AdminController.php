@@ -321,28 +321,43 @@ class AdminController extends Controller
         $id = (int) $id;
         $data = json_decode(file_get_contents('php://input'), true);
 
-        if (!isset($data['texte_carte'], $data['valeurs_choix1'], $data['valeurs_choix2'], $data['id_deck'])) {
+        // Validate input data
+        if (!isset(
+            $data['event_description'],
+            $data['choice_1'],
+            $data['choice_2'],
+            $data['population_impact_1'],
+            $data['finance_impact_1'],
+            $data['population_impact_2'],
+            $data['finance_impact_2'],
+            $data['id_deck']
+        )) {
             http_response_code(400);
             echo json_encode(['error' => 'Données manquantes']);
             return;
         }
 
-        $texte_carte = $data['texte_carte'];
-        $valeurs_choix1 = $data['valeurs_choix1'];
-        $valeurs_choix2 = $data['valeurs_choix2'];
-        $deckId = $data['id_deck'];
+        // Prepare data for update
+        $updateData = [
+            'event_description' => $data['event_description'],
+            'choice_1' => $data['choice_1'],
+            'population_impact_1' => (int)$data['population_impact_1'],
+            'finance_impact_1' => (int)$data['finance_impact_1'],
+            'choice_2' => $data['choice_2'],
+            'population_impact_2' => (int)$data['population_impact_2'],
+            'finance_impact_2' => (int)$data['finance_impact_2'],
+            'id_deck' => (int)$data['id_deck']
+        ];
 
-        $success = Carte::getInstance()->updateCarte($id, [
-            'texte_carte' => $texte_carte,
-            'valeurs_choix1' => $valeurs_choix1,
-            'valeurs_choix2' => $valeurs_choix2,
-            'id_deck' => $deckId
-        ]);
+        // Attempt to update the card
+        $success = Carte::getInstance()->updateCarte($id, $updateData);
 
         if ($success) {
+            http_response_code(200);
             echo json_encode(['success' => 'Carte modifiée avec succès']);
         } else {
+            http_response_code(500);
             echo json_encode(['error' => 'Une erreur est survenue lors de la modification de la carte']);
         }
     }
-};
+}
