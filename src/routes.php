@@ -55,6 +55,7 @@ return [
 
     // Récupérer informations deck pour le créateur
     ['GET', '/createur', 'createur@getAllDecks'],
+    ['OPTIONS', '/createur', 'createur@getAllDecks'],
     ['GET', '/createur/deck/{id:\d+}', 'createur@getDeck'],
 
      // Ajout d'un like sur le deck
