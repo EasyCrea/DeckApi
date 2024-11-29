@@ -56,7 +56,6 @@ return [
     // Récupérer informations deck pour le créateur
     ['GET', '/createur', 'createur@getAllDecks'],
     ['OPTIONS', '/createur', 'authorization@options'],
-
     ['GET', '/createur/deck/{id:\d+}', 'createur@getDeck'],
     ['OPTIONS', '/createur/deck/{id:\d+}', 'authorization@options'],
 
