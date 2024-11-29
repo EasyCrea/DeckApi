@@ -4,7 +4,7 @@ Options -Indexes
 # Réécriture du moteur activé
 RewriteEngine On
 
-RewriteBase /EasyCrea/
+RewriteBase /api/
 
 # rediriger les index.php les URL si elles ne correspondent pas à un fichier ou à un dossier
 RewriteCond %{REQUEST_FILENAME} !-d

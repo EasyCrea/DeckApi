@@ -2,6 +2,7 @@
 /*
     Fichier : src/bootstrap.php
 */
+
 declare(strict_types=1);
 
 /*
@@ -50,48 +51,48 @@ if (APP_MODE === 'dev') {
     $whoops->pushHandler(function ($exception, $inspector, $run) {
         $errorFile = APP_STORAGE_DIRECTORY . 'error.log';
         $output = date('Y-m-d H:i:s') . ' L' . $exception->getLine() . ' ' .
-                  $exception->getFile() . ':: ' . $exception->getMessage() . "\n" .
-                  file_get_contents($errorFile);
+            $exception->getFile() . ':: ' . $exception->getMessage() . "\n" .
+            file_get_contents($errorFile);
         file_put_contents($errorFile, $output);
     });
 }
 $whoops->register();
 
-/*
-  ==5==
-  Construire les vues avec TWIG.
-  https://twig.symfony.com/doc/3.x/
-*/
-$twig = new \Twig\Environment(
-    // spécifier le dossier des templates twig
-    new \Twig\Loader\FilesystemLoader(APP_SRC_DIRECTORY . 'View'),
-    [
-        // le dossier du cache de TWIG – pas actif pour le moment
-        'cache' => false,
-        // si true, les variables qui n'existent pas déclenchent une erreur
-        'strict_variables ' => true,
-        // debug activé
-        'debug' => true,
-    ]
-);
-// méthode dump() dans TWIG
-$twig->addExtension(new \Twig\Extension\DebugExtension());
-// ajouter dans TWIG une fonction 'url'
-// dans une vue TWIG, on peut écrire :
-//    <a href="{{ url('/test') }}">...</a>
-$twig->addFunction(
-    new \Twig\TwigFunction('url', function ($url) {
-        return APP_ROOT_URL_COMPLETE . $url;
-    })
-);
-// ajouter dans TWIG une fonction 'asset'
-// dans une vue TWIG, on peut écrire :
-//    <img src="{{ asset('/image/avatar/' ~ avatar.illustration) }}">
-$twig->addFunction(
-    new \Twig\TwigFunction('asset', function ($asset) {
-        return APP_ROOT_URL_COMPLETE . '/assets' . $asset;
-    })
-);
+// /*
+//   ==5==
+//   Construire les vues avec TWIG.
+//   https://twig.symfony.com/doc/3.x/
+// */
+// $twig = new \Twig\Environment(
+//     // spécifier le dossier des templates twig
+//     new \Twig\Loader\FilesystemLoader(APP_SRC_DIRECTORY . 'View'),
+//     [
+//         // le dossier du cache de TWIG – pas actif pour le moment
+//         'cache' => false,
+//         // si true, les variables qui n'existent pas déclenchent une erreur
+//         'strict_variables ' => true,
+//         // debug activé
+//         'debug' => true,
+//     ]
+// );
+// // méthode dump() dans TWIG
+// $twig->addExtension(new \Twig\Extension\DebugExtension());
+// // ajouter dans TWIG une fonction 'url'
+// // dans une vue TWIG, on peut écrire :
+// //    <a href="{{ url('/test') }}">...</a>
+// $twig->addFunction(
+//     new \Twig\TwigFunction('url', function ($url) {
+//         return APP_ROOT_URL_COMPLETE . $url;
+//     })
+// );
+// // ajouter dans TWIG une fonction 'asset'
+// // dans une vue TWIG, on peut écrire :
+// //    <img src="{{ asset('/image/avatar/' ~ avatar.illustration) }}">
+// $twig->addFunction(
+//     new \Twig\TwigFunction('asset', function ($asset) {
+//         return APP_ROOT_URL_COMPLETE . '/assets' . $asset;
+//     })
+// );
 
 
 /*
@@ -121,7 +122,7 @@ $uri = rawurldecode($uri);
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 // traiter la commande (si c'est possible)
 switch ($routeInfo[0]) {
-    // la route est connue
+        // la route est connue
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];

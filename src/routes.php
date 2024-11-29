@@ -10,6 +10,9 @@ Les routes
 
 return [
 
+
+    ['GET', '/', 'createur@getAllDecks'],
+    ['OPTIONS', '/', 'authorization@options'],
     // Gérer les créateurs (Créateurs, Inscription, Connexion, etc.)
     // Inscription
     ['POST', '/createurs/register', 'createur@register'],

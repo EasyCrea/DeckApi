@@ -14,6 +14,11 @@ use App\Model\CarteAleatoire;
 class AdminController extends Controller
 {
 
+    public function index()
+    {
+        echo json_encode("toto");
+    }
+
     // Connexion API
     public function login()
     {
