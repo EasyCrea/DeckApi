@@ -356,6 +356,11 @@ class CreateurController extends Controller
     {
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
+        $decodedToken = $authorizationController->validateCreateurToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
         // 1. vérifier les données soumises
         $decks = Deck::getInstance()->findAll();
         if ($decks) {
@@ -367,6 +372,39 @@ class CreateurController extends Controller
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Erreur lors de la récupération des decks'
+            ]);
+        }
+    }
+    public function getCreateurByDeck($id){
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+        $decodedToken = $authorizationController->validateCreateurToken();
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
+        $id = (int) $id;
+        $carte = Carte::getInstance()->findAllBy([
+            'id_deck' => $id
+        ]);
+        $createurs = [];
+        foreach ($carte as $card) {
+            $createur = Createur::getInstance()->findOneBy([
+                'id_createur' => $card['id_createur']
+            ]);
+            if ($createur) {
+                $createurs[] = $createur;
+            }
+        }
+        if ($createurs) {
+            echo json_encode([
+                'status' => 'success',
+                'createurs' => $createurs
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Erreur lors de la récupération des createurs'
             ]);
         }
     }
