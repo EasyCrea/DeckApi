@@ -24,9 +24,8 @@ class CreateurController extends Controller
 
     public function register()
     {
-        // Création d'une instance de l'autre contrôleur (AuthorizationController)
         $authorizationController = new AuthorizationController();
-        $authorizationController->options(); // Appel des options CORS si nécessaire
+        $authorizationController->options();
 
         // Récupération et décodage des données JSON envoyées dans le body de la requête
         $data = json_decode(file_get_contents('php://input'), true);
@@ -153,6 +152,31 @@ class CreateurController extends Controller
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Identifiants incorrects'
+            ]);
+        }
+    }
+
+    public function getAllCreateur()
+    {
+        $authorizationController = new AuthorizationController();
+
+        $authorizationController->options();
+
+        // 1. vérifier les données soumises
+        $createurs = Createur::getInstance()->findAll();
+        $emails = array_map(function ($createur) {
+            return $createur['ad_email_createur'];
+        }, $createurs);
+
+        if ($createurs) {
+            echo json_encode([
+                'status' => 'success',
+                'emails' => $emails
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Erreur lors de la récupération des decks'
             ]);
         }
     }
