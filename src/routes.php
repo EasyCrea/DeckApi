@@ -55,15 +55,18 @@ return [
 
     // Récupérer informations deck pour le créateur
     ['GET', '/createur', 'createur@getAllDecks'],
-    ['GET', '/createur/deck/{id:\d+}', 'createur@getDeck'],
+    ['OPTIONS', '/createur', 'authorization@options'],
 
-     // Ajout d'un like sur le deck
-     ['PATCH', '/likeDeck/{id_deck:\d+}', 'createur@likeDeck'],
-     ['OPTIONS', '/likeDeck/{id:\d+}', 'authorization@options'],
- 
-     // Route POST
-     ['POST', '/like/{id_deck:\d+}/{id_createur:\d+}', 'createur@ajoutLike'],
-     ['OPTIONS', '/like/{id_deck:\d+}/{id_createur:\d+}', 'authorization@options'],
+    ['GET', '/createur/deck/{id:\d+}', 'createur@getDeck'],
+    ['OPTIONS', '/createur/deck/{id:\d+}', 'authorization@options'],
+
+    // Ajout d'un like sur le deck
+    ['PATCH', '/likeDeck/{id_deck:\d+}', 'createur@likeDeck'],
+    ['OPTIONS', '/likeDeck/{id:\d+}', 'authorization@options'],
+
+    // Route POST
+    ['POST', '/like/{id_deck:\d+}/{id_createur:\d+}', 'createur@ajoutLike'],
+    ['OPTIONS', '/like/{id_deck:\d+}/{id_createur:\d+}', 'authorization@options'],
 
     // Récupérer informations carte pour le créateur
     ['GET', '/createur/random/{id:\d+}', 'createur@getRandomCard'],
