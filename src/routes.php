@@ -59,6 +59,22 @@ return [
     ['GET', '/createur/deck/{id:\d+}', 'createur@getDeck'],
     ['OPTIONS', '/createur/deck/{id:\d+}', 'authorization@options'],
 
+    ['GET', '/allcreateur', 'createur@getAllCreators'],
+    ['OPTIONS', '/allcreateur', 'authorization@options'],
+
+    // Historique des parties
+    ['GET', '/gamehistory/{user_id:\d+}/{deck_id:\d+}', 'createur@getGameHistory'],
+    ['OPTIONS', '/gamehistory/{user_id:\d+}/{deck_id:\d+}', 'authorization@options'],
+    ['POST', '/creategamehistory', 'createur@createGameHistory'],
+    ['OPTIONS', '/creategamehistory', 'authorization@options'],
+    ['DELETE', '/deletegamehistory/{id:\d+}', 'createur@deleteGameHistory'],
+    ['OPTIONS', '/deletegamehistory/{id:\d+}', 'authorization@options'],
+    ['PUT', '/updategamehistory', 'createur@updateGameHistory'],
+    ['OPTIONS', '/updategamehistory', 'authorization@options'],
+
+
+        
+
     // Ajout d'un like sur le deck
     ['PATCH', '/likeDeck/{id_deck:\d+}', 'createur@likeDeck'],
     ['OPTIONS', '/likeDeck/{id:\d+}', 'authorization@options'],
