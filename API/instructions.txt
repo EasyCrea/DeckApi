@@ -1,0 +1,13 @@
+Ce template de mini projet PHP est basé sur une structure MVC.
+Pour être utilisé, il faut procéder aux réglages suivants :
+  o générer le dossier /vendor de libraires de COMPOSER avec l'instruction :
+        composer update
+  o adapter le contenu des 2 fichiers /src/Config/config.local.php et (optionnellement) /src/Config/config.prod.php
+    en fonction des valeurs de réglage pour accéder à la base de données. Si l'application n'utilise pas de base,
+    alors les fichiers de configuration peuvent rester vides.
+  o mettre en place la base MYSQL nommée 'mvc.generic-demo' (le nom peut être adaptée). Dans le fichier src/_database
+    on trouve un fichier generate.sql qui permet rapidement de mettre en place la table et des données fictives pour 
+    alimenter l'application.
+
+Il faut démarer le projet en exécutant le serveur local sur le port 8000 (par exemple) :
+  php -S localhost:8000 -t public
