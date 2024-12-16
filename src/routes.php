@@ -10,6 +10,9 @@ Les routes
 
 return [
 
+
+    ['GET', '/', 'admin@index'],
+    ['OPTIONS', '/', 'admin@index'],
     // Gérer les créateurs (Créateurs, Inscription, Connexion, etc.)
     // Inscription
     ['POST', '/createurs/register', 'createur@register'],
