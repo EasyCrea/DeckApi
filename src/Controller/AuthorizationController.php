@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use Dotenv\Dotenv;
 
 class AuthorizationController extends Controller
 {
@@ -14,7 +15,14 @@ class AuthorizationController extends Controller
      */
     public function options(): void
     {
-        header('Access-Control-Allow-Origin: http://localhost:5173');
+        $allowed_origins = [
+            'http://localhost:5173',
+            'https://easydeck.alwaysdata.net'
+        ];
+
+        if (isset($_SERVER['HTTP_ORIGIN']) && in_array($_SERVER['HTTP_ORIGIN'], $allowed_origins)) {
+            header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
+        }
         header('Access-Control-Allow-Methods: GET, POST, PATCH, DELETE, OPTIONS');
         header('Access-Control-Allow-Headers: Authorization, Content-Type, X-Requested-With');
         header('Access-Control-Allow-Credentials: true');
@@ -39,9 +47,14 @@ class AuthorizationController extends Controller
         }
 
         $token = str_replace('Bearer ', '', $headers['Authorization']);
+        // Charger les variables d'environnement
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2)); // Remonte à la racine du projet
+        $dotenv->load();
 
+        // Récupérer la clé secrète JWT depuis le .env
+        $jwtSecret = $_ENV['JWT_SECRET'];
         try {
-            $key = new Key(JWT_SECRET, 'HS256');
+            $key = new Key($jwtSecret, 'HS256');
             $decoded = JWT::decode($token, $key);
 
             echo json_encode([
@@ -67,9 +80,14 @@ class AuthorizationController extends Controller
         }
 
         $token = str_replace('Bearer ', '', $headers['Authorization']);
+        // Charger les variables d'environnement
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2)); // Remonte à la racine du projet
+        $dotenv->load();
 
+        // Récupérer la clé secrète JWT depuis le .env
+        $jwtSecret = $_ENV['JWT_SECRET'];
         try {
-            $key = new Key(JWT_SECRET, 'HS256');
+            $key = new Key($jwtSecret, 'HS256');
             $decoded = JWT::decode($token, $key);
 
             // Vérifier si le rôle est "admin"
@@ -92,9 +110,13 @@ class AuthorizationController extends Controller
         }
 
         $token = str_replace('Bearer ', '', $headers['Authorization']);
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2)); // Remonte à la racine du projet
+        $dotenv->load();
 
+        // Récupérer la clé secrète JWT depuis le .env
+        $jwtSecret = $_ENV['JWT_SECRET'];
         try {
-            $key = new Key(JWT_SECRET, 'HS256');
+            $key = new Key($jwtSecret, 'HS256');
             $decoded = JWT::decode($token, $key);
 
             // Vérifier si le rôle est "createur"

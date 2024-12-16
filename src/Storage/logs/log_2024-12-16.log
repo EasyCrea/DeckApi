@@ -1,0 +1,171 @@
+[2024-12-16 14:39:27]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@login',
+        2 => array(),
+    )
+    exception-line: 68
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\vendor\vlucas\phpdotenv\src\Store\FileStore.php'
+    exception-code: 'Unable to read any of the environment file(s) at [C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\.env].'
+[2024-12-16 14:39:29]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@login',
+        2 => array(),
+    )
+    exception-line: 68
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\vendor\vlucas\phpdotenv\src\Store\FileStore.php'
+    exception-code: 'Unable to read any of the environment file(s) at [C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\.env].'
+[2024-12-16 14:45:51]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@login',
+        2 => array(),
+    )
+    exception-line: 68
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\vendor\vlucas\phpdotenv\src\Store\FileStore.php'
+    exception-code: 'Unable to read any of the environment file(s) at [C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\.env].'
+[2024-12-16 14:47:03]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@login',
+        2 => array(),
+    )
+    exception-line: 68
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\vendor\vlucas\phpdotenv\src\Store\FileStore.php'
+    exception-code: 'Unable to read any of the environment file(s) at [C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\.env].'
+[2024-12-16 14:48:01]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@login',
+        2 => array(),
+    )
+    exception-line: 68
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\vendor\vlucas\phpdotenv\src\Store\FileStore.php'
+    exception-code: 'Unable to read any of the environment file(s) at [C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\.env].'
+[2024-12-16 14:50:24]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@login',
+        2 => array(),
+    )
+    exception-line: 68
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\vendor\vlucas\phpdotenv\src\Store\FileStore.php'
+    exception-code: 'Unable to read any of the environment file(s) at [C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\.env].'
+[2024-12-16 14:50:45]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@login',
+        2 => array(),
+    )
+    exception-line: 68
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\vendor\vlucas\phpdotenv\src\Store\FileStore.php'
+    exception-code: 'Unable to read any of the environment file(s) at [C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\.env].'
+[2024-12-16 14:55:02]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@index',
+        2 => array(),
+    )
+    exception-line: 19
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'Undefined array key "USER"'
+[2024-12-16 14:57:56]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@index',
+        2 => array(),
+    )
+    exception-line: 19
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'Undefined array key "USER"'
+[2024-12-16 15:00:51]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@index',
+        2 => array(),
+    )
+    exception-line: 13
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'require(vendor/autoload.php): Failed to open stream: No such file or directory'
+[2024-12-16 15:00:54]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@index',
+        2 => array(),
+    )
+    exception-line: 13
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'require(vendor/autoload.php): Failed to open stream: No such file or directory'
+[2024-12-16 15:00:55]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@index',
+        2 => array(),
+    )
+    exception-line: 13
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'require(vendor/autoload.php): Failed to open stream: No such file or directory'
+[2024-12-16 15:00:56]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@index',
+        2 => array(),
+    )
+    exception-line: 13
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'require(vendor/autoload.php): Failed to open stream: No such file or directory'
+[2024-12-16 15:00:57]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@index',
+        2 => array(),
+    )
+    exception-line: 13
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'require(vendor/autoload.php): Failed to open stream: No such file or directory'
+[2024-12-16 15:19:23]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@index',
+        2 => array(),
+    )
+    exception-line: 13
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'require(vendor/autoload.php): Failed to open stream: No such file or directory'
+[2024-12-16 15:19:58]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@index',
+        2 => array(),
+    )
+    exception-line: 13
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'require(vendor/autoload.php): Failed to open stream: No such file or directory'
+[2024-12-16 15:20:48]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@index',
+        2 => array(),
+    )
+    exception-line: 13
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'require(vendor/autoload.php): Failed to open stream: No such file or directory'
+[2024-12-16 15:21:35]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@index',
+        2 => array(),
+    )
+    exception-line: 13
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'require(vendor/autoload.php): Failed to open stream: No such file or directory'
+[2024-12-16 15:24:24]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'admin@index',
+        2 => array(),
+    )
+    exception-line: 13
+    exception-file: 'C:\Cours MMI 3ème année\A Blanc\SAE\DeckApi\src\Controller\AdminController.php'
+    exception-code: 'require(vendor/autoload.php): Failed to open stream: No such file or directory'

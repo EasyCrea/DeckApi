@@ -1,22 +1,26 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Controller;
 
 use Firebase\JWT\JWT;
 use App\Model\Admin;
+use Dotenv\Dotenv;
 use App\Model\Deck;
 use App\Model\Carte;
-use App\Model\CarteAleatoire;
-
 
 class AdminController extends Controller
 {
-
     public function index()
     {
-        echo json_encode("toto");
+        // Charger les variables d'environnement
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2)); // Remonte à la racine du projet
+        $dotenv->load();
+
+        // Récupérer la clé secrète JWT depuis le .env
+        $jwtSecret = $_ENV['JWT_SECRET'];
+
+        // Si vous voulez afficher la clé, utilisez echo ou var_dump
+        echo $jwtSecret; // ou var_dump($jwtSecret);
     }
 
     // Connexion API
@@ -26,6 +30,11 @@ class AdminController extends Controller
         $authorizationController = new AuthorizationController();
 
         $authorizationController->options();
+
+        // Charger les variables d'environnement
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2)); // Remonte à la racine du projet
+
+        $dotenv->load();
 
         // Lire les données JSON envoyées dans la requête
         $data = json_decode(file_get_contents('php://input'), true);
@@ -58,8 +67,11 @@ class AdminController extends Controller
                 'exp' => time() + 3600 // Le token expire après 1 heure
             ];
 
-            // Utiliser une clé secrète pour encoder le token (assurez-vous d'avoir défini JWT_SECRET dans votre projet)
-            $token = JWT::encode($payload, JWT_SECRET, 'HS256');
+            // Récupérer la clé secrète JWT depuis le .env
+            $jwtSecret = $_ENV['JWT_SECRET'];
+
+            // Encoder le token avec la clé secrète du .env
+            $token = JWT::encode($payload, $jwtSecret, 'HS256');
 
             // Retourner la réponse avec le token généré
             echo json_encode([

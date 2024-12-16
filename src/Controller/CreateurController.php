@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Model\Createur;
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
+use Dotenv\Dotenv;
 use App\Model\Deck;
 use App\Model\Gamehistory;
 use App\Model\Like;
@@ -107,6 +107,12 @@ class CreateurController extends Controller
 
         // Appel de la méthode options() depuis l'autre contrôleur
         $authorizationController->options();
+
+        // Charger les variables d'environnement
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2)); // Remonte à la racine du projet
+        $dotenv->load();
+
+
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (!isset($data['email'], $data['password'])) {
@@ -135,8 +141,11 @@ class CreateurController extends Controller
                 'exp' => time() + 3600 // Expiration dans 1 heure
             ];
 
-            $token = JWT::encode($payload, JWT_SECRET, 'HS256');
+            // Récupérer la clé secrète JWT depuis le .env
+            $jwtSecret = $_ENV['JWT_SECRET'];
 
+            // Encoder le token avec la clé secrète du .env
+            $token = JWT::encode($payload, $jwtSecret, 'HS256');
             // Retourner la réponse avec le token
             echo json_encode([
                 'status' => 'success',
