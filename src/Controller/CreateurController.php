@@ -168,12 +168,12 @@ class CreateurController extends Controller
             // Convertir l'ID du créateur et de deck en entiers (si nécessaire)
             $userId = (int) $userId;
             $deckId = (int) $deckId;
-            
+
             // Vérifier que l'ID du créateur et du deck sont valides
             if ($userId > 0 && $deckId > 0) {
                 // Récupérer l'historique de jeu pour cet utilisateur et ce deck
                 $gameHistory = GameHistory::getInstance()->getGameHistoryByCreateurAndDeck($userId, $deckId);
-        
+
                 if ($gameHistory) {
                     // Si des historiques de jeu sont trouvés, les retourner sous forme JSON
                     echo json_encode([
@@ -201,118 +201,122 @@ class CreateurController extends Controller
                 'message' => 'ID du créateur ou du deck manquant.'
             ]);
         }
-    } 
+    }
     public function createGameHistory()
-{
-    $authorizationController = new AuthorizationController();
-    $authorizationController->options();
+    {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
 
-    // Récupérer les données de l'entrée (par exemple via POST)
-    $data = json_decode(file_get_contents('php://input'), true);
+        // Récupérer les données de l'entrée (par exemple via POST)
+        $data = json_decode(file_get_contents('php://input'), true);
 
-    // Vérifier les champs requis
-    if (!isset($data['user_id']) || !isset($data['deck_id']) || !isset($data['turn_count']) || 
-        !isset($data['final_people']) || !isset($data['final_treasury']) || !isset($data['is_winner'])) {
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'Tous les champs requis doivent être fournis.'
-        ]);
-        return;
+        // Vérifier les champs requis
+        if (
+            !isset($data['user_id']) || !isset($data['deck_id']) || !isset($data['turn_count']) ||
+            !isset($data['final_people']) || !isset($data['final_treasury']) || !isset($data['is_winner'])
+        ) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Tous les champs requis doivent être fournis.'
+            ]);
+            return;
+        }
+
+        // Ajouter l'historique du jeu à la base de données
+        $gameHistory = new Gamehistory();
+        $result = $gameHistory->addGameHistory(
+            $data['user_id'],
+            $data['deck_id'],
+            $data['turn_count'],
+            $data['final_people'],
+            $data['final_treasury'],
+            $data['is_winner']
+        );
+
+        if ($result) {
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Historique du jeu ajouté avec succès.'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Une erreur est survenue lors de l\'ajout de l\'historique.'
+            ]);
+        }
     }
+    public function deleteGameHistory(int $id)
+    {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
 
-    // Ajouter l'historique du jeu à la base de données
-    $gameHistory = new Gamehistory();
-    $result = $gameHistory->addGameHistory(
-        $data['user_id'],
-        $data['deck_id'],
-        $data['turn_count'],
-        $data['final_people'],
-        $data['final_treasury'],
-        $data['is_winner']
-    );
+        // Vérifier que l'ID est valide
+        if (!$id) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'ID de l\'historique du jeu invalide.'
+            ]);
+            return;
+        }
 
-    if ($result) {
-        echo json_encode([
-            'status' => 'success',
-            'message' => 'Historique du jeu ajouté avec succès.'
-        ]);
-    } else {
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'Une erreur est survenue lors de l\'ajout de l\'historique.'
-        ]);
+        // Supprimer l'historique du jeu
+        $gameHistory = new Gamehistory();
+        $result = $gameHistory->deleteGameHistory($id);
+
+        if ($result) {
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Historique du jeu supprimé avec succès.'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Une erreur est survenue lors de la suppression.'
+            ]);
+        }
     }
-}
-public function deleteGameHistory(int $id)
-{
-    $authorizationController = new AuthorizationController();
-    $authorizationController->options();
+    public function updateGameHistory()
+    {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
 
-    // Vérifier que l'ID est valide
-    if (!$id) {
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'ID de l\'historique du jeu invalide.'
-        ]);
-        return;
+        // Récupérer les données de l'entrée (par exemple via POST)
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        // Vérifier les champs requis
+        if (
+            !isset($data['id']) || !isset($data['turn_count']) || !isset($data['final_people']) ||
+            !isset($data['final_treasury']) || !isset($data['is_winner'])
+        ) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Tous les champs requis doivent être fournis.'
+            ]);
+            return;
+        }
+
+        // Mettre à jour l'historique du jeu
+        $gameHistory = new GameHistory();
+        $result = $gameHistory->updateGameHistory(
+            $data['id'],
+            $data['turn_count'],
+            $data['final_people'],
+            $data['final_treasury'],
+            $data['is_winner']
+        );
+
+        if ($result) {
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Historique du jeu mis à jour avec succès.'
+            ]);
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Une erreur est survenue lors de la mise à jour de l\'historique.'
+            ]);
+        }
     }
-
-    // Supprimer l'historique du jeu
-    $gameHistory = new Gamehistory();
-    $result = $gameHistory->deleteGameHistory($id);
-
-    if ($result) {
-        echo json_encode([
-            'status' => 'success',
-            'message' => 'Historique du jeu supprimé avec succès.'
-        ]);
-    } else {
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'Une erreur est survenue lors de la suppression.'
-        ]);
-    }
-}
-public function updateGameHistory()
-{
-    $authorizationController = new AuthorizationController();
-    $authorizationController->options();
-
-    // Récupérer les données de l'entrée (par exemple via POST)
-    $data = json_decode(file_get_contents('php://input'), true);
-
-    // Vérifier les champs requis
-    if (!isset($data['id']) || !isset($data['turn_count']) || !isset($data['final_people']) || 
-        !isset($data['final_treasury']) || !isset($data['is_winner'])) {
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'Tous les champs requis doivent être fournis.'
-        ]);
-        return;
-    }
-
-    // Mettre à jour l'historique du jeu
-    $gameHistory = new GameHistory();
-    $result = $gameHistory->updateGameHistory(
-        $data['id'],
-        $data['turn_count'],
-        $data['final_people'],
-        $data['final_treasury'],
-        $data['is_winner']
-    );
-
-    if ($result) {
-        echo json_encode([
-            'status' => 'success',
-            'message' => 'Historique du jeu mis à jour avec succès.'
-        ]);
-    } else {
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'Une erreur est survenue lors de la mise à jour de l\'historique.'
-        ]);
-    }
-}
 
 
     public function createCard(int|string $id)
@@ -533,7 +537,8 @@ public function updateGameHistory()
             ]);
         }
     }
-    public function getCreateurByDeck($id){
+    public function getCreateurByDeck($id)
+    {
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
         $decodedToken = $authorizationController->validateCreateurToken();
