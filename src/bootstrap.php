@@ -209,3 +209,15 @@ switch ($routeInfo[0]) {
 
         break;
 }
+
+
+/*
+  ==7==
+  Charger les variables d'environnement
+*/
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+// Récupérer la clé API
+$apiKey = $_ENV['JWT_SECRET'];
