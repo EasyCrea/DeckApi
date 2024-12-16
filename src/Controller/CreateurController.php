@@ -783,6 +783,7 @@ class CreateurController extends Controller
     }
     public function ajoutLike($id_deck, $id_createur)
     {
+        
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
         $decodedToken = $authorizationController->validateCreateurToken();
@@ -793,6 +794,27 @@ class CreateurController extends Controller
         }
         $id_createur = (int) $id_createur;
         $id_deck = (int) $id_deck;
+
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $existing = Like::getInstance()->findOneBy([
+                'id_deck' => $id_deck,
+                'id_createur' => $id_createur
+            ]);
+            
+            if ($existing) {
+                echo json_encode([
+                    'status' => 'success',
+                    'message' => $existing
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Like non trouvé'
+                ]);
+            }
+        }
+
+       
         $existing = Like::getInstance()->findOneBy([
             'id_deck' => $id_deck,
             'id_createur' => $id_createur
