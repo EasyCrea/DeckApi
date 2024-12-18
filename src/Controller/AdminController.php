@@ -242,6 +242,15 @@ class AdminController extends Controller
             return;
         }
 
+        //Check if one deck is already live
+        $decks = Deck::getInstance()->findAll();
+        foreach ($decks as $deck) {
+            if ($deck['live'] == 1) {
+                echo json_encode(['error' => 'Un deck est déjà actif']);
+                return;
+            }
+        }
+
         $id = (int) $id;
         $success = Deck::getInstance()->updateDeck($id, ['live' => 1]);
         echo json_encode(['success' => $success ? 'Deck activé avec succès' : 'Échec de l\'activation']);
