@@ -168,6 +168,7 @@ class AdminController extends Controller
         }
 
         // Validation de l'ID
+        // dd($id);
         $id = (int) $id;
         if ($id <= 0) {
             http_response_code(400);
