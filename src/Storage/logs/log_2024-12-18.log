@@ -1,0 +1,24 @@
+[2024-12-18 12:13:01]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@deleteLike',
+        2 => array(
+            'id_deck' => '30',
+            'id_createur' => '37',
+        ),
+    )
+    exception-line: 266
+    exception-file: 'C:\Users\maloc\OneDrive\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'Table non valide.'
+[2024-12-18 12:14:27]	[ALERT]	404 - erreur dans le processus de traitement du routage
+    routeInfo: array(
+        0 => 1,
+        1 => 'createur@deleteLike',
+        2 => array(
+            'id_deck' => '30',
+            'id_createur' => '37',
+        ),
+    )
+    exception-line: 266
+    exception-file: 'C:\Users\maloc\OneDrive\Documents\GitHub\DeckApi\src\Model\Model.php'
+    exception-code: 'Table non valide.'

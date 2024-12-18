@@ -792,7 +792,7 @@ class CreateurController extends Controller
     }
     public function ajoutLike($id_deck, $id_createur)
     {
-        
+
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
         $decodedToken = $authorizationController->validateCreateurToken();
@@ -809,47 +809,93 @@ class CreateurController extends Controller
                 'id_deck' => $id_deck,
                 'id_createur' => $id_createur
             ]);
-            
+
             if ($existing) {
                 echo json_encode([
                     'status' => 'success',
-                    'message' => $existing
+                    'message' =>    'Like déja ajouté'
                 ]);
+                return;
             } else {
                 echo json_encode([
                     'status' => 'error',
-                    'message' => 'Like non trouvé'
+                    'message' => 'pas de like'
                 ]);
             }
         }
 
-       
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $existing = Like::getInstance()->findOneBy([
+                'id_deck' => $id_deck,
+                'id_createur' => $id_createur
+            ]);
+            if ($existing) {
+                echo json_encode([
+                    'status' => 'error',
+                    'message' => 'Like déjà ajouté'
+                ]);
+                return;
+            } else {
+                $createur = Like::getInstance()->create([
+                    'id_deck' => $id_deck,
+                    'id_createur' => $id_createur
+                ]);
+                if ($createur) {
+                    echo json_encode([
+                        'status' => 'success',
+                        'message' => 'Like ajouté avec succès'
+                    ]);
+                } else {
+                    echo json_encode([
+                        'status' => 'error',
+                        'message' => 'Erreur lors de l\'ajout du like'
+                    ]);
+                }
+            }
+        }
+    }
+    public function deleteLike($id_deck, $id_createur)
+    {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+        $decodedToken = $authorizationController->validateCreateurToken();
+
+        if (!$decodedToken) {
+            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
+            return;
+        }
+        $id_createur = (int) $id_createur;
+        $id_deck = (int) $id_deck;
+
         $existing = Like::getInstance()->findOneBy([
             'id_deck' => $id_deck,
             'id_createur' => $id_createur
         ]);
         if ($existing) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Like déjà ajouté'
+            $delete = Like::getInstance()->delete($id_deck, $id_createur);
+            $deck = Deck::getInstance()->findOneBy([
+                'id_deck' => $id_deck
             ]);
-            return;
-        } else {
-            $createur = Like::getInstance()->create([
-                'id_deck' => $id_deck,
-                'id_createur' => $id_createur
-            ]);
-            if ($createur) {
+            $nb_jaime = $deck['nb_jaime'];
+            $update = Deck::getInstance()->updateDeck($id_deck, ['nb_jaime' => $nb_jaime - 1]);
+
+            if ($delete && $update) {
                 echo json_encode([
                     'status' => 'success',
-                    'message' => 'Like ajouté avec succès'
+                    'message' => 'Like supprimé avec succès'
                 ]);
             } else {
                 echo json_encode([
                     'status' => 'error',
-                    'message' => 'Erreur lors de l\'ajout du like'
+                    'message' => 'Erreur lors de la suppression du like'
                 ]);
             }
+
+        } else {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Like non trouvé'
+            ]);
         }
     }
 }

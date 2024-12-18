@@ -87,6 +87,10 @@ return [
     ['GET', '/like/{id_deck:\d+}/{id_createur:\d+}', 'createur@ajoutLike'],
     ['OPTIONS', '/like/{id_deck:\d+}/{id_createur:\d+}', 'authorization@options'],
 
+    // Route DELETE pour le like
+    ['DELETE', '/like/delete/{id_deck:\d+}/{id_createur:\d+}', 'createur@deleteLike'],
+    ['OPTIONS', '/like/delete/{id_deck:\d+}/{id_createur:\d+}', 'authorization@options'],
+
 
 
     // Récupérer informations carte pour le créateur
