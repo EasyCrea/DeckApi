@@ -75,13 +75,6 @@ return [
     ['PUT', '/updategamehistory', 'createur@updateGameHistory'],
     ['OPTIONS', '/updategamehistory', 'authorization@options'],
 
-
-        
-
-    // Ajout d'un like sur le deck
-    ['PATCH', '/likeDeck/{id_deck:\d+}', 'createur@likeDeck'],
-    ['OPTIONS', '/likeDeck/{id:\d+}', 'authorization@options'],
-
     // Route POST pour le like
     ['POST', '/like/{id_deck:\d+}/{id_createur:\d+}', 'createur@ajoutLike'],
     ['GET', '/like/{id_deck:\d+}/{id_createur:\d+}', 'createur@ajoutLike'],

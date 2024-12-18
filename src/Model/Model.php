@@ -262,11 +262,15 @@ class Model
     public function delete(int $id): bool
     {
         // Valider la table et déterminer la colonne
-        if (!in_array($this->tableName, ['deck', 'carte'], true)) {
+        if (!in_array($this->tableName, ['deck', 'carte', 'like'], true)) {
             throw new InvalidArgumentException('Table non valide.');
         }
 
-        $column = $this->tableName === 'deck' ? 'id_deck' : 'id_carte';
+        $column = match($this->tableName) {
+            'deck' => 'id_deck',
+            'carte' => 'id_carte',
+            'like' => 'id_like'
+        };
 
         // Requête SQL pour supprimer l'enregistrement
         $sql = "DELETE FROM `{$this->tableName}` WHERE `{$column}` = :id";
