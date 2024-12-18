@@ -12,15 +12,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        // Charger les variables d'environnement
-        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2)); // Remonte à la racine du projet
-        $dotenv->load();
-
-        // Récupérer la clé secrète JWT depuis le .env
-        $jwtSecret = $_ENV['JWT_SECRET'];
-
-        // Si vous voulez afficher la clé, utilisez echo ou var_dump
-        echo $jwtSecret; // ou var_dump($jwtSecret);
+        echo json_encode("Ceci est un test");
     }
 
     // Connexion API
