@@ -527,11 +527,6 @@ class CreateurController extends Controller
     {
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
-        $decodedToken = $authorizationController->validateCreateurToken();
-        if (!$decodedToken) {
-            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
-            return;
-        }
         // 1. vérifier les données soumises
         $decks = Deck::getInstance()->findAll();
         if ($decks) {
