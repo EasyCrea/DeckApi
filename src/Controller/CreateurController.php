@@ -8,7 +8,7 @@ use App\Model\Createur;
 use Firebase\JWT\JWT;
 use Dotenv\Dotenv;
 use App\Model\Deck;
-use App\Model\Gamehistory;
+use App\Model\GameHistory;
 use App\Model\Like;
 use App\Model\Carte;
 use App\Model\CarteAleatoire;
@@ -211,6 +211,7 @@ class CreateurController extends Controller
             ]);
         }
     }
+    
     public function createGameHistory()
     {
         $authorizationController = new AuthorizationController();
@@ -230,29 +231,33 @@ class CreateurController extends Controller
             ]);
             return;
         }
+        $date_soumission = (new \DateTime())->format('Y-m-d');
 
-        // Ajouter l'historique du jeu à la base de données
-        $gameHistory = new Gamehistory();
-        $result = $gameHistory->addGameHistory(
-            $data['user_id'],
-            $data['deck_id'],
-            $data['turn_count'],
-            $data['final_people'],
-            $data['final_treasury'],
-            $data['is_winner']
-        );
-
-        if ($result) {
+        $cardData = [
+            'user_id' => $data['user_id'],
+            'deck_id' => $data['deck_id'],
+            'game_date' => $date_soumission,
+            'turn_count' => $data['turn_count'],
+            'final_people' => $data['final_people'],
+            'final_treasury' => $data['final_treasury'],
+            'is_winner' => $data['is_winner'],
+        ];
+        try {
+            echo json_encode($cardData);    
+            GameHistory::getInstance()->create($cardData);
             echo json_encode([
                 'status' => 'success',
-                'message' => 'Historique du jeu ajouté avec succès.'
+                'message' => 'Carte créée avec succès',
             ]);
-        } else {
+        } catch (\Exception $e) {
+            http_response_code(500);
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Une erreur est survenue lors de l\'ajout de l\'historique.'
+                'message' => $e->getMessage(),
             ]);
         }
+
+       
     }
     public function deleteGameHistory(int $id)
     {

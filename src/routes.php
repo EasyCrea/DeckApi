@@ -68,10 +68,13 @@ return [
     // Historique des parties
     ['GET', '/gamehistory/{user_id:\d+}/{deck_id:\d+}', 'createur@getGameHistory'],
     ['OPTIONS', '/gamehistory/{user_id:\d+}/{deck_id:\d+}', 'authorization@options'],
+
     ['POST', '/creategamehistory', 'createur@createGameHistory'],
     ['OPTIONS', '/creategamehistory', 'authorization@options'],
+
     ['DELETE', '/deletegamehistory/{id:\d+}', 'createur@deleteGameHistory'],
     ['OPTIONS', '/deletegamehistory/{id:\d+}', 'authorization@options'],
+    
     ['PUT', '/updategamehistory', 'createur@updateGameHistory'],
     ['OPTIONS', '/updategamehistory', 'authorization@options'],
 
