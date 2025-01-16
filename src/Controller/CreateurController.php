@@ -211,7 +211,7 @@ class CreateurController extends Controller
             ]);
         }
     }
-    
+
     public function createGameHistory()
     {
         $authorizationController = new AuthorizationController();
@@ -243,7 +243,7 @@ class CreateurController extends Controller
             'is_winner' => $data['is_winner'],
         ];
         try {
-            echo json_encode($cardData);    
+            echo json_encode($cardData);
             GameHistory::getInstance()->create($cardData);
             echo json_encode([
                 'status' => 'success',
@@ -256,8 +256,6 @@ class CreateurController extends Controller
                 'message' => $e->getMessage(),
             ]);
         }
-
-       
     }
     public function deleteGameHistory(int $id)
     {
@@ -797,7 +795,7 @@ class CreateurController extends Controller
             $deck = Deck::getInstance()->findOneBy([
                 'id_deck' => $id_deck
             ]);
-            $nb_jaime = $deck['nb_jaime']; 
+            $nb_jaime = $deck['nb_jaime'];
 
             if ($existing) {
                 echo json_encode([
@@ -864,7 +862,6 @@ class CreateurController extends Controller
                     'message' => 'Erreur lors de la suppression du like'
                 ]);
             }
-
         } else {
             echo json_encode([
                 'status' => 'error',

@@ -14,6 +14,15 @@ return [
     ['GET', '/', 'admin@index'],
     ['OPTIONS', '/', 'admin@index'],
     // Gérer les créateurs (Créateurs, Inscription, Connexion, etc.)
+
+    // Lister les créateurs
+    ['GET', '/admin/createurs', 'admin@index'],
+    ['OPTIONS', '/admin/createurs', 'authorization@options'],
+
+    // Supprimer un utilisateur
+    ['DELETE', '/admin/deleteCreateur/{id:\d+}', 'admin@deleteCreateur'],
+    ['OPTIONS', '/admin/deleteCreateur/{id:\d+}', 'authorization@options'],
+
     // Inscription
     ['POST', '/createurs/register', 'createur@register'],
     ['OPTIONS', '/createurs/register', 'authorization@options'],
@@ -74,7 +83,7 @@ return [
 
     ['DELETE', '/deletegamehistory/{id:\d+}', 'createur@deleteGameHistory'],
     ['OPTIONS', '/deletegamehistory/{id:\d+}', 'authorization@options'],
-    
+
     ['PUT', '/updategamehistory', 'createur@updateGameHistory'],
     ['OPTIONS', '/updategamehistory', 'authorization@options'],
 

@@ -7,20 +7,43 @@ use App\Model\Admin;
 use Dotenv\Dotenv;
 use App\Model\Deck;
 use App\Model\Carte;
+use App\Model\Createur;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        // Charger les variables d'environnement
-        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 2)); // Remonte à la racine du projet
-        $dotenv->load();
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
 
-        // Récupérer la clé secrète JWT depuis le .env
-        $jwtSecret = $_ENV['JWT_SECRET'];
+        $decodedToken = $authorizationController->validateAdminToken();
+        if (!$decodedToken) {
+            return;
+        }
 
-        // Si vous voulez afficher la clé, utilisez echo ou var_dump
-        echo $jwtSecret; // ou var_dump($jwtSecret);
+        // Lister les créateurs
+        $createurs = Createur::getInstance()->findAll();
+        echo json_encode($createurs);
+    }
+
+    // Supprimer un utilisateur
+    public function deleteCreateur(int|string $id)
+    {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+
+        $decodedToken = $authorizationController->validateAdminToken();
+        if (!$decodedToken) {
+            return;
+        }
+
+        $id = (int) $id;
+        $success = Createur::getInstance()->delete($id);
+        if ($success) {
+            echo json_encode(['success' => 'Utilisateur supprimé avec succès']);
+        } else {
+            echo json_encode(['error' => 'Une erreur est survenue lors de la suppression de l\'utilisateur']);
+        }
     }
 
     // Connexion API
