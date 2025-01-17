@@ -252,7 +252,6 @@ class Model
         return $sth->rowCount() > 0;
     }
 
-
     /**
      * Efface l'identifiant.
      *
@@ -262,14 +261,15 @@ class Model
     public function delete(int $id): bool
     {
         // Valider la table et déterminer la colonne
-        if (!in_array($this->tableName, ['deck', 'carte', 'like'], true)) {
+        if (!in_array($this->tableName, ['deck', 'carte', 'like', 'createur'], true)) {
             throw new InvalidArgumentException('Table non valide.');
         }
 
-        $column = match($this->tableName) {
+        $column = match ($this->tableName) {
             'deck' => 'id_deck',
             'carte' => 'id_carte',
-            'like' => 'id_like'
+            'like' => 'id_like',
+            'createur' => 'id_createur',
         };
 
         // Requête SQL pour supprimer l'enregistrement

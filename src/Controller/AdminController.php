@@ -36,8 +36,8 @@ class AdminController extends Controller
         if (!$decodedToken) {
             return;
         }
-
         $id = (int) $id;
+        echo json_encode($id);
         $success = Createur::getInstance()->delete($id);
         if ($success) {
             echo json_encode(['success' => 'Utilisateur supprimé avec succès']);
@@ -45,6 +45,46 @@ class AdminController extends Controller
             echo json_encode(['error' => 'Une erreur est survenue lors de la suppression de l\'utilisateur']);
         }
     }
+
+    public function banCreateur(int|string $id): void
+    {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+
+        $decodedToken = $authorizationController->validateAdminToken();
+        if (!$decodedToken || empty($decodedToken['admin'])) {
+            http_response_code(403);
+            echo json_encode(['error' => 'Accès refusé.']);
+            return;
+        }
+
+        $id = (int) $id;
+        $response = [];
+        $createur = Createur::getInstance()->findOneBy(['id_createur' => $id]);
+
+        if ($createur) {
+            $isBanned = (bool) $createur->banned; // Notation objet pour accéder à 'banned'
+
+            if ($isBanned) {
+                $success = Createur::getInstance()->debanCreateurModel($id);
+                $response = [
+                    'success' => $success,
+                    'message' => $success ? 'Utilisateur débanni avec succès.' : 'Échec du débannissement.'
+                ];
+            } else {
+                $success = Createur::getInstance()->banCreateurModel($id);
+                $response = [
+                    'success' => $success,
+                    'message' => $success ? 'Utilisateur banni avec succès.' : 'Échec du bannissement.'
+                ];
+            }
+        } else {
+            $response = ['error' => 'Utilisateur non trouvé.'];
+        }
+
+        echo json_encode($response);
+    }
+
 
     // Connexion API
     public function login()

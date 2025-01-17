@@ -23,6 +23,10 @@ return [
     ['DELETE', '/admin/deleteCreateur/{id:\d+}', 'admin@deleteCreateur'],
     ['OPTIONS', '/admin/deleteCreateur/{id:\d+}', 'authorization@options'],
 
+    // Banir un user
+    ['PATCH', '/admin/banCreateur/{id:\d+}', 'admin@banCreateur'],
+    ['OPTIONS', '/admin/banCreateur/{id:\d+}', 'authorization@options'],
+
     // Inscription
     ['POST', '/createurs/register', 'createur@register'],
     ['OPTIONS', '/createurs/register', 'authorization@options'],
