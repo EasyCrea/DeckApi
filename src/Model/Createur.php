@@ -18,7 +18,7 @@ class Createur extends Model
      */
     public function banCreateurModel(int $id): bool
     {
-        $sql = 'UPDATE `' . $this->tableName . '` SET `banni` = 1 WHERE `id_createur` = :id';
+        $sql = 'UPDATE `' . $this->tableName . '` SET `banned` = 1 WHERE `id_createur` = :id';
         $sth = $this->query($sql, [':id' => $id]);
         return $sth->rowCount() > 0;
     }
@@ -31,7 +31,7 @@ class Createur extends Model
      */
     public function debanCreateurModel(int $id): bool
     {
-        $sql = 'UPDATE `' . $this->tableName . '` SET `banni` = 0 WHERE `id_createur` = :id';
+        $sql = 'UPDATE `' . $this->tableName . '` SET `banned` = 0 WHERE `id_createur` = :id';
         $sth = $this->query($sql, [':id' => $id]);
         return $sth->rowCount() > 0;
     }

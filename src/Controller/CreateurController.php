@@ -138,6 +138,7 @@ class CreateurController extends Controller
                 'id' => $createur['id_createur'],
                 'email' => $createur['ad_email_createur'],
                 'role' => 'createur',
+                'banned' => $createur['banned'],
                 'exp' => time() + 3600 // Expiration dans 1 heure
             ];
 
@@ -154,7 +155,8 @@ class CreateurController extends Controller
                 'createur' => [
                     'id' => $createur['id_createur'],
                     'email' => $createur['ad_email_createur'],
-                    'role' => 'createur'
+                    'role' => 'createur',
+                    'banned' => $createur['banned']
                 ]
             ]);
         } else {

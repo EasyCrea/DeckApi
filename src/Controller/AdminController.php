@@ -52,7 +52,7 @@ class AdminController extends Controller
         $authorizationController->options();
 
         $decodedToken = $authorizationController->validateAdminToken();
-        if (!$decodedToken || empty($decodedToken['admin'])) {
+        if (!$decodedToken) {
             http_response_code(403);
             echo json_encode(['error' => 'Accès refusé.']);
             return;
@@ -63,9 +63,10 @@ class AdminController extends Controller
         $createur = Createur::getInstance()->findOneBy(['id_createur' => $id]);
 
         if ($createur) {
-            $isBanned = (bool) $createur->banned; // Notation objet pour accéder à 'banned'
+            $isBanned = $createur['banned'];
 
             if ($isBanned) {
+
                 $success = Createur::getInstance()->debanCreateurModel($id);
                 $response = [
                     'success' => $success,
