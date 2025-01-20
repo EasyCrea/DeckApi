@@ -270,6 +270,7 @@ class Model
             'carte' => 'id_carte',
             'like' => 'id_like',
             'createur' => 'id_createur',
+            'game_history' => 'id',
         };
 
         // Requête SQL pour supprimer l'enregistrement

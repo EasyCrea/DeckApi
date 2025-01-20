@@ -260,18 +260,12 @@ class CreateurController extends Controller
             ]);
         }
     }
-    public function deleteGameHistory(int $id)
+    public function deleteGameHistory($id)
     {
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
 
-        $id = (int) $id;
-
-        echo json_encode([
-            'status' => 'error',
-            'message' => 'Fonctionnalité non implémentée.'
-        ]);
-        
+    $id = (int) $id;
 
         // Vérifier que l'ID est valide
         if (!$id) {
