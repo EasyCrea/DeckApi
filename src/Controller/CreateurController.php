@@ -13,6 +13,7 @@ use App\Model\Like;
 use App\Model\Carte;
 use App\Model\CarteAleatoire;
 use App\Controller\AuthorizationController;
+use App\Model\Game;
 use Exception;
 
 
@@ -264,6 +265,14 @@ class CreateurController extends Controller
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
 
+        $id = (int) $id;
+
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Fonctionnalité non implémentée.'
+        ]);
+        
+
         // Vérifier que l'ID est valide
         if (!$id) {
             echo json_encode([
@@ -272,22 +281,21 @@ class CreateurController extends Controller
             ]);
             return;
         }
-
-        // Supprimer l'historique du jeu
-        $gameHistory = new Gamehistory();
-        $result = $gameHistory->deleteGameHistory($id);
-
-        if ($result) {
+       try {
+            GameHistory::getInstance()->delete($id);
             echo json_encode([
                 'status' => 'success',
                 'message' => 'Historique du jeu supprimé avec succès.'
             ]);
-        } else {
+        }
+        catch (\Exception $e) {
+            http_response_code(500);
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Une erreur est survenue lors de la suppression.'
+                'message' => $e->getMessage(),
             ]);
         }
+
     }
 
     public function createCard(int|string $id)

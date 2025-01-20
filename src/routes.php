@@ -97,8 +97,6 @@ return [
     ['DELETE', '/like/delete/{id_deck:\d+}/{id_createur:\d+}', 'createur@deleteLike'],
     ['OPTIONS', '/like/delete/{id_deck:\d+}/{id_createur:\d+}', 'authorization@options'],
 
-
-
     // Récupérer informations carte pour le créateur
     ['GET', '/createur/random/{id:\d+}', 'createur@getRandomCard'],
     ['GET', '/createur/selfCard/{id:\d+}', 'createur@getCard'],

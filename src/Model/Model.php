@@ -261,7 +261,7 @@ class Model
     public function delete(int $id): bool
     {
         // Valider la table et déterminer la colonne
-        if (!in_array($this->tableName, ['deck', 'carte', 'like', 'createur'], true)) {
+        if (!in_array($this->tableName, ['deck', 'carte', 'like', 'createur', 'game_history'], true)) {
             throw new InvalidArgumentException('Table non valide.');
         }
 
