@@ -74,9 +74,6 @@ return [
 
     ['DELETE', '/deletegamehistory/{id:\d+}', 'createur@deleteGameHistory'],
     ['OPTIONS', '/deletegamehistory/{id:\d+}', 'authorization@options'],
-    
-    ['PUT', '/updategamehistory', 'createur@updateGameHistory'],
-    ['OPTIONS', '/updategamehistory', 'authorization@options'],
 
     // Route POST pour le like
     ['POST', '/like/{id_deck:\d+}/{id_createur:\d+}', 'createur@ajoutLike'],

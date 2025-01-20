@@ -45,22 +45,6 @@ class Gamehistory extends Model
     $sth->bindParam(':id', $id, \PDO::PARAM_INT);
     return $sth->execute();
 }
-public function updateGameHistory(int $id, int $turnCount, int $finalPeople, int $finalTreasury, bool $isWinner): bool
-{
-    $sql = "UPDATE game_history 
-            SET turn_count = :turn_count,
-                final_people = :final_people,
-                final_treasury = :final_treasury,
-                is_winner = :is_winner
-            WHERE id = :id";
-    $sth = $this->query($sql);
-    $sth->bindParam(':id', $id, \PDO::PARAM_INT);
-    $sth->bindParam(':turn_count', $turnCount, \PDO::PARAM_INT);
-    $sth->bindParam(':final_people', $finalPeople, \PDO::PARAM_INT);
-    $sth->bindParam(':final_treasury', $finalTreasury, \PDO::PARAM_INT);
-    $sth->bindParam(':is_winner', $isWinner, \PDO::PARAM_BOOL);
-    return $sth->execute();
-}
 
 
 }

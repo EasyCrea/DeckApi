@@ -289,49 +289,6 @@ class CreateurController extends Controller
             ]);
         }
     }
-    public function updateGameHistory()
-    {
-        $authorizationController = new AuthorizationController();
-        $authorizationController->options();
-
-        // Récupérer les données de l'entrée (par exemple via POST)
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        // Vérifier les champs requis
-        if (
-            !isset($data['id']) || !isset($data['turn_count']) || !isset($data['final_people']) ||
-            !isset($data['final_treasury']) || !isset($data['is_winner'])
-        ) {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Tous les champs requis doivent être fournis.'
-            ]);
-            return;
-        }
-
-        // Mettre à jour l'historique du jeu
-        $gameHistory = new GameHistory();
-        $result = $gameHistory->updateGameHistory(
-            $data['id'],
-            $data['turn_count'],
-            $data['final_people'],
-            $data['final_treasury'],
-            $data['is_winner']
-        );
-
-        if ($result) {
-            echo json_encode([
-                'status' => 'success',
-                'message' => 'Historique du jeu mis à jour avec succès.'
-            ]);
-        } else {
-            echo json_encode([
-                'status' => 'error',
-                'message' => 'Une erreur est survenue lors de la mise à jour de l\'historique.'
-            ]);
-        }
-    }
-
 
     public function createCard(int|string $id)
     {
