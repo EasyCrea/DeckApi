@@ -99,8 +99,13 @@ return [
 
     // Récupérer informations carte pour le créateur
     ['GET', '/createur/random/{id:\d+}', 'createur@getRandomCard'],
+    ['OPTIONS', '/createur/random/{id:\d+}', 'authorization@options'],
+
     ['GET', '/createur/selfCard/{id:\d+}', 'createur@getCard'],
+    ['OPTIONS', '/createur/selfCard/{id:\d+}', 'authorization@options'],
+    
     ['GET', '/createur/deckCard/{id:\d+}', 'createur@getCardByDeck'],
+    ['OPTIONS', '/createur/deckCard/{id:\d+}', 'authorization@options'],
 
     //Récupérer les participants des différents decks
     ['GET', '/createur/participants/{id:\d+}', 'createur@getCreateurByDeck'],
