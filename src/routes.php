@@ -70,8 +70,8 @@ return [
     ['OPTIONS', '/createur/{id_deck:\d+}/{id_createur:\d+}', 'authorization@options'],
 
     // Récupérer informations deck pour le créateur
-    ['GET', '/createur', 'createur@getAllDecks'],
-    ['OPTIONS', '/createur', 'authorization@options'],
+    ['GET', '/getAllDeck', 'createur@getAllDecks'],
+    ['OPTIONS', '/getAllDeck', 'authorization@options'],    
     ['GET', '/createur/deck/{id:\d+}', 'createur@getDeck'],
     ['OPTIONS', '/createur/deck/{id:\d+}', 'authorization@options'],
 
