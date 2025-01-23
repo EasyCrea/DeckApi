@@ -265,7 +265,7 @@ class CreateurController extends Controller
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
 
-    $id = (int) $id;
+        $id = (int) $id;
 
         // Vérifier que l'ID est valide
         if (!$id) {
@@ -275,21 +275,19 @@ class CreateurController extends Controller
             ]);
             return;
         }
-       try {
+        try {
             GameHistory::getInstance()->delete($id);
             echo json_encode([
                 'status' => 'success',
                 'message' => 'Historique du jeu supprimé avec succès.'
             ]);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             http_response_code(500);
             echo json_encode([
                 'status' => 'error',
                 'message' => $e->getMessage(),
             ]);
         }
-
     }
 
     public function createCard(int|string $id)
@@ -673,12 +671,14 @@ class CreateurController extends Controller
         ]);
         $titleDeck = $deck['titre_deck'] ?? null;
         $descriptionDeck = $deck['description'] ?? null;
+        $nb_cartes = $deck['nb_cartes'] ?? null;
         if ($cards && $titleDeck) {
             echo json_encode([
                 'status' => 'success',
                 'cards' => $cards,
                 'titleDeck' => $titleDeck,
-                'descriptionDeck' => $descriptionDeck
+                'descriptionDeck' => $descriptionDeck,
+                'nb_cartes' => $nb_cartes
             ]);
         } else {
             echo json_encode([
