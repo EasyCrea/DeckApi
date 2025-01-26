@@ -13,8 +13,8 @@ Cette API PHP utilise l'architecture MVC (Modèle-Vue-Contrôleur) pour gérer l
 
 ### Clonage du projet
 ```bash
-git clone [https://github.com/EasyCrea/API.git](https://github.com/EasyCrea/DeckApi)
-cd API
+git clone https://github.com/EasyCrea/DeckApi
+cd DeckApi
 ```
 
 ### Installation des dépendances
