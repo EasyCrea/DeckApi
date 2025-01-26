@@ -1,167 +1,88 @@
-Voici une version en français complète et adaptée :  
+# API EasyCrea
 
-```markdown
-# API PHP pour EasyCrea et Deckouverte
+## Description
+Cette API PHP utilise l'architecture MVC (Modèle-Vue-Contrôleur) pour gérer les fonctionnalités de EasyCrea et Deckouverte.
 
-Cette API, développée en PHP selon le modèle MVC, est conçue pour prendre en charge les projets [EasyCrea](https://github.com/EasyCrea/Easy_Crea) et [Deckouverte](https://github.com/EasyCrea/Deckouverte). Elle permet de gérer les utilisateurs (créateurs et administrateurs), les decks, les cartes, ainsi que leurs interactions.
+## Prérequis
+- PHP 7.4+
+- Serveur web (Apache/Nginx)
+- Base de données MySQL
+- Composer
 
----
+## Installation
 
-## 🚀 Fonctionnalités principales
-- **Gestion des utilisateurs :**  
-  - Inscription et connexion des créateurs.  
-  - Assignation de cartes aléatoires.  
-  - Vérification de l'état des cartes dans un deck.  
-  - Gestion des historiques de parties et des interactions.  
-
-- **Gestion des administrateurs :**  
-  - Création, modification, activation ou suppression de decks et cartes.  
-  - Gestion des utilisateurs : bannissement, suppression.  
-  - Tableau de bord administratif.  
-
-- **Gestion des cartes :**  
-  - Création et modification de cartes.  
-  - Consultation des cartes créées ou aléatoires.
-
----
-
-## 📂 Routes de l'API
-### Utilisateurs
-#### Créateurs
-- **Inscription :**  
-  `POST /createurs/register`  
-  Permet à un utilisateur de s'inscrire.  
-
-- **Connexion :**  
-  `POST /createurs/login`  
-  Permet à un utilisateur de se connecter.  
-
-- **Vérification du token :**  
-  `GET /authorization/checkToken`  
-  Vérifie la validité du token d'authentification.  
-
-- **Assignation de carte aléatoire :**  
-  `POST /createur/{id_deck}/{id_createur}`  
-  Associe une carte aléatoire à un créateur.  
-
-- **Vérification de carte aléatoire :**  
-  `GET /createur/{id_deck}/{id_createur}/randomCard`  
-  Vérifie si un créateur a déjà une carte dans un deck.
-
-- **Consulter les decks disponibles :**  
-  `GET /getAllDeck`  
-  Retourne tous les decks disponibles.  
-
-#### Historique des parties
-- **Consultation :**  
-  `GET /gamehistory/{user_id}/{deck_id}`  
-  Récupère l'historique des parties d'un utilisateur dans un deck donné.  
-
-- **Ajout :**  
-  `POST /creategamehistory`  
-  Ajoute un nouvel historique de partie.  
-
-- **Suppression :**  
-  `DELETE /deletegamehistory/{id}`  
-  Supprime un historique de partie.
-
-#### Interactions (Likes)
-- **Ajout ou consultation :**  
-  `POST /like/{id_deck}/{id_createur}`  
-  Ajoute ou consulte un "like" d'un créateur pour un deck donné.  
-
-- **Suppression :**  
-  `DELETE /like/delete/{id_deck}/{id_createur}`  
-  Supprime un "like" pour un deck donné.
-
----
-
-### Administrateurs
-#### Gestion des créateurs
-- **Liste des créateurs :**  
-  `GET /admin/createurs`  
-  Retourne tous les créateurs inscrits.  
-
-- **Suppression d'un créateur :**  
-  `DELETE /admin/deleteCreateur/{id}`  
-  Supprime un créateur par son ID.  
-
-- **Bannissement d'un créateur :**  
-  `PATCH /admin/banCreateur/{id}`  
-  Bannis un créateur par son ID.
-
-#### Gestion des decks
-- **Création de decks :**  
-  `POST /admin/createDeck`  
-  Crée un nouveau deck.  
-
-- **Modification d'un deck :**  
-  `POST /admin/edit/{id}`  
-  Modifie un deck existant par son ID.  
-
-- **Activation/Désactivation :**  
-  `PATCH /admin/activate/{id}` ou `PATCH /admin/deactivate/{id}`  
-  Active ou désactive un deck par son ID.  
-
-- **Suppression :**  
-  `DELETE /admin/delete/deck/{id}`  
-  Supprime un deck par son ID.
-
-#### Gestion des cartes
-- **Création :**  
-  `POST /createCard{id}`  
-  Crée une carte pour un deck spécifique.  
-
-- **Modification :**  
-  `PATCH /admin/edit/card/{id}`  
-  Modifie une carte existante.  
-
-- **Suppression :**  
-  `DELETE /admin/delete/card/{id}`  
-  Supprime une carte par son ID.
-
-#### Tableau de bord
-- **Accès au tableau de bord :**  
-  `GET /admin/dashboard`  
-  Affiche un tableau de bord pour l'administrateur.
-
----
-
-## ⚙️ Installation
-1. **Cloner ce dépôt :**  
-   ```bash
-   git clone [<URL_DU_DEPOT>](https://github.com/EasyCrea/DeckApi)
-   cd DeckApi
-   ```
-
-2. **Configurer l’environnement :**  
-   - Créez un fichier `config.local.php` et `config.prod.php` dans `src/Config/` pour vos configurations locales et de production.  
-   - Assurez-vous que ces fichiers sont ignorés par Git (ajout dans `.gitignore`).  
-
-3. **Installer les dépendances :**  
-   ```bash
-   composer install
-   ```
-
-4. **Importer la base de données :**  
-   Importez le fichier SQL fourni dans votre base de données.
-
-5. **Démarrer le serveur :**  
-   ```bash
-   php -S localhost:8000 -t public
-   ```
-
----
-
-## 📜 License
-Cette API est distribuée sous licence MIT.
-
----
-
-## 🛠️ Contributions
-Les contributions sont les bienvenues. N’hésitez pas à ouvrir une issue ou une pull request !
-
----
+### Clonage du projet
+```bash
+git clone [https://github.com/EasyCrea/API.git](https://github.com/EasyCrea/DeckApi)
+cd API
 ```
 
-Ce README fournit une présentation claire et organisée de l'API, ainsi que des étapes pour l'installation et l'utilisation. Si tu veux ajouter des sections ou modifier certains éléments, n'hésite pas à me le dire !
+### Installation des dépendances
+```bash
+composer install
+```
+
+## Routes Principales
+
+### Authentification
+- `POST /createurs/register` : Inscription de créateur
+- `POST /createurs/login` : Connexion de créateur
+- `POST /admin/login` : Connexion admin
+- `GET /authorization/checkToken` : Vérification de token
+
+### Créateurs
+- `GET /allcreateur` : Liste de tous les créateurs
+- `GET /createur/{deck_id}/{createur_id}` : Informations du créateur
+- `POST /createur/{deck_id}/{createur_id}` : Assignation de carte aléatoire
+
+### Cartes
+- `POST /createCard{id}` : Création de carte
+- `PATCH /admin/edit/card/{id}` : Modification de carte
+- `GET /createur/random/{id}` : Récupération de carte aléatoire
+
+### Decks
+- `GET /getAllDeck` : Liste de tous les decks
+- `GET /createur/deck/{id}` : Détails d'un deck
+- `POST /admin/createDeck` : Création de deck
+
+### Administration
+- `GET /admin/dashboard` : Tableau de bord admin
+- `DELETE /admin/delete/deck/{id}` : Suppression de deck
+- `PATCH /admin/deactivate/{id}` : Désactivation de deck
+
+### Historique de Jeu
+- `GET /gamehistory/{user_id}/{deck_id}` : Historique de jeu
+- `POST /creategamehistory` : Création d'entrée d'historique
+- `DELETE /deletegamehistory/{id}` : Suppression d'entrée d'historique
+
+## Gestion des Likes
+- `POST /like/{deck_id}/{createur_id}` : Ajout de like
+- `DELETE /like/delete/{deck_id}/{createur_id}` : Suppression de like
+
+## Authentification & Sécurité
+- JWT (JSON Web Token) pour l'authentification
+- Middleware de vérification de token
+- Protection contre les CORS
+- Validation et assainissement des entrées
+
+## Gestion des Erreurs
+- Codes de statut HTTP appropriés
+- Messages d'erreur structurés
+- Logging des erreurs
+
+## Performance
+- Mise en cache des réponses
+- Requêtes SQL optimisées
+- Pagination pour les grandes listes
+
+## Déploiement
+1. Configurer votre serveur web
+2. Importer le schéma de base de données
+3. Définir les variables d'environnement
+4. Configurer les droits d'accès aux fichiers
+
+## Contribution
+1. Forker le projet
+2. Créer une branche de feature
+3. Commit vos modifications
+4. Push et ouvrir une Pull Request
