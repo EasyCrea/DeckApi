@@ -3,3 +3,4 @@ composer.lock
 .env
 /src/Config/config.local.php
 /src/Config/config.prod.php
+/src/Storage/logs/
