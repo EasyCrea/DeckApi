@@ -4,3 +4,4 @@ composer.lock
 /src/Config/config.local.php
 /src/Config/config.prod.php
 /src/Storage/logs/
+src/_database
