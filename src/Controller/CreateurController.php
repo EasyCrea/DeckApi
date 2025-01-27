@@ -13,9 +13,8 @@ use App\Model\Like;
 use App\Model\Carte;
 use App\Model\CarteAleatoire;
 use App\Controller\AuthorizationController;
-use App\Model\Game;
 use Exception;
-use PHPMailer\PHPMailer\PHPMailer;
+
 
 
 
@@ -851,27 +850,40 @@ class CreateurController extends Controller
         // Récupération des données JSON envoyées dans la requête
         $data = json_decode(file_get_contents('php://input'), true);
 
-        $mail = new PHPMailer(true);
-        try {
-            // Configuration du SMTP
-            $mail->isSMTP();
-            $mail->Host = 'smtp.alwaysdata.com'; // SMTP de Gmail (ou un autre)
-            $mail->SMTPAuth = true;
-            $mail->Username = 'easydeck@alwaysdata.net'; // Votre email SMTP
-            $mail->Password = 'lemotdepassecestmmi3'; // Mot de passe de l'email
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = 587;
+        // Vérification des champs requis
+        if (!isset($data['email'], $data['subject'], $data['message'], $data['name'])) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Tous les champs (email, subject, message, name) sont requis.'
+            ]);
+            return;
+        }
 
-            // Configuration du message
-            $mail->setFrom($data['email'], $data['name']);
-            $mail->addAddress('eliot.pouplier@gmail.com'); // Destinataire
-            $mail->Subject = $data['subject'];
-            $mail->Body = $data['message'];
+        // Destinataire et expéditeur
+        $to = "eliot.pouplier@gmail.com"; // Destinataire fixe
+        $from = filter_var($data['email'], FILTER_VALIDATE_EMAIL); // Validation de l'e-mail de l'expéditeur
+        $subject = htmlspecialchars(trim($data['subject']));
+        $message = htmlspecialchars(trim($data['message']));
+        $name = htmlspecialchars(trim($data['name']));
 
-            $mail->send();
+        if (!$from) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Adresse e-mail de l\'expéditeur invalide.'
+            ]);
+            return;
+        }
+        // Préparation des en-têtes
+        $headers = "From: $name <$from>\r\n";
+        $headers .= "Reply-To: $from\r\n";
+        $headers .= "X-Priority: 1\r\n"; // Priorité élevée
+        $headers .= "X-Mailer: PHP/" . phpversion();
+
+        // Envoi de l'e-mail
+        if (mail($to, $subject, $message, $headers)) {
             echo json_encode(['status' => 'success', 'message' => 'Email envoyé avec succès.']);
-        } catch (Exception $e) {
-            echo json_encode(['status' => 'error', 'message' => 'Erreur: ' . $mail->ErrorInfo]);
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'Échec de l\'envoi de l\'email.']);
         }
     }
 }
