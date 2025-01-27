@@ -506,13 +506,6 @@ class CreateurController extends Controller
     }
     public function getCreateurByDeck($id)
     {
-        $authorizationController = new AuthorizationController();
-        $authorizationController->options();
-        $decodedToken = $authorizationController->validateCreateurToken();
-        if (!$decodedToken) {
-            // La méthode `validateAdminToken` gère déjà la réponse HTTP en cas d'erreur.
-            return;
-        }
         $id = (int) $id;
         $carte = Carte::getInstance()->findAllBy([
             'id_deck' => $id
@@ -538,6 +531,7 @@ class CreateurController extends Controller
             ]);
         }
     }
+    
     public function getRandomCard(
         int|string $id
     ) {
