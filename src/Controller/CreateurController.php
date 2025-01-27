@@ -530,7 +530,7 @@ class CreateurController extends Controller
             ]);
         }
     }
-    
+
     public function getRandomCard(
         int|string $id
     ) {
@@ -827,6 +827,9 @@ class CreateurController extends Controller
 
     public function sendEmail()
     {
+        // Activation du debugging
+        error_log("Début de la fonction sendEmail");
+
         // Initialisation du contrôleur d'autorisation
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
@@ -834,6 +837,8 @@ class CreateurController extends Controller
         // Validation du token
         $decodedToken = $authorizationController->validateCreateurToken();
         if (!$decodedToken) {
+            error_log("Token invalide");
+            http_response_code(401);
             echo json_encode([
                 'status' => 'error',
                 'message' => 'Token invalide ou non fourni.'
@@ -841,43 +846,114 @@ class CreateurController extends Controller
             return;
         }
 
-        // Récupération des données JSON envoyées dans la requête
-        $data = json_decode(file_get_contents('php://input'), true);
+        // Récupération des données JSON
+        $rawData = file_get_contents('php://input');
+        error_log("Données reçues : " . $rawData);
+
+        $data = json_decode($rawData, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            error_log("Erreur JSON : " . json_last_error_msg());
+            http_response_code(400);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Données JSON invalides: ' . json_last_error_msg(),
+                'received_data' => $rawData
+            ]);
+            return;
+        }
 
         // Vérification des champs requis
-        if (!isset($data['email'], $data['subject'], $data['message'], $data['name'])) {
+        $requiredFields = ['email', 'subject', 'message', 'name'];
+        $missingFields = [];
+        foreach ($requiredFields as $field) {
+            if (!isset($data[$field]) || empty($data[$field])) {
+                $missingFields[] = $field;
+            }
+        }
+
+        if (!empty($missingFields)) {
+            error_log("Champs manquants : " . implode(', ', $missingFields));
+            http_response_code(400);
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Tous les champs (email, subject, message, name) sont requis.'
+                'message' => 'Champs manquants : ' . implode(', ', $missingFields),
+                'received_data' => $data
             ]);
             return;
         }
 
-        // Destinataire et expéditeur
-        $to = "eliot.pouplier@gmail.com"; // Destinataire fixe
-        $from = filter_var($data['email'], FILTER_VALIDATE_EMAIL); // Validation de l'e-mail de l'expéditeur
-        $subject = htmlspecialchars(trim($data['subject']));
-        $message = htmlspecialchars(trim($data['message']));
-        $name = htmlspecialchars(trim($data['name']));
-
+        // Nettoyage et validation des données
+        $from = filter_var($data['email'], FILTER_VALIDATE_EMAIL);
         if (!$from) {
+            error_log("Email invalide : " . $data['email']);
+            http_response_code(400);
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Adresse e-mail de l\'expéditeur invalide.'
+                'message' => 'Adresse email invalide',
+                'received_email' => $data['email']
             ]);
             return;
         }
-        // Préparation des en-têtes
-        $headers = "From: $name <$from>\r\n";
-        $headers .= "Reply-To: $from\r\n";
-        $headers .= "X-Priority: 1\r\n"; // Priorité élevée
-        $headers .= "X-Mailer: PHP/" . phpversion();
 
-        // Envoi de l'e-mail
-        if (mail($to, $subject, $message, $headers)) {
-            echo json_encode(['status' => 'success', 'message' => 'Email envoyé avec succès.']);
+        $to = "eliot.pouplier@gmail.com";
+        $subject = htmlspecialchars(trim($data['subject']), ENT_QUOTES, 'UTF-8');
+        $message = htmlspecialchars(trim($data['message']), ENT_QUOTES, 'UTF-8');
+        $name = htmlspecialchars(trim($data['name']), ENT_QUOTES, 'UTF-8');
+
+        // Construction du message HTML avec meilleur formatage
+        $htmlMessage = "
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset='UTF-8'>
+            <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+            <title>Message de contact - Portfolio</title>
+        </head>
+        <body style='margin: 0; padding: 0; font-family: Arial, sans-serif;'>
+            <div style='max-width: 600px; margin: 0 auto; padding: 20px;'>
+                <div style='background: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
+                    <h2 style='color: #333; margin-bottom: 20px;'>Nouveau message de {$name}</h2>
+                    <div style='background: #f8f9fa; padding: 15px; border-radius: 4px; margin-bottom: 20px;'>
+                        <p style='margin: 0; line-height: 1.6;'>" . nl2br($message) . "</p>
+                    </div>
+                    <div style='color: #666; font-size: 14px;'>
+                        <p>Email de l'expéditeur : {$from}</p>
+                        <p>Envoyé depuis le formulaire de contact du portfolio</p>
+                    </div>
+                </div>
+            </div>
+        </body>
+        </html>
+    ";
+
+        // Configuration améliorée des en-têtes
+        $headers = [
+            'MIME-Version: 1.0',
+            'Content-Type: text/html; charset=UTF-8',
+            'From: Portfolio Contact <contact@' . $_SERVER['HTTP_HOST'] . '>', // Utilise le domaine du site
+            'Reply-To: ' . $name . ' <' . $from . '>',
+            'X-Mailer: PHP/' . phpversion(),
+            'List-Unsubscribe: <mailto:contact@' . $_SERVER['HTTP_HOST'] . '?subject=unsubscribe>',
+            'Message-ID: <' . time() . '-' . md5($from . $to) . '@' . $_SERVER['HTTP_HOST'] . '>',
+            'Date: ' . date('r'),
+            'X-Priority: 3',  // Priorité normale
+            'X-Sender: contact@' . $_SERVER['HTTP_HOST'],
+            'Return-Path: contact@' . $_SERVER['HTTP_HOST']
+        ];
+
+        // Envoi de l'email
+        if (mail($to, $subject, $htmlMessage, implode("\r\n", $headers))) {
+            http_response_code(200);
+            echo json_encode([
+                'status' => 'success',
+                'message' => 'Email envoyé avec succès'
+            ]);
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'Échec de l\'envoi de l\'email.']);
+            http_response_code(500);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Échec de l\'envoi de l\'email'
+            ]);
         }
     }
 }
