@@ -15,6 +15,7 @@ use App\Model\CarteAleatoire;
 use App\Controller\AuthorizationController;
 use App\Model\Game;
 use Exception;
+use PHPMailer\PHPMailer\PHPMailer;
 
 
 
@@ -828,6 +829,49 @@ class CreateurController extends Controller
                 'status' => 'error',
                 'message' => 'Like non trouvé'
             ]);
+        }
+    }
+
+    public function sendEmail()
+    {
+        // Initialisation du contrôleur d'autorisation
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+
+        // Validation du token
+        $decodedToken = $authorizationController->validateCreateurToken();
+        if (!$decodedToken) {
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Token invalide ou non fourni.'
+            ]);
+            return;
+        }
+
+        // Récupération des données JSON envoyées dans la requête
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        $mail = new PHPMailer(true);
+        try {
+            // Configuration du SMTP
+            $mail->isSMTP();
+            $mail->Host = 'smtp.alwaysdata.com'; // SMTP de Gmail (ou un autre)
+            $mail->SMTPAuth = true;
+            $mail->Username = 'easydeck@alwaysdata.net'; // Votre email SMTP
+            $mail->Password = 'lemotdepassecestmmi3'; // Mot de passe de l'email
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+
+            // Configuration du message
+            $mail->setFrom($data['email'], $data['name']);
+            $mail->addAddress('eliot.pouplier@gmail.com'); // Destinataire
+            $mail->Subject = $data['subject'];
+            $mail->Body = $data['message'];
+
+            $mail->send();
+            echo json_encode(['status' => 'success', 'message' => 'Email envoyé avec succès.']);
+        } catch (Exception $e) {
+            echo json_encode(['status' => 'error', 'message' => 'Erreur: ' . $mail->ErrorInfo]);
         }
     }
 }

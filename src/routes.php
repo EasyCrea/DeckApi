@@ -71,7 +71,7 @@ return [
 
     // Récupérer informations deck pour le créateur
     ['GET', '/getAllDeck', 'createur@getAllDecks'],
-    ['OPTIONS', '/getAllDeck', 'authorization@options'],    
+    ['OPTIONS', '/getAllDeck', 'authorization@options'],
     ['GET', '/createur/deck/{id:\d+}', 'createur@getDeck'],
     ['OPTIONS', '/createur/deck/{id:\d+}', 'authorization@options'],
 
@@ -93,6 +93,10 @@ return [
     ['GET', '/like/{id_deck:\d+}/{id_createur:\d+}', 'createur@ajoutLike'],
     ['OPTIONS', '/like/{id_deck:\d+}/{id_createur:\d+}', 'authorization@options'],
 
+    // Route pour envoyer un email
+    ['POST', '/sendEmail', 'createur@sendEmail'],
+    ['OPTIONS', '/sendEmail', 'authorization@options'],
+
     // Route DELETE pour le like
     ['DELETE', '/like/delete/{id_deck:\d+}/{id_createur:\d+}', 'createur@deleteLike'],
     ['OPTIONS', '/like/delete/{id_deck:\d+}/{id_createur:\d+}', 'authorization@options'],
@@ -103,7 +107,7 @@ return [
 
     ['GET', '/createur/selfCard/{id:\d+}', 'createur@getCard'],
     ['OPTIONS', '/createur/selfCard/{id:\d+}', 'authorization@options'],
-    
+
     ['GET', '/createur/deckCard/{id:\d+}', 'createur@getCardByDeck'],
     ['OPTIONS', '/createur/deckCard/{id:\d+}', 'authorization@options'],
 

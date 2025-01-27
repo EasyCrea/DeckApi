@@ -45,6 +45,8 @@ define('APP_STORAGE_DIRECTORY', APP_SRC_DIRECTORY . 'Storage' . DS);
 /** chemin absolu vers le dossier de stockage des logs */
 define('APP_DEBUG_FILE_PATH', APP_STORAGE_DIRECTORY . 'logs');
 
+/** JWT secret key */
+define('JWT_SECRET', 'lasignaturedujwtpourlasaemmi3');
 
 /** URL complète de l'application en http:// ou https:// */
 define(
