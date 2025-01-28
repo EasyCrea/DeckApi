@@ -507,7 +507,7 @@ class CreateurController extends Controller
     {
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
-        
+
         $id = (int) $id;
         $carte = Carte::getInstance()->findAllBy([
             'id_deck' => $id
@@ -537,6 +537,9 @@ class CreateurController extends Controller
     public function getRandomCard(
         int|string $id
     ) {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+        
         $id = (int) $id;
         // 1. vérifier les données soumises
         $card = Carte::getInstance()->findOneBy([
