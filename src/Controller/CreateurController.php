@@ -505,6 +505,9 @@ class CreateurController extends Controller
     }
     public function getCreateurByDeck($id)
     {
+        $authorizationController = new AuthorizationController();
+        $authorizationController->options();
+        
         $id = (int) $id;
         $carte = Carte::getInstance()->findAllBy([
             'id_deck' => $id
