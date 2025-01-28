@@ -113,7 +113,6 @@ return [
 
     //Récupérer les participants des différents decks
     ['GET', '/createur/participants/{id:\d+}', 'createur@getCreateurByDeck'],
-    ['OPTIONS', '/createur/participants/{id:\d+}', 'authorization@options'],
 
     // Gérer la connexion des administrateurs
     ['POST', '/admin/login', 'admin@login'],
