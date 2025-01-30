@@ -539,7 +539,7 @@ class CreateurController extends Controller
     ) {
         $authorizationController = new AuthorizationController();
         $authorizationController->options();
-        
+
         $id = (int) $id;
         // 1. vérifier les données soumises
         $card = Carte::getInstance()->findOneBy([
@@ -672,13 +672,17 @@ class CreateurController extends Controller
         $titleDeck = $deck['titre_deck'] ?? null;
         $descriptionDeck = $deck['description'] ?? null;
         $nb_cartes = $deck['nb_cartes'] ?? null;
+        $date_debut_deck = $deck['date_debut_deck'] ?? null;
+        $date_fin_deck = $deck['date_fin_deck'] ?? null;
         if ($cards && $titleDeck) {
             echo json_encode([
                 'status' => 'success',
                 'cards' => $cards,
                 'titleDeck' => $titleDeck,
                 'descriptionDeck' => $descriptionDeck,
-                'nb_cartes' => $nb_cartes
+                'nb_cartes' => $nb_cartes,
+                'date_debut_deck' => $date_debut_deck,
+                'date_fin_deck' => $date_fin_deck
             ]);
         } else {
             echo json_encode([
