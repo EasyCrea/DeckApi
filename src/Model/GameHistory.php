@@ -11,7 +11,7 @@ class Gamehistory extends Model
     
     public function getGameHistoryByCreateurAndDeck(int $userId, int $deckId)
     {
-        $sql = "SELECT * FROM game_history WHERE user_id = :user_id AND deck_id = :deck_id ORDER BY game_date DESC";
+        $sql = "SELECT * FROM game_history WHERE user_id = :user_id AND deck_id = :deck_id ORDER BY id DESC";
         $sth = $this->query($sql, ['user_id' => $userId, 'deck_id' => $deckId]);
         
         if ($sth) {
